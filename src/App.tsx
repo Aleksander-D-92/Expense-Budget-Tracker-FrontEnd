@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Grid from '@material-ui/core/Grid';
+import {Hidden, Typography} from "@material-ui/core";
+import {TopNavController} from "./views/top_nav/TopNavController";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <Grid container spacing={0}>
+                <Hidden xsDown={true}>
+                    <Grid item xs={false} sm={1} md={2}
+                          id={'leftNav'}
+                    >
+                    </Grid>
+                </Hidden>
+                <Grid item xs={12} sm={11} md={10}>
+                    <Grid item xs={12} id={'header'}>
+                        <TopNavController/>
+                    </Grid>
+                    <Grid item xs={12} id={'body'}>
+                        <span>body</span>
+                    </Grid>
+                    <Grid item xs={12} id={'footer'}>
+                        <span>Footer</span>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </>
+    );
 }
 
 export default App;

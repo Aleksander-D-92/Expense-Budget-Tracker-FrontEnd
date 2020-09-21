@@ -1,0 +1,21 @@
+@import '~bootstrap/dist/css/bootstrap-grid.css';
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+}
+
+#leftNav {
+    background-color: coral;
+    min-height: 100%;
+}
+
+#body {
+    background-color: aquamarine;
+    min-height: 700px;
+}
+
+#header, #footer {
+    /*background-color: blueviolet;*/
+    height: 100px;
+}
