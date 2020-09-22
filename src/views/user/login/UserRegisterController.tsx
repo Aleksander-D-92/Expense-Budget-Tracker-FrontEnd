@@ -6,6 +6,7 @@ function UserRegisterController() {
 
     return (
         <>
+
             <UserRegisterForm/>
         </>
     )
