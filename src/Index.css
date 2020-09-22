@@ -11,11 +11,14 @@ html, body, #root {
 }
 
 #body {
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
     min-height: 700px;
 }
 
-#header, #footer {
-    /*background-color: blueviolet;*/
+#footer {
     height: 100px;
+}
+
+#footer {
+    background-color: blueviolet;
 }
