@@ -1,8 +1,9 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import {Hidden, Typography} from "@material-ui/core";
+import {Hidden} from "@material-ui/core";
 import {TopNavController} from "./views/top_nav/TopNavController";
 import {WebsiteRoutes} from "./config/react-router-dom/WebsiteRoutes";
+
 
 function App() {
     return (
