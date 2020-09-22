@@ -3,11 +3,13 @@ import {UserRegisterForm} from "./UserRegisterForm";
 
 
 function UserRegisterController() {
+    function handleRegister(data: any) {
+        console.log(data);
+    }
 
     return (
         <>
-
-            <UserRegisterForm/>
+            <UserRegisterForm handleSubmit={handleRegister}/>
         </>
     )
 }
