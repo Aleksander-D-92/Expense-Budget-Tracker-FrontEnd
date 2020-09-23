@@ -11,8 +11,7 @@ interface Props {
 function AccountLock(props: Props) {
     const {register, handleSubmit, errors} = useForm({
         defaultValues: {
-            oldPassword: '',
-            newPassword: '',
+            password: '',
         }
     });
     return (

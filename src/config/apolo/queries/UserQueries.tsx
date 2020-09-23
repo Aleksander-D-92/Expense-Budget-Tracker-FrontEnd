@@ -1,10 +1,60 @@
 import {gql} from "@apollo/client";
 
+interface UserDetails {
+    userId: number
+    username: string
+    registrationDate: Date
+    accountNonLocked: boolean,
+    authorities: [Authorities]
+
+}
+
+interface Authorities {
+    authorityId: number,
+    authority: string
+}
+
+interface CreateUserVars {
+    username: string,
+    password: string,
+    confirmPassword: string
+}
+
+export interface CreateJWTVars {
+    username: string,
+    password: string,
+    rememberMe: boolean
+}
+
+export interface CreateJWTResp {
+    createJWT: {
+        idToken: string
+    }
+}
+
+interface Message {
+    message: Message
+}
+
+export interface UserByIdQuery {
+    userById: UserDetails
+}
+
+export interface UserByIdQueryVars {
+    id: number
+}
+
+export interface AllUsersQuery {
+    allUsers: [UserDetails]
+}
+
 const ALL_USERS = gql`
     query {
         allUsers {
             userId
-            userId
+            username
+            registrationDate
+            accountNonLocked
             authorities {
                 authorityId
                 authority
@@ -18,6 +68,8 @@ const USER_BY_ID = gql`
         userById(id: $id) {
             userId
             username
+            registrationDate
+            accountNonLocked
             authorities {
                 authorityId
                 authority

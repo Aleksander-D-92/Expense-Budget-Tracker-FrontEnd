@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Avatar, Card, CardHeader, createStyles, Grid, Theme} from "@material-ui/core";
 import {ChangePassword} from "./ChangePassword";
 import {AccountLock} from "./AccountLock";
@@ -6,12 +6,17 @@ import {useSelector} from 'react-redux';
 import {ReduxState} from "../../../config/redux/ReduxStore";
 import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
-import {useMutation} from "@apollo/client";
-import {UPDATE_ACCOUNT_LOCK, UPDATE_PASSWORD} from "../../../config/apolo/queries/UserQueries";
+import {useLazyQuery, useMutation} from "@apollo/client";
+import {
+    UPDATE_ACCOUNT_LOCK,
+    UPDATE_PASSWORD,
+    USER_BY_ID,
+    UserByIdQuery, UserByIdQueryVars
+} from "../../../config/apolo/queries/UserQueries";
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(
     createStyles({
         root: {},
         avatar: {
@@ -27,6 +32,13 @@ function AccountSettingsController() {
     const id = state.userDetails.userId;
     const [updatePassword] = useMutation(UPDATE_PASSWORD);
     const [updateAccountLock] = useMutation(UPDATE_ACCOUNT_LOCK);
+    const [getUserDetails, {loading, data, error}] = useLazyQuery<UserByIdQuery, UserByIdQueryVars>(USER_BY_ID);
+    useEffect(() => {
+        getUserDetails({
+            variables: {id: id}
+        });
+        console.log(data?.userById.authorities);
+    }, [data, getUserDetails, id])
 
     function changePassword(data: any) {
         updatePassword({
@@ -48,7 +60,7 @@ function AccountSettingsController() {
         updateAccountLock({
             variables: {
                 userId: id,
-                $password: data.password
+                password: data.password
             }
         }).then(() => {
             history.push("/users/logout")

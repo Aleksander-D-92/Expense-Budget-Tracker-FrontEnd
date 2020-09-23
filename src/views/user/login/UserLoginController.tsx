@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {UserLoginForm} from "./UserLoginForm";
 import {useMutation} from "@apollo/client";
-import {CREATE_JWT} from "../../../config/apolo/queries/UserQueries";
+import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/queries/UserQueries";
 import {toast, ToastContainer} from 'react-toastify';
 import {removeAllCookies} from "../../../shared/utils/cookieUtils";
 import {useDispatch} from 'react-redux';
@@ -9,18 +9,16 @@ import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
 
 
 function UserLoginController() {
-    const [createJWT] = useMutation(CREATE_JWT)
+    const [createJWT, {data, error, loading}] = useMutation<CreateJWTResp, CreateJWTVars>(CREATE_JWT)
     const dispatch = useDispatch();
 
-    function handleLogin(data: any) {
+    function handleLogin(formData: any) {
         createJWT({
             variables: {
-                username: data.username,
-                password: data.password,
-                rememberMe: data.rememberMe
+                username: formData.username,
+                password: formData.password,
+                rememberMe: formData.rememberMe
             }
-        }).then((e) => {
-            updateCookiesAndStore(e.data.createJWT.idToken)
         }).catch(() => {
             toast.error("Invalid Credentials", {
                 position: 'bottom-right'
@@ -29,11 +27,16 @@ function UserLoginController() {
         })
     }
 
+    useEffect(() => {
+        if (data !== undefined && data !== null) {
+            updateCookiesAndStore(data.createJWT.idToken)
+        }
+    }, [data])
+
     function updateCookiesAndStore(jwt: string) {
         removeAllCookies();
         document.cookie = `jwt=${jwt}`;
         let jwtPayload = JSON.parse(atob(jwt.split('.')[1])); //parse the JWT payload to JSON object
-        console.log(jwtPayload);
         dispatch({type: USER_LOGGED_IN});
         dispatch({
             type: USER_DETAILS,
