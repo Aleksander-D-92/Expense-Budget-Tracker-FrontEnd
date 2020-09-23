@@ -52,10 +52,10 @@ function UserLoginForm(props: Props) {
                                             name={'username'}
                                             inputRef={register({
                                                 required: true,
-                                                pattern: new RegExp('^[a-zA-Z0-9]{5,20}$')
+                                                pattern: new RegExp('^[a-zA-Z0-9_]{5,20}$')
                                             })}
                                             error={errors.username}
-                                            helperText={errors.username ? 'Between 5 and 20 characters, no spacial symbols' : ''}
+                                            helperText={errors.username ? 'Between 5 and 20 characters, no spacial symbols except "_"' : ''}
                                         />
                                     </Grid>
                                 </Grid>

@@ -48,4 +48,22 @@ const CREATE_JWT = gql`
     }
 
 `
-export {CREATE_USER, CREATE_JWT, ALL_USERS, USER_BY_ID}
+const UPDATE_PASSWORD = gql`
+    mutation updatePassword($userId:ID, $oldPassword:String, $newPassword:String){
+        updatePassword(
+            from: { userId: $userId, oldPassword: $oldPassword, newPassword: $newPassword }
+        ) {
+            message
+        }
+    }
+
+`
+const UPDATE_ACCOUNT_LOCK = gql`
+    mutation updateAccountLock($userId:ID, $password:String){
+        updateAccountLock(from: { userId: $userId, password: $password }) {
+            message
+        }
+    }
+
+`
+export {CREATE_USER, CREATE_JWT, ALL_USERS, USER_BY_ID, UPDATE_PASSWORD, UPDATE_ACCOUNT_LOCK}
