@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Avatar, Card, CardHeader, createStyles, Grid, Theme} from "@material-ui/core";
+import {Avatar, Card, CardHeader, createStyles, Grid} from "@material-ui/core";
 import {ChangePassword} from "./ChangePassword";
 import {AccountLock} from "./AccountLock";
 import {useSelector} from 'react-redux';
@@ -7,10 +7,7 @@ import {ReduxState} from "../../../config/redux/ReduxStore";
 import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {useLazyQuery, useMutation} from "@apollo/client";
-import {
-    USER_BY_ID,
-    UserByIdQuery, UserByIdQueryVars
-} from "../../../config/apolo/queries/UserQueries";
+import {USER_BY_ID, UserByIdQuery, UserByIdQueryVars} from "../../../config/apolo/queries/UserQueries";
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 import {

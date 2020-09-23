@@ -6,6 +6,7 @@ import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
 function CheckIfLoggedIn() {
     const dispatch = useDispatch();
     useEffect(() => {
+        console.log()
         const token = readCookieByKeyName('jwt');
         if (token !== null) {
             let jwtPayload = JSON.parse(atob(token.split('.')[1])); //parse the JWT payload to JSON object

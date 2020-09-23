@@ -7,7 +7,7 @@ import {CREATE_USER, CreateUserVars} from "../../../config/apolo/queries/UserMut
 import {Dummy} from "../../../config/apolo/queries/Shared";
 
 function UserRegisterController() {
-    const [createUser, {data, loading}] = useMutation<Dummy, CreateUserVars>(CREATE_USER)
+    const [createUser, {loading}] = useMutation<Dummy, CreateUserVars>(CREATE_USER)
     const history = useHistory();
 
     function handleRegister(formData: any) {
