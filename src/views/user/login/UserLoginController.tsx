@@ -9,7 +9,7 @@ import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/qu
 
 
 function UserLoginController() {
-    const [createJWT, {data, error, loading}] = useMutation<CreateJWTResp, CreateJWTVars>(CREATE_JWT)
+    const [createJWT, {data, loading}] = useMutation<CreateJWTResp, CreateJWTVars>(CREATE_JWT)
     const dispatch = useDispatch();
 
     function handleLogin(formData: any) {
@@ -19,17 +19,13 @@ function UserLoginController() {
                 password: formData.password,
                 rememberMe: formData.rememberMe
             }
-        }).catch(() => {
-            toast.error("Invalid Credentials", {
+        }).catch((err) => {
+            toast.error(err.graphQLErrors[0].message, {
                 position: 'bottom-right'
             });
 
         })
     }
-
-    useEffect(() => {
-        console.log(loading)
-    }, [loading])
 
     useEffect(() => {
         if (data !== undefined && data !== null) {
@@ -56,7 +52,8 @@ function UserLoginController() {
 
     return (
         <>
-            <UserLoginForm handleLogin={handleLogin}/>
+            <UserLoginForm handleLogin={handleLogin}
+                           loading={loading}/>
             <ToastContainer/>
         </>
     )

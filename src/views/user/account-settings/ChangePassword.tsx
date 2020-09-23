@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary, Button,
-    Card, CardContent, Checkbox,
-    FormControlLabel,
+    AccordionSummary,
+    Button,
+    CircularProgress,
     Grid,
     TextField,
     Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {useForm} from "react-hook-form";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 
 interface Props {
-    changePassword: Function
+    changePassword: Function,
+    loading: boolean
 }
 
 function ChangePassword(props: Props) {
@@ -77,8 +77,10 @@ function ChangePassword(props: Props) {
                         </Grid>
                         <Button type={'submit'}
                                 variant="contained"
-                                color="secondary">
+                                color="secondary"
+                                disabled={props.loading}>
                             Change password
+                            {props.loading ? <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>
                     </form>
                 </AccordionDetails>

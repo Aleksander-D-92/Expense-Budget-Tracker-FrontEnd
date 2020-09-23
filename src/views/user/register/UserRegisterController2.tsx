@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {UserRegisterForm} from "./UserRegisterForm";
 import {useMutation} from '@apollo/client';
 import {useHistory} from 'react-router-dom';
@@ -9,9 +9,6 @@ import {Dummy} from "../../../config/apolo/queries/Shared";
 function UserRegisterController() {
     const [createUser, {data, loading}] = useMutation<Dummy, CreateUserVars>(CREATE_USER)
     const history = useHistory();
-    useEffect(() => {
-        console.log(loading)
-    }, [loading])
 
     function handleRegister(formData: any) {
         createUser({
@@ -22,8 +19,8 @@ function UserRegisterController() {
             }
         }).then(() => {
             history.push("/users/login")
-        }).catch(() => {
-            toast.error("User with this username all ready exists", {
+        }).catch((err) => {
+            toast.error(err.graphQLErrors[0].message, {
                 position: 'bottom-right'
             });
         })
@@ -31,7 +28,8 @@ function UserRegisterController() {
 
     return (
         <>
-            <UserRegisterForm handleSubmit={handleRegister}/>
+            <UserRegisterForm handleSubmit={handleRegister}
+                              loading={loading}/>
             <ToastContainer/>
         </>
     )

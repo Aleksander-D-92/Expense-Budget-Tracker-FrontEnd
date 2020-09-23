@@ -4,7 +4,7 @@ import {
     Card,
     CardContent,
     CardHeader,
-    Checkbox,
+    Checkbox, CircularProgress,
     FormControlLabel,
     Grid,
     IconButton,
@@ -17,7 +17,8 @@ import {useForm} from "react-hook-form";
 
 
 interface Props {
-    handleLogin: Function
+    handleLogin: Function,
+    loading: boolean
 }
 
 function UserLoginForm(props: Props) {
@@ -95,8 +96,10 @@ function UserLoginForm(props: Props) {
                                 </Grid>
                                 <Button type={'submit'}
                                         variant="contained"
-                                        color="secondary">
+                                        color="primary"
+                                        disabled={props.loading}>
                                     Login
+                                    {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
                                 </Button>
                             </form>
                         </CardContent>

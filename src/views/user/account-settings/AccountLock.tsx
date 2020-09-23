@@ -1,11 +1,21 @@
 import React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Button, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    Grid,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {useForm} from "react-hook-form";
 import LockIcon from "@material-ui/icons/Lock";
 
 interface Props {
     lockAccount: Function
+    loading: boolean
 }
 
 function AccountLock(props: Props) {
@@ -46,8 +56,9 @@ function AccountLock(props: Props) {
                         </Grid>
                         <Button type={'submit'}
                                 variant="contained"
-                                color="secondary">
+                                color="secondary" disabled={props.loading}>
                             Lock your account
+                            {props.loading ? <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>
                     </form>
                 </AccordionDetails>

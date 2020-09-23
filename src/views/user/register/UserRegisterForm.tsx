@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Card, CardContent, CardHeader, Grid, IconButton, TextField} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, CircularProgress, Grid, IconButton, TextField} from "@material-ui/core";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
@@ -8,6 +8,7 @@ import {useForm} from "react-hook-form";
 
 interface Props {
     handleSubmit: Function
+    loading: boolean
 }
 
 
@@ -94,8 +95,10 @@ function UserRegisterForm(props: Props) {
                                 </Grid>
                                 <Button type={'submit'}
                                         variant="contained"
-                                        color="secondary">
+                                        color="primary"
+                                        disabled={props.loading}>
                                     Register
+                                    {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
                                 </Button>
                             </form>
                         </CardContent>

@@ -35,9 +35,9 @@ function AccountSettingsController() {
     const history = useHistory();
     const state = useSelector((state: ReduxState) => state)
     const id = state.userDetails.userId;
-    const [updatePassword] = useMutation<Dummy, UpdatePasswordVars>(UPDATE_PASSWORD);
-    const [updateAccountLock] = useMutation<Dummy, UpdateAccountLockVars>(UPDATE_ACCOUNT_LOCK);
-    const [getUserDetails, {loading, data, error}] = useLazyQuery<UserByIdQuery, UserByIdQueryVars>(USER_BY_ID);
+    const [updatePassword, {loading: updatePasswordLoading}] = useMutation<Dummy, UpdatePasswordVars>(UPDATE_PASSWORD);
+    const [updateAccountLock, {loading: updateAccountLockLoading}] = useMutation<Dummy, UpdateAccountLockVars>(UPDATE_ACCOUNT_LOCK);
+    const [getUserDetails, {loading: getUserDetailsLoading, data}] = useLazyQuery<UserByIdQuery, UserByIdQueryVars>(USER_BY_ID);
     useEffect(() => {
         getUserDetails({
             variables: {id: id}
@@ -90,8 +90,10 @@ function AccountSettingsController() {
                             title="Account settings"
                             subheader="Registered: September 14, 2016"
                         />
-                        <ChangePassword changePassword={changePassword}/>
-                        <AccountLock lockAccount={lockAccount}/>
+                        <ChangePassword changePassword={changePassword}
+                                        loading={updatePasswordLoading}/>
+                        <AccountLock lockAccount={lockAccount}
+                                     loading={updateAccountLockLoading}/>
                     </Card>
                 </Grid>
             </Grid>
