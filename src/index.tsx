@@ -7,13 +7,17 @@ import 'fontsource-roboto';
 import {BrowserRouter} from "react-router-dom";
 import {ApolloProvider} from '@apollo/client';
 import {client} from "./config/apolo/ApoloConfig";
+import {store} from "./config/redux/ReduxStore";
+import {Provider} from "react-redux";
 
 ReactDOM.render(
     <React.StrictMode>
         <ApolloProvider client={client}>
-            <BrowserRouter>
-                <App/>
-            </BrowserRouter>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <App/>
+                </BrowserRouter>
+            </Provider>
         </ApolloProvider>
     </React.StrictMode>,
     document.getElementById('root')

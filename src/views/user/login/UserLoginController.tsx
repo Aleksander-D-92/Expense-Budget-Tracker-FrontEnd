@@ -2,11 +2,15 @@ import React from "react";
 import {UserLoginForm} from "./UserLoginForm";
 import {useMutation} from "@apollo/client";
 import {CREATE_JWT} from "../../../config/apolo/queries/UserQueries";
-import {ToastContainer, toast} from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
+import {removeAllCookies} from "../../../shared/utils/cookieUtils";
+import {useDispatch} from 'react-redux';
+import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
 
 
 function UserLoginController() {
     const [createJWT] = useMutation(CREATE_JWT)
+    const dispatch = useDispatch();
 
     function handleLogin(data: any) {
         createJWT({
@@ -16,12 +20,30 @@ function UserLoginController() {
                 rememberMe: data.rememberMe
             }
         }).then((e) => {
-            console.log(e);
-        }).catch((e) => {
+            updateCookiesAndStore(e.data.createJWT.idToken)
+        }).catch(() => {
             toast.error("Invalid Credentials", {
                 position: 'bottom-right'
             });
-            console.log(e);
+
+        })
+    }
+
+    function updateCookiesAndStore(jwt: string) {
+        removeAllCookies();
+        document.cookie = `jwt=${jwt}`;
+        let jwtPayload = JSON.parse(atob(jwt.split('.')[1])); //parse the JWT payload to JSON object
+        console.log(jwtPayload);
+        dispatch({type: USER_LOGGED_IN});
+        dispatch({
+            type: USER_DETAILS,
+            payload: {
+                userId: jwtPayload.id,
+                username: jwtPayload.sub,
+                authority: jwtPayload.authorities,
+                exp: jwtPayload.exp,
+                authorizationHeader: `Bearer ${jwt}`
+            }
         })
     }
 

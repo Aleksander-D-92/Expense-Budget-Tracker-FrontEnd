@@ -3,11 +3,13 @@ import Grid from '@material-ui/core/Grid';
 import {Hidden} from "@material-ui/core";
 import {TopNavController} from "./views/top_nav/TopNavController";
 import {WebsiteRoutes} from "./config/react-router-dom/WebsiteRoutes";
+import {CheckIfLoggedIn} from "./views/user/check-if-logged-in/CheckIfLoggedIn";
 
 
 function App() {
     return (
         <>
+            <CheckIfLoggedIn/>
             <Grid container spacing={0}>
                 <Hidden xsDown={true}>
                     <Grid item xs={false} sm={1} md={2}
