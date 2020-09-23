@@ -1,5 +1,11 @@
 import {gql} from "@apollo/client";
 
+export interface CreateUserVars {
+    username: string,
+    password: string,
+    confirmPassword: string
+}
+
 const CREATE_USER = gql`
     mutation createUser($username: String!,$password: String!, $confirmPassword:String!) {
         createUser(
@@ -13,6 +19,19 @@ const CREATE_USER = gql`
         }
     }
 `
+
+export interface CreateJWTResp {
+    createJWT: {
+        idToken: string
+    }
+}
+
+export interface CreateJWTVars {
+    username: string,
+    password: string,
+    rememberMe: boolean
+}
+
 const CREATE_JWT = gql`
     mutation createJWT($username: String!, $password: String!,$rememberMe: Boolean) {
         createJWT(
@@ -23,6 +42,13 @@ const CREATE_JWT = gql`
     }
 
 `
+
+export interface UpdatePasswordVars {
+    userId: number
+    oldPassword: string
+    newPassword: string
+}
+
 const UPDATE_PASSWORD = gql`
     mutation updatePassword($userId:ID, $oldPassword:String, $newPassword:String){
         updatePassword(
@@ -33,6 +59,12 @@ const UPDATE_PASSWORD = gql`
     }
 
 `
+
+export interface UpdateAccountLockVars {
+    userId: number
+    password: string
+}
+
 const UPDATE_ACCOUNT_LOCK = gql`
     mutation updateAccountLock($userId:ID, $password:String){
         updateAccountLock(from: { userId: $userId, password: $password }) {
@@ -41,3 +73,4 @@ const UPDATE_ACCOUNT_LOCK = gql`
     }
 
 `
+export {UPDATE_PASSWORD, UPDATE_ACCOUNT_LOCK, CREATE_JWT, CREATE_USER}

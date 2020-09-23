@@ -8,13 +8,18 @@ import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {useLazyQuery, useMutation} from "@apollo/client";
 import {
-    UPDATE_ACCOUNT_LOCK,
-    UPDATE_PASSWORD,
     USER_BY_ID,
     UserByIdQuery, UserByIdQueryVars
 } from "../../../config/apolo/queries/UserQueries";
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
+import {
+    UPDATE_ACCOUNT_LOCK,
+    UPDATE_PASSWORD,
+    UpdateAccountLockVars,
+    UpdatePasswordVars
+} from "../../../config/apolo/queries/UserMutations";
+import {Dummy} from "../../../config/apolo/queries/Shared";
 
 const useStyles = makeStyles(
     createStyles({
@@ -30,8 +35,8 @@ function AccountSettingsController() {
     const history = useHistory();
     const state = useSelector((state: ReduxState) => state)
     const id = state.userDetails.userId;
-    const [updatePassword] = useMutation(UPDATE_PASSWORD);
-    const [updateAccountLock] = useMutation(UPDATE_ACCOUNT_LOCK);
+    const [updatePassword] = useMutation<Dummy, UpdatePasswordVars>(UPDATE_PASSWORD);
+    const [updateAccountLock] = useMutation<Dummy, UpdateAccountLockVars>(UPDATE_ACCOUNT_LOCK);
     const [getUserDetails, {loading, data, error}] = useLazyQuery<UserByIdQuery, UserByIdQueryVars>(USER_BY_ID);
     useEffect(() => {
         getUserDetails({
@@ -40,12 +45,12 @@ function AccountSettingsController() {
         console.log(data?.userById.authorities);
     }, [data, getUserDetails, id])
 
-    function changePassword(data: any) {
+    function changePassword(formData: any) {
         updatePassword({
             variables: {
                 userId: id,
-                oldPassword: data.oldPassword,
-                newPassword: data.newPassword
+                oldPassword: formData.oldPassword,
+                newPassword: formData.newPassword
             }
         }).then(() => {
             history.push("/users/logout")
@@ -56,11 +61,11 @@ function AccountSettingsController() {
         })
     }
 
-    function lockAccount(data: any) {
+    function lockAccount(formData: any) {
         updateAccountLock({
             variables: {
                 userId: id,
-                password: data.password
+                password: formData.password
             }
         }).then(() => {
             history.push("/users/logout")

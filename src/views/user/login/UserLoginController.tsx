@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
 import {UserLoginForm} from "./UserLoginForm";
 import {useMutation} from "@apollo/client";
-import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/queries/UserQueries";
 import {toast, ToastContainer} from 'react-toastify';
 import {removeAllCookies} from "../../../shared/utils/cookieUtils";
 import {useDispatch} from 'react-redux';
 import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
+import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/queries/UserMutations";
 
 
 function UserLoginController() {
@@ -26,6 +26,10 @@ function UserLoginController() {
 
         })
     }
+
+    useEffect(() => {
+        console.log(loading)
+    }, [loading])
 
     useEffect(() => {
         if (data !== undefined && data !== null) {
