@@ -1,6 +1,6 @@
 import {gql} from "@apollo/client";
 
-interface UserDetails {
+export interface UserDetails {
     userId: number
     username: string
     registrationDate: Date
