@@ -16,11 +16,13 @@ function UserRegisterController() {
     }, [data])
 
     function handleRegister(formData: any) {
+        console.log(formData);
         createUser({
             variables: {
                 username: formData.username,
                 password: formData.password,
-                confirmPassword: formData.confirmPassword
+                confirmPassword: formData.confirmPassword,
+                authorityId: formData.authorityId
             }
         }).then(() => {
             history.push("/users/login")

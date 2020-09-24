@@ -3,16 +3,18 @@ import {gql} from "@apollo/client";
 export interface CreateUserVars {
     username: string,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    authorityId: number
 }
 
 const CREATE_USER = gql`
-    mutation createUser($username: String!,$password: String!, $confirmPassword:String!) {
+    mutation createUser($username: String!,$password: String!, $confirmPassword:String!, $authorityId:ID) {
         createUser(
             form: {
                 username: $username,
                 password: $password,
-                confirmPassword: $confirmPassword
+                confirmPassword: $confirmPassword,
+                authorityId: $authorityId
             }
         ) {
             message

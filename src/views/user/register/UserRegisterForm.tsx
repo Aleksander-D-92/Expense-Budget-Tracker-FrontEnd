@@ -117,9 +117,6 @@ function UserRegisterForm(props: Props) {
                                             <Select
                                                 name={'authorityId'}
                                                 defaultValue={2}
-                                                inputRef={register({
-                                                    required: true
-                                                })}
                                             >
                                                 {props.authorities?.filter(a => a.authority !== 'ROLE_ADMIN')
                                                     .map(a => <MenuItem value={a.authorityId}>{a.authority}</MenuItem>)}
