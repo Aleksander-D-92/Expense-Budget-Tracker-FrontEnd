@@ -4,6 +4,7 @@ import {UserRegisterController} from "../../views/user/register/UserRegisterCont
 import {UserLoginController} from "../../views/user/login/UserLoginController";
 import {UserLogoutController} from "../../views/user/logout/UserLogoutController";
 import {AccountSettingsController} from "../../views/user/account-settings/AccountSettingsController";
+import {AllUsersController} from "../../views/admin/AllUsersController";
 
 function WebsiteRoutes() {
     return (
@@ -13,6 +14,7 @@ function WebsiteRoutes() {
             <Route exact={true} path={'/users/logout'}><UserLogoutController/></Route>
             <Route exact={true} path={'/users/account-settings'}><AccountSettingsController/></Route>
             <Route exact={true} path={'/users/logout'}>Logout</Route>
+            <Route exact={true} path={'/admins/all-users'}><AllUsersController/></Route>
         </Switch>
     )
 }
