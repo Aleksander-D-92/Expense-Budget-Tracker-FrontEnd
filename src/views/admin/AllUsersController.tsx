@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {AllUsersTable} from "./AllUsersTable";
-import {ALL_USERS, AllUsersQuery, UserDetails} from "../../config/apolo/queries/UserQueries";
+import {ALL_USERS, AllUsersQueryResp, UserDetails} from "../../config/apolo/queries/UserQueries";
 import {useQuery} from "@apollo/client";
 import {cloneDeep} from 'lodash';
 
 
 function AllUsersController() {
-    const {loading, data} = useQuery<AllUsersQuery>(ALL_USERS);
+    const {loading, data} = useQuery<AllUsersQueryResp>(ALL_USERS);
     const [allUsers, setAllUsers] = useState<UserDetails[]>();
     useEffect(() => {
         setAllUsers(cloneDeep(data?.allUsers));

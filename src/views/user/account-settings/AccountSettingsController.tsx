@@ -7,7 +7,7 @@ import {ReduxState} from "../../../config/redux/ReduxStore";
 import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {useLazyQuery, useMutation} from "@apollo/client";
-import {USER_BY_ID, UserByIdQuery, UserByIdQueryVars} from "../../../config/apolo/queries/UserQueries";
+import {USER_BY_ID, UserByIdQueryResult, UserByIdQueryVars} from "../../../config/apolo/queries/UserQueries";
 import Skeleton from '@material-ui/lab/Skeleton';
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
@@ -18,6 +18,7 @@ import {
     UpdatePasswordVars
 } from "../../../config/apolo/mutations/UserMutations";
 import {Dummy} from "../../../config/apolo/queries/Shared";
+import {formatDate} from "../../../shared/utils/functions";
 
 const useStyles = makeStyles(
     createStyles({
@@ -35,7 +36,7 @@ function AccountSettingsController() {
     const id = state.userDetails.userId;
     const [updatePassword, {loading: updatePasswordLoading}] = useMutation<Dummy, UpdatePasswordVars>(UPDATE_PASSWORD);
     const [updateAccountLock, {loading: updateAccountLockLoading}] = useMutation<Dummy, UpdateAccountLockVars>(UPDATE_ACCOUNT_LOCK);
-    const [getUserDetails, {loading: getUserDetailsLoading, data}] = useLazyQuery<UserByIdQuery, UserByIdQueryVars>(USER_BY_ID);
+    const [getUserDetails, {loading: getUserDetailsLoading, data}] = useLazyQuery<UserByIdQueryResult, UserByIdQueryVars>(USER_BY_ID);
     useEffect(() => {
         getUserDetails({
             variables: {id: id}
@@ -99,7 +100,7 @@ function AccountSettingsController() {
                                 </Avatar>
                             }
                             title="Account settings"
-                            subheader="Registered: September 14, 2016"
+                            subheader={`Registered: ${formatDate(data?.userById.registrationDate)}`}
                             action={formatAction(data?.userById.authorities[0].authority)}
                         />
                         <ChangePassword changePassword={changePassword}

@@ -1,4 +1,5 @@
 import {gql} from "@apollo/client";
+import {AUTHORITY_FRAGMENT, USER_DETAILS_FRAGMENT} from "../fragments/UserFragments";
 
 export interface UserDetails {
     userId: number
@@ -19,34 +20,21 @@ interface Message {
     message: Message
 }
 
-export interface UserByIdQuery {
-    userById: UserDetails
-}
 
-export interface UserByIdQueryVars {
-    id: number
-}
-
-export interface AllUsersQuery {
+export interface AllUsersQueryResp {
     allUsers: [UserDetails]
 }
 
 const ALL_USERS = gql`
     query {
         allUsers {
-            userId
-            username
-            registrationDate
-            accountNonLocked
-            authorities {
-                authorityId
-                authority
-            }
+            ...userDetails
         }
     }
+    ${USER_DETAILS_FRAGMENT}
 `
 
-export interface UserByIdQuery {
+export interface UserByIdQueryResult {
     userById: UserDetails
 }
 
@@ -57,29 +45,22 @@ export interface UserByIdQueryVars {
 const USER_BY_ID = gql`
     query userById($id: ID!) {
         userById(id: $id) {
-            userId
-            username
-            registrationDate
-            accountNonLocked
-            authorities {
-                authorityId
-                authority
-            }
+            ... userDetails
         }
     }
+    ${USER_DETAILS_FRAGMENT}
 `
 
-export interface AllAuthoritiesResp {
+export interface AllAuthoritiesQueryResp {
     allAuthorities: Authority[]
 }
 
 const ALL_AUTHORITIES = gql`
     query {
         allAuthorities {
-            authorityId
-            authority
+            ...authorityDetails
         }
     }
-
+    ${AUTHORITY_FRAGMENT}
 `
 export {ALL_USERS, USER_BY_ID, ALL_AUTHORITIES}
