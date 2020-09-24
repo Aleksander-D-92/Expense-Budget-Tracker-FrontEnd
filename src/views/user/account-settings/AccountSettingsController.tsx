@@ -15,7 +15,7 @@ import {
     UPDATE_PASSWORD,
     UpdateAccountLockVars,
     UpdatePasswordVars
-} from "../../../config/apolo/queries/UserMutations";
+} from "../../../config/apolo/mutations/UserMutations";
 import {Dummy} from "../../../config/apolo/queries/Shared";
 
 const useStyles = makeStyles(

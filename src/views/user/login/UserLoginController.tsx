@@ -1,11 +1,14 @@
-import React, {useEffect} from "react";
+import React, {useEffect, MouseEvent} from "react";
 import {UserLoginForm} from "./UserLoginForm";
 import {useMutation} from "@apollo/client";
 import {toast, ToastContainer} from 'react-toastify';
 import {removeAllCookies} from "../../../shared/utils/cookieUtils";
 import {useDispatch} from 'react-redux';
 import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
-import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/queries/UserMutations";
+import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/mutations/UserMutations";
+import {DemoLogin} from "./DemoLogin";
+import {Grid} from "@material-ui/core";
+import {ADMIN_CREDENTIALS, FREE_USER_CREDENTIALS, PAID_USER_CREDENTIALS} from "./variables";
 
 
 function UserLoginController() {
@@ -25,6 +28,37 @@ function UserLoginController() {
             });
 
         })
+    }
+
+    function handleDemoLogin(target: MouseEvent<HTMLButtonElement>) {
+        let credentials = {
+            username: '',
+            password: '',
+            rememberMe: true
+        };
+        switch (target.currentTarget.name) {
+            case 'paid_login':
+                credentials = PAID_USER_CREDENTIALS;
+                break;
+            case 'free_login':
+                credentials = FREE_USER_CREDENTIALS;
+                break;
+            case 'admin_login':
+                credentials = ADMIN_CREDENTIALS;
+                break;
+        }
+        createJWT({
+            variables: {
+                username: credentials.username,
+                password: credentials.password,
+                rememberMe: credentials.rememberMe
+            }
+        }).catch((err) => {
+            toast.error(err.graphQLErrors[0].message, {
+                position: 'bottom-right'
+            });
+        })
+
     }
 
     useEffect(() => {
@@ -52,8 +86,12 @@ function UserLoginController() {
 
     return (
         <>
-            <UserLoginForm handleLogin={handleLogin}
+            <Grid container spacing={3} justify="center">
+                <DemoLogin handleDemoLogin={handleDemoLogin}
                            loading={loading}/>
+                <UserLoginForm handleLogin={handleLogin}
+                               loading={loading}/>
+            </Grid>
             <ToastContainer/>
         </>
     )

@@ -3,7 +3,7 @@ import {UserRegisterForm} from "./UserRegisterForm";
 import {useMutation} from '@apollo/client';
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
-import {CREATE_USER, CreateUserVars} from "../../../config/apolo/queries/UserMutations";
+import {CREATE_USER, CreateUserVars} from "../../../config/apolo/mutations/UserMutations";
 import {Dummy} from "../../../config/apolo/queries/Shared";
 
 function UserRegisterController() {

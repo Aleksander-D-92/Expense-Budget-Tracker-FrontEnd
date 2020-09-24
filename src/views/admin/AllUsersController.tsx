@@ -6,7 +6,7 @@ import {cloneDeep} from 'lodash';
 
 
 function AllUsersController() {
-    const {loading, error, data} = useQuery<AllUsersQuery>(ALL_USERS);
+    const {loading, data} = useQuery<AllUsersQuery>(ALL_USERS);
     const [allUsers, setAllUsers] = useState<UserDetails[]>();
     useEffect(() => {
         setAllUsers(cloneDeep(data?.allUsers));

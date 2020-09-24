@@ -31,7 +31,6 @@ function AllUsersTable(props: Props) {
                 sorting: true
             }}
             isLoading={props.loading}
-
         />
     )
 }
