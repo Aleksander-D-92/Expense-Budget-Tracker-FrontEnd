@@ -5,11 +5,11 @@ export interface UserDetails {
     username: string
     registrationDate: Date
     accountNonLocked: boolean,
-    authorities: [Authorities]
+    authorities: [Authority]
 
 }
 
-interface Authorities {
+export interface Authority {
     authorityId: number,
     authority: string
 }
@@ -61,4 +61,17 @@ const USER_BY_ID = gql`
     }
 `
 
-export { ALL_USERS, USER_BY_ID}
+export interface AllAuthoritiesResp {
+    allAuthorities: Authority[]
+}
+
+const ALL_AUTHORITIES = gql`
+    query {
+        allAuthorities {
+            authorityId
+            authority
+        }
+    }
+
+`
+export {ALL_USERS, USER_BY_ID, ALL_AUTHORITIES}

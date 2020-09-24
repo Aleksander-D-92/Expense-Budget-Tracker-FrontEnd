@@ -1,14 +1,28 @@
 import React from "react";
-import {Button, Card, CardContent, CardHeader, CircularProgress, Grid, IconButton, TextField} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    CircularProgress, FormControl,
+    Grid,
+    IconButton,
+    InputLabel, MenuItem, Select,
+    TextField
+} from "@material-ui/core";
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import {useForm} from "react-hook-form";
+import {Authority} from "../../../config/apolo/queries/UserQueries";
 
 
 interface Props {
     handleSubmit: Function
     loading: boolean
+    authorities?: Authority[]
+    authoritiesLoading: boolean
 }
 
 
@@ -17,7 +31,7 @@ function UserRegisterForm(props: Props) {
         defaultValues: {
             username: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
         }
     });
 
@@ -26,12 +40,7 @@ function UserRegisterForm(props: Props) {
             <Grid container justify="center">
                 <Grid xs={11} md={4} className={'mt-4'}>
                     <Card>
-                        <CardHeader title={'Registration form'}
-                                    action={
-                                        <IconButton aria-label="settings">
-                                            <MoreVertIcon/>
-                                        </IconButton>
-                                    }/>
+                        <CardHeader title={'Registration form'}/>
                         <CardContent>
                             <form onSubmit={handleSubmit(data => props.handleSubmit(data))}>
                                 <Grid container spacing={1} alignItems="flex-end" className={'mb-3'}>
@@ -41,6 +50,7 @@ function UserRegisterForm(props: Props) {
                                     <Grid item xs={10}>
                                         <TextField
                                             fullWidth={true}
+                                            required={true}
                                             label="username"
                                             placeholder={'enter your username'}
                                             name={'username'}
@@ -60,6 +70,7 @@ function UserRegisterForm(props: Props) {
                                     <Grid item xs={10}>
                                         <TextField
                                             fullWidth={true}
+                                            required={true}
                                             label="Password"
                                             placeholder={'chose a password'}
                                             type={'password'}
@@ -80,6 +91,7 @@ function UserRegisterForm(props: Props) {
                                     <Grid item xs={10}>
                                         <TextField
                                             fullWidth={true}
+                                            required={true}
                                             label="Confirm Password"
                                             placeholder={'confirm your password'}
                                             type={'password'}
@@ -91,6 +103,28 @@ function UserRegisterForm(props: Props) {
                                             error={errors.confirmPassword}
                                             helperText={errors.confirmPassword ? 'Passwords do not match' : ''}
                                         />
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={1} alignItems="flex-end" className={'mb-3'}>
+                                    <Grid item>
+                                        <PeopleAltIcon/>
+                                    </Grid>
+                                    <Grid item xs={10}>
+                                        <FormControl
+                                            fullWidth={true}
+                                            required={true}>
+                                            <InputLabel>Authority</InputLabel>
+                                            <Select
+                                                name={'authorityId'}
+                                                defaultValue={2}
+                                                inputRef={register({
+                                                    required: true
+                                                })}
+                                            >
+                                                {props.authorities?.filter(a => a.authority !== 'ROLE_ADMIN')
+                                                    .map(a => <MenuItem value={a.authorityId}>{a.authority}</MenuItem>)}
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                 </Grid>
                                 <Button type={'submit'}

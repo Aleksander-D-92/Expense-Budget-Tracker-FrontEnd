@@ -25,6 +25,11 @@ function AllUsersTable(props: Props) {
                 {title: 'Registration Date', field: 'registrationDate', type: 'datetime'},
                 {title: 'Account Non Locked', field: 'accountNonLocked', type: 'boolean'},
                 {title: 'Authority', field: 'authorities[0].authority', type: 'string'},
+                {
+                    title: 'Edit User',
+                    field: 'userId',
+                    render: rowData => <Link to={`/admins/edit-user/${rowData.userId}`}>Edit this user</Link>
+                },
             ]}
             data={props.users !== undefined ? props.users : []}
             options={{

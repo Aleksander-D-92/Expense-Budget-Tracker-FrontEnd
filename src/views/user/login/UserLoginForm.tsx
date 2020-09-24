@@ -4,13 +4,12 @@ import {
     Card,
     CardContent,
     CardHeader,
-    Checkbox, CircularProgress,
+    Checkbox,
+    CircularProgress,
     FormControlLabel,
     Grid,
-    IconButton,
     TextField
 } from "@material-ui/core";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import {useForm} from "react-hook-form";
@@ -43,6 +42,7 @@ function UserLoginForm(props: Props) {
                                 <Grid item xs={10}>
                                     <TextField
                                         fullWidth={true}
+                                        required={true}
                                         label="username"
                                         placeholder={'enter your username'}
                                         name={'username'}
@@ -62,6 +62,7 @@ function UserLoginForm(props: Props) {
                                 <Grid item xs={10}>
                                     <TextField
                                         fullWidth={true}
+                                        required={true}
                                         label="Password"
                                         placeholder={'chose a password'}
                                         type={'password'}

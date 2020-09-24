@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import {Collapse, Hidden, List, ListItem, ListItemIcon, ListItemText, SvgIcon} from "@material-ui/core";
+import {Collapse, Hidden, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
