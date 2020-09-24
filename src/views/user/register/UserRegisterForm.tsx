@@ -4,17 +4,18 @@ import {
     Card,
     CardContent,
     CardHeader,
-    CircularProgress, FormControl,
+    CircularProgress,
+    FormControl,
     Grid,
-    IconButton,
-    InputLabel, MenuItem, Select,
+    InputLabel,
+    MenuItem,
+    Select,
     TextField
 } from "@material-ui/core";
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {Authority} from "../../../config/apolo/queries/UserQueries";
 
 
@@ -27,7 +28,7 @@ interface Props {
 
 
 function UserRegisterForm(props: Props) {
-    const {register, handleSubmit, errors, getValues} = useForm({
+    const {register, handleSubmit, errors, getValues, control} = useForm({
         defaultValues: {
             username: '',
             password: '',
@@ -110,18 +111,26 @@ function UserRegisterForm(props: Props) {
                                         <PeopleAltIcon/>
                                     </Grid>
                                     <Grid item xs={10}>
-                                        <FormControl
-                                            fullWidth={true}
-                                            required={true}>
-                                            <InputLabel>Authority</InputLabel>
-                                            <Select
-                                                name={'authorityId'}
-                                                defaultValue={2}
-                                            >
-                                                {props.authorities?.filter(a => a.authority !== 'ROLE_ADMIN')
-                                                    .map(a => <MenuItem value={a.authorityId}>{a.authority}</MenuItem>)}
-                                            </Select>
-                                        </FormControl>
+                                        <Controller
+                                                    rules={{required: true}}
+                                                    control={control}
+                                                    defaultValue={1}
+                                                    name={'authorityId'}
+                                                    as={
+                                                        <FormControl
+                                                            fullWidth={true}
+                                                            required={true}>
+                                                            <InputLabel>Authority</InputLabel>
+                                                            <Select
+                                                                defaultValue={2}
+                                                            >
+                                                                {props.authorities?.filter(a => a.authority !== 'ROLE_ADMIN')
+                                                                    .map(a => <MenuItem
+                                                                        value={a.authorityId}>{a.authority}</MenuItem>)}
+                                                            </Select>
+                                                        </FormControl>
+                                                    }>
+                                        </Controller>
                                     </Grid>
                                 </Grid>
                                 <Button type={'submit'}

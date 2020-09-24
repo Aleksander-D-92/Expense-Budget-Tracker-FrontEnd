@@ -46,6 +46,14 @@ const ALL_USERS = gql`
     }
 `
 
+export interface UserByIdQuery {
+    userById: UserDetails
+}
+
+export interface UserByIdQueryVars {
+    id: number
+}
+
 const USER_BY_ID = gql`
     query userById($id: ID!) {
         userById(id: $id) {

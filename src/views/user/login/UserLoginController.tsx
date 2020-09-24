@@ -9,11 +9,13 @@ import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/mu
 import {DemoLogin} from "./DemoLogin";
 import {Grid} from "@material-ui/core";
 import {ADMIN_CREDENTIALS, FREE_USER_CREDENTIALS, PAID_USER_CREDENTIALS} from "./variables";
+import {useHistory} from 'react-router-dom';
 
 
 function UserLoginController() {
     const [createJWT, {data, loading}] = useMutation<CreateJWTResp, CreateJWTVars>(CREATE_JWT)
     const dispatch = useDispatch();
+    const history = useHistory();
 
     function handleLogin(formData: any) {
         createJWT({
@@ -81,7 +83,8 @@ function UserLoginController() {
                 exp: jwtPayload.exp,
                 authorizationHeader: `Bearer ${jwt}`
             }
-        })
+        });
+        history.push("/")
     }
 
     return (

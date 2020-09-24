@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Avatar, Card, CardHeader, createStyles, Grid} from "@material-ui/core";
+import {Avatar, Card, CardHeader, createStyles, Grid, LinearProgress} from "@material-ui/core";
 import {ChangePassword} from "./ChangePassword";
 import {AccountLock} from "./AccountLock";
 import {useSelector} from 'react-redux';
@@ -8,6 +8,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {useLazyQuery, useMutation} from "@apollo/client";
 import {USER_BY_ID, UserByIdQuery, UserByIdQueryVars} from "../../../config/apolo/queries/UserQueries";
+import Skeleton from '@material-ui/lab/Skeleton';
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 import {
@@ -39,8 +40,20 @@ function AccountSettingsController() {
         getUserDetails({
             variables: {id: id}
         });
-        console.log(data?.userById.authorities);
-    }, [data, getUserDetails, id])
+    }, [getUserDetails, id])
+
+    const formatAction = (authority: string | undefined) => {
+        switch (authority) {
+            case 'ROLE_ADMIN':
+                return 'Admin';
+            case 'ROLE_USER_FREE':
+                return 'Free Account';
+            case 'ROLE_USER_PAID':
+                return 'Paid Account';
+            default:
+                return '';
+        }
+    }
 
     function changePassword(formData: any) {
         updatePassword({
@@ -78,6 +91,7 @@ function AccountSettingsController() {
             <Grid container justify="center">
                 <Grid xs={11} md={6} className={'mt-4'}>
                     <Card>
+                        {getUserDetailsLoading ? <LinearProgress/> : ''}
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe" className={classes.avatar}>
@@ -86,11 +100,14 @@ function AccountSettingsController() {
                             }
                             title="Account settings"
                             subheader="Registered: September 14, 2016"
+                            action={formatAction(data?.userById.authorities[0].authority)}
                         />
                         <ChangePassword changePassword={changePassword}
-                                        loading={updatePasswordLoading}/>
+                                        passwordLoading={updatePasswordLoading}
+                                        accountLockLoading={updateAccountLockLoading}/>
                         <AccountLock lockAccount={lockAccount}
-                                     loading={updateAccountLockLoading}/>
+                                     accountLockLoading={updateAccountLockLoading}
+                                     passwordLoading={updatePasswordLoading}/>
                     </Card>
                 </Grid>
             </Grid>

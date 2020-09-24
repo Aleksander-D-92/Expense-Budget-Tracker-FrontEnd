@@ -10,7 +10,7 @@ const PAID_USER_CREDENTIALS = {
     rememberMe: true
 }
 const ADMIN_CREDENTIALS = {
-    username: 'demo_paid_account',
+    username: 'demo_admin',
     password: '123056a',
     rememberMe: true
 }

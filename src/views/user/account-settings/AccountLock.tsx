@@ -15,7 +15,8 @@ import LockIcon from "@material-ui/icons/Lock";
 
 interface Props {
     lockAccount: Function
-    loading: boolean
+    accountLockLoading: boolean
+    passwordLoading: boolean
 }
 
 function AccountLock(props: Props) {
@@ -56,9 +57,10 @@ function AccountLock(props: Props) {
                         </Grid>
                         <Button type={'submit'}
                                 variant="contained"
-                                color="secondary" disabled={props.loading}>
+                                color="secondary" disabled={props.accountLockLoading || props.passwordLoading}>
                             Lock your account
-                            {props.loading ? <CircularProgress size={20} color={'secondary'}/> : ''}
+                            {props.accountLockLoading || props.passwordLoading ?
+                                <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>
                     </form>
                 </AccordionDetails>
