@@ -60,6 +60,9 @@ function AdminEditUserController() {
 
     function editAuthority(formData: any) {
         console.log(formData);
+        if (formData.authorityId === userDetails?.authorities[0].authorityId) {
+            return;
+        }
         const userId = userDetails?.userId;
         const authorityId = formData.authorityId;
         updateAuthority({

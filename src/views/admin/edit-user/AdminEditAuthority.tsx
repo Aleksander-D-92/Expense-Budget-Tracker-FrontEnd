@@ -5,7 +5,7 @@ import {
     AccordionSummary,
     Button,
     CircularProgress,
-    FormControl,
+    FormControl, FormHelperText,
     Grid,
     InputLabel,
     MenuItem,
@@ -26,7 +26,7 @@ interface Props {
 }
 
 function AdminEditAuthority(props: Props) {
-    const {handleSubmit, control} = useForm({});
+    const {handleSubmit, control, errors} = useForm({});
     return (
         <>
             <Accordion defaultExpanded={true}>
@@ -44,12 +44,13 @@ function AdminEditAuthority(props: Props) {
                             <Grid item xs={10}>
                                 <FormControl
                                     fullWidth={true}
+                                    error={errors.authorityId}
                                     required={true}>
                                     <InputLabel>Authority</InputLabel>
                                     <Controller name="authorityId"
-                                                rules={{required: "this is required"}}
+                                                rules={{min: 1, required: true}}
+                                                defaultValue={0}
                                                 control={control}
-                                                defaultValue={2}
                                                 as={
                                                     <Select
                                                     >
@@ -58,6 +59,9 @@ function AdminEditAuthority(props: Props) {
                                                                 value={a.authorityId}>{a.authority}</MenuItem>)}
                                                     </Select>}
                                     />
+                                    <FormHelperText>
+                                        {errors.authorityId && 'Select an authority'}
+                                    </FormHelperText>
                                 </FormControl>
                             </Grid>
                         </Grid>
