@@ -8,13 +8,13 @@ interface Props {
     lockAccount: Function,
     loading: boolean,
     accountNonLocked?: boolean
-    accountLockLoading: boolean
+    updateAccountLockLoading: boolean
 }
 
 function AdminLockAccount(props: Props) {
     return (
         <>
-            <Accordion defaultExpanded={true} >
+            <Accordion defaultExpanded={true}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                 >
@@ -26,22 +26,22 @@ function AdminLockAccount(props: Props) {
                                 color="primary"
                                 className={'mb-2'}
                                 fullWidth={true}
-                                disabled={!!props.accountNonLocked || props.accountLockLoading}
+                                disabled={!!props.accountNonLocked || props.updateAccountLockLoading || props.accountNonLocked === undefined}
                                 startIcon={<LockIcon/>}
                                 name={'unlock'}
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => props.lockAccount(e)}>
                             Unlock
-                            {props.accountLockLoading ? <CircularProgress size={20} color={'primary'}/> : ''}
+                            {props.updateAccountLockLoading || props.accountNonLocked === undefined ? <CircularProgress size={20} color={'primary'}/> : ''}
                         </Button>
                         <Button variant="contained"
                                 color="secondary"
                                 fullWidth={true}
-                                disabled={!props.accountNonLocked || props.accountLockLoading}
+                                disabled={!props.accountNonLocked || props.updateAccountLockLoading || props.accountNonLocked === undefined}
                                 startIcon={<LockOpenIcon/>}
                                 name={'lock'}
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => props.lockAccount(e)}>
                             Lock
-                            {props.accountLockLoading ? <CircularProgress size={20} color={'secondary'}/> : ''}
+                            {props.updateAccountLockLoading || props.accountNonLocked === undefined ? <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>
                     </form>
                 </AccordionDetails>

@@ -7,14 +7,19 @@ import {AdminLockAccount} from "./AdminLockAccount";
 import {AdminEditAuthority} from "./AdminEditAuthority";
 import {Avatar, Card, CardHeader, Grid, List, ListItemText} from "@material-ui/core";
 import {capitalizeString, formatDate} from "../../../shared/utils/functions";
-import {ADMIN_UPDATE_ACCOUNT_LOCK, AdminUpdateAccountLockVars} from "../../../config/apolo/mutations/AdminMutations";
+import {
+    ADMIN_UPDATE_ACCOUNT_LOCK,
+    ADMIN_UPDATE_AUTHORITY,
+    AdminUpdateAccountLockVars, AdminUpdateAuthorityVars
+} from "../../../config/apolo/mutations/AdminMutations";
 import {Dummy} from "../../../config/apolo/ApoloConfig";
 
 function AdminEditUserController() {
     const {userId} = useParams();
     const [userDetails, setUserDetails] = useState<UserDetails>();
     const [authorities, setAuthorities] = useState<Authority[]>();
-    const [updateAccountLock, {loading: accountLockLoading}] = useMutation<Dummy, AdminUpdateAccountLockVars>(ADMIN_UPDATE_ACCOUNT_LOCK);
+    const [updateAccountLock, {loading: updateAccountLockLoading}] = useMutation<Dummy, AdminUpdateAccountLockVars>(ADMIN_UPDATE_ACCOUNT_LOCK);
+    const [updateAuthority, {loading: updateAuthorityLoading}] = useMutation<Dummy, AdminUpdateAuthorityVars>(ADMIN_UPDATE_AUTHORITY);
     const {data, loading} = useQuery<AdminEditUserResp, UserByIdQueryVars>(USER_DETAILS_AND_AUTHORITIES, {
         variables: {
             id: userId
@@ -78,10 +83,14 @@ function AdminEditUserController() {
                         </CardHeader>
                         <AdminLockAccount lockAccount={lockAccount}
                                           loading={loading}
-                                          accountLockLoading={accountLockLoading}
+                                          updateAccountLockLoading={updateAccountLockLoading}
                                           accountNonLocked={userDetails?.accountNonLocked}/>
+
                         <AdminEditAuthority editAuthority={editAuthority}
-                                            loading={loading}/>
+                                            loading={loading}
+                                            updateAuthorityLoading={updateAuthorityLoading}
+                                            authorities={authorities}
+                        />
                     </Card>
                 </Grid>
             </Grid>
