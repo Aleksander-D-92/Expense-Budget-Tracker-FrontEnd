@@ -1,5 +1,5 @@
-import React, {MouseEvent} from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Button, Typography} from "@material-ui/core";
+import React, {MouseEvent, useState} from "react";
+import {Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -8,12 +8,13 @@ interface Props {
     lockAccount: Function,
     loading: boolean,
     accountNonLocked?: boolean
+    accountLockLoading: boolean
 }
 
 function AdminLockAccount(props: Props) {
     return (
         <>
-            <Accordion>
+            <Accordion defaultExpanded={true} >
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                 >
@@ -25,20 +26,22 @@ function AdminLockAccount(props: Props) {
                                 color="primary"
                                 className={'mb-2'}
                                 fullWidth={true}
-                                disabled={props.accountNonLocked ? true : false}
+                                disabled={!!props.accountNonLocked || props.accountLockLoading}
                                 startIcon={<LockIcon/>}
                                 name={'unlock'}
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => props.lockAccount(e)}>
                             Unlock
+                            {props.accountLockLoading ? <CircularProgress size={20} color={'primary'}/> : ''}
                         </Button>
                         <Button variant="contained"
                                 color="secondary"
                                 fullWidth={true}
-                                disabled={props.accountNonLocked ? false : true}
+                                disabled={!props.accountNonLocked || props.accountLockLoading}
                                 startIcon={<LockOpenIcon/>}
                                 name={'lock'}
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => props.lockAccount(e)}>
                             Lock
+                            {props.accountLockLoading ? <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>
                     </form>
                 </AccordionDetails>

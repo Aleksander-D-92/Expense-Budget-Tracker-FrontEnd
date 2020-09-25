@@ -1,17 +1,20 @@
 import React, {MouseEvent, useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
-import {useQuery} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
 import {Authority, UserByIdQueryVars, UserDetails} from "../../../config/apolo/queries/UserQueries";
 import {AdminEditUserResp, USER_DETAILS_AND_AUTHORITIES} from "../../../config/apolo/queries/AdminQueries";
 import {AdminLockAccount} from "./AdminLockAccount";
 import {AdminEditAuthority} from "./AdminEditAuthority";
 import {Avatar, Card, CardHeader, Grid, List, ListItemText} from "@material-ui/core";
 import {capitalizeString, formatDate} from "../../../shared/utils/functions";
+import {ADMIN_UPDATE_ACCOUNT_LOCK, AdminUpdateAccountLockVars} from "../../../config/apolo/mutations/AdminMutations";
+import {Dummy} from "../../../config/apolo/ApoloConfig";
 
 function AdminEditUserController() {
     const {userId} = useParams();
     const [userDetails, setUserDetails] = useState<UserDetails>();
     const [authorities, setAuthorities] = useState<Authority[]>();
+    const [updateAccountLock, {loading: accountLockLoading}] = useMutation<Dummy, AdminUpdateAccountLockVars>(ADMIN_UPDATE_ACCOUNT_LOCK);
     const {data, loading} = useQuery<AdminEditUserResp, UserByIdQueryVars>(USER_DETAILS_AND_AUTHORITIES, {
         variables: {
             id: userId
@@ -24,12 +27,26 @@ function AdminEditUserController() {
     }, [data])
 
     function lockAccount(e: MouseEvent<HTMLButtonElement>) {
+        let accountNonLock = false;
         switch (e.currentTarget.name) {
             case 'lock':
+                accountNonLock = false;
                 break;
             case 'unlock':
+                accountNonLock = true;
                 break;
         }
+        const userId = userDetails?.userId;
+        updateAccountLock({
+            variables: {
+                userId: (userId !== undefined) ? userId : -1,
+                accountNonLocked: accountNonLock,
+            }
+        }).then(() => {
+            const {...newState} = userDetails;
+            newState.accountNonLocked = accountNonLock;
+            setUserDetails(newState);
+        });
     }
 
     function editAuthority() {
@@ -61,6 +78,7 @@ function AdminEditUserController() {
                         </CardHeader>
                         <AdminLockAccount lockAccount={lockAccount}
                                           loading={loading}
+                                          accountLockLoading={accountLockLoading}
                                           accountNonLocked={userDetails?.accountNonLocked}/>
                         <AdminEditAuthority editAuthority={editAuthority}
                                             loading={loading}/>
