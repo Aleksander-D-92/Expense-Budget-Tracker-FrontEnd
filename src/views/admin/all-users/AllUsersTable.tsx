@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
 import {Link} from "react-router-dom";
-import {UserDetails} from "../../config/apolo/queries/UserQueries";
+import {UserDetails} from "../../../config/apolo/queries/UserQueries";
 
 interface Props {
     users?: UserDetails[]
@@ -9,7 +9,6 @@ interface Props {
 }
 
 function AllUsersTable(props: Props) {
-    console.log(props.users);
     return (
         <MaterialTable
             title="All users currently registered"

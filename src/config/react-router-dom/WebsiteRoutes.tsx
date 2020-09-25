@@ -4,8 +4,8 @@ import {UserRegisterController} from "../../views/user/register/UserRegisterCont
 import {UserLoginController} from "../../views/user/login/UserLoginController";
 import {UserLogoutController} from "../../views/user/logout/UserLogoutController";
 import {AccountSettingsController} from "../../views/user/account-settings/AccountSettingsController";
-import {AllUsersController} from "../../views/admin/AllUsersController";
-import {AdminEditUser} from "../../views/admin/AdminEditUser";
+import {AllUsersController} from "../../views/admin/all-users/AllUsersController";
+import {AdminEditUser} from "../../views/admin/edit-user/AdminEditUser";
 
 function WebsiteRoutes() {
     return (
