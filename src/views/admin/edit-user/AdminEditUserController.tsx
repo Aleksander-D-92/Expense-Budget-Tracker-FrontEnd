@@ -5,12 +5,13 @@ import {Authority, UserByIdQueryVars, UserDetails} from "../../../config/apolo/q
 import {AdminEditUserResp, USER_DETAILS_AND_AUTHORITIES} from "../../../config/apolo/queries/AdminQueries";
 import {AdminLockAccount} from "./AdminLockAccount";
 import {AdminEditAuthority} from "./AdminEditAuthority";
-import {Avatar, Card, CardHeader, Grid, List, ListItemText} from "@material-ui/core";
+import {Avatar, Card, CardHeader, Grid, LinearProgress, List, ListItemText} from "@material-ui/core";
 import {capitalizeString, formatDate} from "../../../shared/utils/functions";
 import {
     ADMIN_UPDATE_ACCOUNT_LOCK,
     ADMIN_UPDATE_AUTHORITY,
-    AdminUpdateAccountLockVars, AdminUpdateAuthorityVars
+    AdminUpdateAccountLockVars,
+    AdminUpdateAuthorityVars
 } from "../../../config/apolo/mutations/AdminMutations";
 import {Dummy} from "../../../config/apolo/ApoloConfig";
 
@@ -54,14 +55,15 @@ function AdminEditUserController() {
         });
     }
 
-    function editAuthority() {
-
+    function editAuthority(formData: any) {
+        console.log(formData);
     }
 
     return (
         <>
             <Grid container justify="center">
                 <Grid xs={11} md={6} className={'mt-4'}>
+                    <LinearProgress hidden={!loading}/>
                     <Card>
                         <CardHeader
                             avatar={

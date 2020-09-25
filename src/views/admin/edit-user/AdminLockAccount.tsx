@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState} from "react";
+import React, {MouseEvent} from "react";
 import {Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, Typography} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import LockIcon from '@material-ui/icons/Lock';
@@ -31,7 +31,8 @@ function AdminLockAccount(props: Props) {
                                 name={'unlock'}
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => props.lockAccount(e)}>
                             Unlock
-                            {props.updateAccountLockLoading || props.accountNonLocked === undefined ? <CircularProgress size={20} color={'primary'}/> : ''}
+                            {props.updateAccountLockLoading || props.accountNonLocked === undefined ?
+                                <CircularProgress size={20} color={'primary'}/> : ''}
                         </Button>
                         <Button variant="contained"
                                 color="secondary"
@@ -41,7 +42,8 @@ function AdminLockAccount(props: Props) {
                                 name={'lock'}
                                 onClick={(e: MouseEvent<HTMLButtonElement>) => props.lockAccount(e)}>
                             Lock
-                            {props.updateAccountLockLoading || props.accountNonLocked === undefined ? <CircularProgress size={20} color={'secondary'}/> : ''}
+                            {props.updateAccountLockLoading || props.accountNonLocked === undefined ?
+                                <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>
                     </form>
                 </AccordionDetails>
