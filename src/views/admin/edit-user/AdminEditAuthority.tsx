@@ -20,12 +20,13 @@ import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 interface Props {
     editAuthority: Function,
     loading: boolean,
-    authorities?: Authority[]
     updateAuthorityLoading: boolean
+    authorities?: Authority[],
+    currentAuthority?: string
 }
 
 function AdminEditAuthority(props: Props) {
-    const {register, handleSubmit, errors, getValues, control} = useForm({});
+    const {handleSubmit, control} = useForm({});
     return (
         <>
             <Accordion defaultExpanded={true}>
@@ -41,32 +42,30 @@ function AdminEditAuthority(props: Props) {
                                 <PeopleAltIcon/>
                             </Grid>
                             <Grid item xs={10}>
-                                <Controller
-                                    rules={{required: true}}
-                                    control={control}
-                                    defaultValue={1}
-                                    name={'authorityId'}
-                                    as={
-                                        <FormControl
-                                            fullWidth={true}
-                                            required={true}>
-                                            <InputLabel>Authority</InputLabel>
-                                            <Select
+                                <FormControl
+                                    fullWidth={true}
+                                    required={true}>
+                                    <InputLabel>Authority</InputLabel>
+                                    <Controller name="authorityId"
+                                                rules={{required: "this is required"}}
+                                                control={control}
                                                 defaultValue={2}
-                                            >
-                                                {props.authorities?.map(a => <MenuItem
-                                                        value={a.authorityId}>{a.authority}</MenuItem>)}
-                                            </Select>
-                                        </FormControl>
-                                    }>
-                                </Controller>
+                                                as={
+                                                    <Select
+                                                    >
+                                                        {props.authorities?.filter(a => a.authority !== props.currentAuthority)
+                                                            .map(a => <MenuItem
+                                                                value={a.authorityId}>{a.authority}</MenuItem>)}
+                                                    </Select>}
+                                    />
+                                </FormControl>
                             </Grid>
                         </Grid>
                         <Button type={'submit'}
                                 fullWidth={true}
                                 variant="contained"
                                 color="secondary"
-                                disabled={props.loading}>
+                                disabled={props.loading || props.updateAuthorityLoading}>
                             Change authority
                             {props.loading || props.updateAuthorityLoading ?
                                 <CircularProgress size={20} color={'secondary'}/> : ''}

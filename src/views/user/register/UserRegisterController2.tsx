@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {UserRegisterForm} from "./UserRegisterForm";
 import {useMutation, useQuery} from '@apollo/client';
 import {useHistory} from 'react-router-dom';

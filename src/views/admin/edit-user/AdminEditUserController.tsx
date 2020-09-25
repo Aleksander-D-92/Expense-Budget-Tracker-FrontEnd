@@ -14,6 +14,8 @@ import {
     AdminUpdateAuthorityVars
 } from "../../../config/apolo/mutations/AdminMutations";
 import {Dummy} from "../../../config/apolo/ApoloConfig";
+import {cloneDeep} from 'lodash';
+
 
 function AdminEditUserController() {
     const {userId} = useParams();
@@ -28,8 +30,8 @@ function AdminEditUserController() {
     });
 
     useEffect(() => {
-        setUserDetails(data?.userById)
-        setAuthorities(data?.allAuthorities)
+        setUserDetails(cloneDeep(data?.userById))
+        setAuthorities(cloneDeep(data?.allAuthorities))
     }, [data])
 
     function lockAccount(e: MouseEvent<HTMLButtonElement>) {
@@ -43,6 +45,7 @@ function AdminEditUserController() {
                 break;
         }
         const userId = userDetails?.userId;
+
         updateAccountLock({
             variables: {
                 userId: (userId !== undefined) ? userId : -1,
@@ -57,6 +60,21 @@ function AdminEditUserController() {
 
     function editAuthority(formData: any) {
         console.log(formData);
+        const userId = userDetails?.userId;
+        const authorityId = formData.authorityId;
+        updateAuthority({
+            variables: {
+                userId: (userId !== undefined) ? userId : -1,
+                authorityId: authorityId,
+            }
+        }).then(() => {
+            const {...newState} = userDetails;
+            const newAuthority = authorities?.find(a => a.authorityId === formData.authorityId);
+            if (newAuthority !== undefined) {
+                newState.authorities[0] = newAuthority;
+            }
+            setUserDetails(newState);
+        })
     }
 
     return (
@@ -89,6 +107,7 @@ function AdminEditUserController() {
                                           accountNonLocked={userDetails?.accountNonLocked}/>
 
                         <AdminEditAuthority editAuthority={editAuthority}
+                                            currentAuthority={userDetails?.authorities[0].authority}
                                             loading={loading}
                                             updateAuthorityLoading={updateAuthorityLoading}
                                             authorities={authorities}

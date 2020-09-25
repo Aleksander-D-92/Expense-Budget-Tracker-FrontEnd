@@ -111,26 +111,23 @@ function UserRegisterForm(props: Props) {
                                         <PeopleAltIcon/>
                                     </Grid>
                                     <Grid item xs={10}>
-                                        <Controller
-                                                    rules={{required: true}}
-                                                    control={control}
-                                                    defaultValue={1}
-                                                    name={'authorityId'}
-                                                    as={
-                                                        <FormControl
-                                                            fullWidth={true}
-                                                            required={true}>
-                                                            <InputLabel>Authority</InputLabel>
+                                        <FormControl
+                                            fullWidth={true}
+                                            required={true}>
+                                            <InputLabel>Authority</InputLabel>
+                                            <Controller name="authorityId"
+                                                        rules={{required: "this is required"}}
+                                                        control={control}
+                                                        defaultValue={2}
+                                                        as={
                                                             <Select
-                                                                defaultValue={2}
                                                             >
                                                                 {props.authorities?.filter(a => a.authority !== 'ROLE_ADMIN')
                                                                     .map(a => <MenuItem
                                                                         value={a.authorityId}>{a.authority}</MenuItem>)}
-                                                            </Select>
-                                                        </FormControl>
-                                                    }>
-                                        </Controller>
+                                                            </Select>}
+                                            />
+                                        </FormControl>
                                     </Grid>
                                 </Grid>
                                 <Button type={'submit'}
