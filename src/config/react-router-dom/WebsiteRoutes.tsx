@@ -5,7 +5,7 @@ import {UserLoginController} from "../../views/user/login/UserLoginController";
 import {UserLogoutController} from "../../views/user/logout/UserLogoutController";
 import {AccountSettingsController} from "../../views/user/account-settings/AccountSettingsController";
 import {AllUsersController} from "../../views/admin/all-users/AllUsersController";
-import {AdminEditUser} from "../../views/admin/edit-user/AdminEditUser";
+import {AdminEditUserController} from "../../views/admin/edit-user/AdminEditUserController";
 
 function WebsiteRoutes() {
     return (
@@ -15,7 +15,7 @@ function WebsiteRoutes() {
             <Route exact={true} path={'/users/logout'}><UserLogoutController/></Route>
             <Route exact={true} path={'/users/account-settings'}><AccountSettingsController/></Route>
             <Route exact={true} path={'/admins/all-users'}><AllUsersController/></Route>
-            <Route exact={true} path={'/admins/edit-user/:userId'}><AdminEditUser/></Route>
+            <Route exact={true} path={'/admins/edit-user/:userId'}><AdminEditUserController/></Route>
         </Switch>
     )
 }

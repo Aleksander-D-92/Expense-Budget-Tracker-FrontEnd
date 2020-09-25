@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
 interface Props {
-    editAuthority: Function
+    editAuthority: Function,
+    loading: boolean
 }
 
 function AdminEditAuthority(props: Props) {
