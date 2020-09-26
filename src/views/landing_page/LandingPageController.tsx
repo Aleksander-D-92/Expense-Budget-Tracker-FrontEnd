@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {AxiosResponse} from 'axios'
 import Carousel from "react-material-ui-carousel";
 import {Button, Paper} from "@material-ui/core";
-import {MovieCollectionResponse, movieDBService, MovieDetails} from "../../services/MovieService";
+import {MovieCollectionResponse, MovieService, MovieDetails} from "../../services/MovieService";
 
 
 interface Props {
@@ -22,16 +22,16 @@ function LandingPageController(props: Props) {
         }
     ]
     useEffect(() => {
-        movieDBService.getDetails(100).then((e: AxiosResponse<MovieDetails>) => {
+        MovieService.getDetails(100).then((e: AxiosResponse<MovieDetails>) => {
             console.log(e.data);
         })
-        movieDBService.getPopular(1).then((e: AxiosResponse<MovieCollectionResponse>) => {
+        MovieService.getPopular(1).then((e: AxiosResponse<MovieCollectionResponse>) => {
             // console.log(e.data);
         })
-        movieDBService.getTopRated(1).then((e: AxiosResponse<MovieCollectionResponse>) => {
+        MovieService.getTopRated(1).then((e: AxiosResponse<MovieCollectionResponse>) => {
             // console.log(e.data);
         })
-        movieDBService.getUpComing(1).then((e: AxiosResponse<MovieCollectionResponse>) => {
+        MovieService.getUpComing(1).then((e: AxiosResponse<MovieCollectionResponse>) => {
             // console.log(e.data);
         })
     }, []);

@@ -67,7 +67,7 @@ interface Genres {
     name: string
 }
 
-const movieDBService = (function () {
+const MovieService = (function () {
     const API_KEY = '2e0bd1aa1c128cb18713465fe5dbfb12';
 
     function getPopular(page: number) {
@@ -94,4 +94,4 @@ const movieDBService = (function () {
     }
 })();
 
-export {movieDBService}
+export {MovieService}

@@ -1,8 +1,8 @@
 import React, {MouseEvent, useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
 import {useMutation, useQuery} from "@apollo/client";
-import {Authority, UserByIdQueryVars, UserDetails} from "../../../config/apollo/queries/UserQueries";
-import {AdminEditUserResp, USER_DETAILS_AND_AUTHORITIES} from "../../../config/apollo/queries/AdminQueries";
+import {Authority, UserByIdQueryVars, UserDetails} from "../../../services/apollo/queries/UserQueries";
+import {AdminEditUserResp, USER_DETAILS_AND_AUTHORITIES} from "../../../services/apollo/queries/AdminQueries";
 import {AdminLockAccount} from "./AdminLockAccount";
 import {AdminEditAuthority} from "./AdminEditAuthority";
 import {Avatar, Card, CardHeader, Grid, LinearProgress, List, ListItemText} from "@material-ui/core";
@@ -12,8 +12,8 @@ import {
     ADMIN_UPDATE_AUTHORITY,
     AdminUpdateAccountLockVars,
     AdminUpdateAuthorityVars
-} from "../../../config/apollo/mutations/AdminMutations";
-import {Dummy} from "../../../config/apollo/ApoloConfig";
+} from "../../../services/apollo/mutations/AdminMutations";
+import {Dummy} from "../../../services/apollo/ApoloConfig";
 import {cloneDeep} from 'lodash';
 
 

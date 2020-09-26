@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
 import {Link} from "react-router-dom";
-import {UserDetails} from "../../../config/apollo/queries/UserQueries";
+import {UserDetails} from "../../../services/apollo/queries/UserQueries";
 
 interface Props {
     users?: UserDetails[]

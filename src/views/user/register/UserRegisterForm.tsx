@@ -16,7 +16,7 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockIcon from '@material-ui/icons/Lock';
 import {Controller, useForm} from "react-hook-form";
-import {Authority} from "../../../config/apollo/queries/UserQueries";
+import {Authority} from "../../../services/apollo/queries/UserQueries";
 
 
 interface Props {

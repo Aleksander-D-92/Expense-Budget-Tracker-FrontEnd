@@ -3,9 +3,9 @@ import {UserRegisterForm} from "./UserRegisterForm";
 import {useMutation, useQuery} from '@apollo/client';
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
-import {CREATE_USER, CreateUserVars} from "../../../config/apollo/mutations/UserMutations";
-import {ALL_AUTHORITIES, AllAuthoritiesQueryResp} from "../../../config/apollo/queries/UserQueries";
-import {Dummy} from "../../../config/apollo/ApoloConfig";
+import {CREATE_USER, CreateUserVars} from "../../../services/apollo/mutations/UserMutations";
+import {ALL_AUTHORITIES, AllAuthoritiesQueryResp} from "../../../services/apollo/queries/UserQueries";
+import {Dummy} from "../../../services/apollo/ApoloConfig";
 
 function UserRegisterController() {
     const [createUser, {loading: createUserLoading}] = useMutation<Dummy, CreateUserVars>(CREATE_USER);

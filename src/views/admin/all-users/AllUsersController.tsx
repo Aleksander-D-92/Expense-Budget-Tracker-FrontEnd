@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {AllUsersTable} from "./AllUsersTable";
-import {ALL_USERS, AllUsersQueryResp, UserDetails} from "../../../config/apollo/queries/UserQueries";
+import {ALL_USERS, AllUsersQueryResp, UserDetails} from "../../../services/apollo/queries/UserQueries";
 import {useQuery} from "@apollo/client";
 import {cloneDeep} from 'lodash';
 

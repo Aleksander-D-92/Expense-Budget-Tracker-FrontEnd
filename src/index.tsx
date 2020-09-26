@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'fontsource-roboto';
 import {BrowserRouter} from "react-router-dom";
 import {ApolloProvider} from '@apollo/client';
-import {client} from "./config/apollo/ApoloConfig";
+import {client} from "./services/apollo/ApoloConfig";
 import {store} from "./config/redux/ReduxStore";
 import {Provider} from "react-redux";
 

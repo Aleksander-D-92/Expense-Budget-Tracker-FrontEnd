@@ -31,7 +31,7 @@ function LeftNav(props: Props) {
                         <HomeIcon style={{fontSize: '40'}}/>
                     </ListItemIcon>
                     <Hidden smDown={true}>
-                        <ListItemText primary="Expense tracker"/>
+                        <ListItemText primary="Movie Theatre"/>
                     </Hidden>
                 </ListItem>
 
