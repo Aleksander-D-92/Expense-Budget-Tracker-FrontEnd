@@ -7,7 +7,7 @@ const client = new ApolloClient({
 
 export {client}
 
-/*using this to to pass as response arguments if the response is pointless,
+/*using this to pass as response arguments if the response is pointless,
  to avoid wiring a separate interface for every query
  */
 export interface Dummy {

@@ -1,61 +1,42 @@
 import React, {useEffect, useState} from "react";
 import Carousel from "react-material-ui-carousel";
-import {Button, Paper} from "@material-ui/core";
-import {MovieService} from "../../services/MovieService";
+import {createStyles, Grid, Theme} from "@material-ui/core";
+import {MovieCollection, MovieService} from "../../services/the_movie_db/MovieService";
+import {ImageContainer} from "./ImageContainer";
+import {PageLoading} from "./PageLoading";
+import {makeStyles} from "@material-ui/core/styles";
 
-
-interface Props {
-
-}
-
-function LandingPageController(props: Props) {
-    const [cards, setCards] = useState<Array<any>>();
-    const items = [
-        {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!"
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {},
+        avatar: {
+            fontSize: 30
         },
-        {
-            name: "Random Name #2",
-            description: "Hello World!"
-        }
-    ]
+    }),
+);
+
+function LandingPageController() {
+    const [topRated, setTopRated] = useState<MovieCollection>();
     useEffect(() => {
-        MovieService.getDetails(100).then((e) => {
-            console.log(e.data);
-        })
-        MovieService.getPopular(1).then((e) => {
-            // console.log(e.data);
-        })
         MovieService.getTopRated(1).then((e) => {
-            // console.log(e.data);
-        })
-        MovieService.getUpComing(1).then((e) => {
-            // console.log(e.data);
+            setTopRated(e.data);
         })
     }, []);
     return (
         <>
-            <Carousel>
-                {
-                    items.map((item, i) => <Item key={i} item={item}/>)
-                }
-            </Carousel>
+            <Grid container justify="center">
+                <Grid xs={12} md={12}>
+                    <PageLoading loading={topRated === undefined}/>
+                    <Carousel autoPlay={true}>
+                        {topRated?.results.map(movie => {
+                            return <ImageContainer movie={movie}/>
+                        })}
+                    </Carousel>
+                    {/*<SmallCarousel movies={topRated?.results}/>*/}
+                </Grid>
+            </Grid>
         </>
     )
 }
 
 export {LandingPageController}
-
-function Item(props: any) {
-    return (
-        <Paper>
-            <h2>{props.item.name}</h2>
-            <p>{props.item.description}</p>
-
-            <Button className="CheckButton">
-                Check it out!
-            </Button>
-        </Paper>
-    )
-}

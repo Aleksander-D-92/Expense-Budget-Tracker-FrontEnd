@@ -23,13 +23,13 @@ function App() {
                 <Paper>
                     <Grid container spacing={0}>
                         <Hidden smDown={true}>
-                            <Grid item xs={false} md={2}
+                            <Grid item xs={false} md={1}
                                   id={'leftNav'}
                             >
                                 <LeftNavController/>
                             </Grid>
                         </Hidden>
-                        <Grid item xs={12} sm={12} md={10}>
+                        <Grid item xs={12} sm={12} md={11}>
                             <Grid item xs={12} id={'header'}>
                                 <TopNavController/>
                             </Grid>

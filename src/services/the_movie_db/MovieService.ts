@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios'
 
 
-interface MovieCollection {
+export interface MovieCollection {
     page: string
     total_pages: number
     total_results: number
@@ -15,11 +15,11 @@ interface MovieCollectionWithDates extends MovieCollection {
     }
 }
 
-interface Movie {
+export interface Movie {
     id: number
     adult: boolean
-    backdrop_path: string
-    poster_path: string
+    backdrop_path: string // golqm image
+    poster_path: string // po maluk image sus nekvo opisanie
     genre_ids: number[]
     original_language: string
     original_title: string
@@ -94,6 +94,11 @@ const MovieService = (function () {
         return axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=${page}`);
     }
 
+    function getByTitle(title: string, page: number): Promise<AxiosResponse<MovieCollection>> {
+        return axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${title}&page=${page}&include_adult=false`);
+
+    }
+
     function getDetails(movieId: number): Promise<AxiosResponse<MovieDetails>> {
         return axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
     }
@@ -103,6 +108,7 @@ const MovieService = (function () {
         getTopRated: (page: number) => getTopRated(page),
         getUpComing: (page: number) => getUpComing(page),
         getNowPlaying: (page: number) => getNowPlaying(page),
+        getByTitle: (title: string, page: number) => getByTitle(title, page),
         getDetails: (movieId: number) => getDetails(movieId),
     }
 })();
