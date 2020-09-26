@@ -7,6 +7,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import HomeIcon from '@material-ui/icons/Home';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 
 interface Props {
@@ -35,7 +37,7 @@ function LeftNav(props: Props) {
 
                 <ListItem button component={Link} to={'/admins/all-users'}>
                     <ListItemIcon>
-                        <SendIcon/>
+                        <PeopleAltIcon/>
                     </ListItemIcon>
                     <Hidden smDown={true}>
                         <ListItemText primary="Manage User Roles"/>
@@ -44,7 +46,7 @@ function LeftNav(props: Props) {
 
                 <ListItem button component={Link} to={'/bank-accounts'}>
                     <ListItemIcon>
-                        <SendIcon/>
+                        <AccountBalanceWalletIcon/>
                     </ListItemIcon>
                     <Hidden smDown={true}>
                         <ListItemText primary="Bank Accounts"/>

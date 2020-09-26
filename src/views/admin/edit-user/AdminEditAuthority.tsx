@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Controller, useForm} from "react-hook-form";
-import {Authority} from "../../../config/apolo/queries/UserQueries";
+import {Authority} from "../../../config/apollo/queries/UserQueries";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 
 interface Props {

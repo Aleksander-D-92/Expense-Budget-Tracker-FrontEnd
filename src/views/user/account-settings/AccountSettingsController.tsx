@@ -7,7 +7,7 @@ import {ReduxState} from "../../../config/redux/ReduxStore";
 import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {useLazyQuery, useMutation} from "@apollo/client";
-import {USER_BY_ID, UserByIdQueryResult, UserByIdQueryVars} from "../../../config/apolo/queries/UserQueries";
+import {USER_BY_ID, UserByIdQueryResult, UserByIdQueryVars} from "../../../config/apollo/queries/UserQueries";
 import {useHistory} from 'react-router-dom';
 import {toast, ToastContainer} from "react-toastify";
 import {
@@ -15,9 +15,9 @@ import {
     UPDATE_PASSWORD,
     UpdateAccountLockVars,
     UpdatePasswordVars
-} from "../../../config/apolo/mutations/UserMutations";
+} from "../../../config/apollo/mutations/UserMutations";
 import {formatDate} from "../../../shared/utils/functions";
-import {Dummy} from "../../../config/apolo/ApoloConfig";
+import {Dummy} from "../../../config/apollo/ApoloConfig";
 
 const useStyles = makeStyles(
     createStyles({

@@ -5,7 +5,7 @@ import {toast, ToastContainer} from 'react-toastify';
 import {removeAllCookies} from "../../../shared/utils/cookieUtils";
 import {useDispatch} from 'react-redux';
 import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
-import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apolo/mutations/UserMutations";
+import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../config/apollo/mutations/UserMutations";
 import {DemoLogin} from "./DemoLogin";
 import {Grid} from "@material-ui/core";
 import {ADMIN_CREDENTIALS, FREE_USER_CREDENTIALS, PAID_USER_CREDENTIALS} from "./variables";
