@@ -49,7 +49,7 @@ function LeftNav(props: Props) {
                         <AccountBalanceWalletIcon/>
                     </ListItemIcon>
                     <Hidden smDown={true}>
-                        <ListItemText primary="Bank Accounts"/>
+                        <ListItemText primary="Bank Accountss"/>
                     </Hidden>
                 </ListItem>
 
