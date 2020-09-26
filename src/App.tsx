@@ -6,12 +6,14 @@ import {WebsiteRoutes} from "./config/react-router-dom/WebsiteRoutes";
 import {CheckIfLoggedIn} from "./views/user/check-if-logged-in/CheckIfLoggedIn";
 import {LeftNavController} from "./views/left_nav/LeftNavController";
 import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {purple} from "@material-ui/core/colors";
 
 
 function App() {
     const theme = createMuiTheme({
         palette: {
-            type: "dark"
+            type: "dark",
+            primary: purple
         }
     });
     return (

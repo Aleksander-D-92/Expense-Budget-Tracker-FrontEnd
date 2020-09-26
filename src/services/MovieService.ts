@@ -1,11 +1,18 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 
-export interface MovieCollectionResponse {
+interface MovieCollection {
     page: string
     total_pages: number
     total_results: number
     results: Movie[]
+}
+
+interface MovieCollectionWithDates extends MovieCollection {
+    dates: {
+        maximum: Date,
+        minimum: Date
+    }
 }
 
 interface Movie {
@@ -25,7 +32,7 @@ interface Movie {
     vote_count: number
 }
 
-export interface MovieDetails {
+interface MovieDetails {
     id: number
     adult: boolean
     backdrop_path: string
@@ -70,19 +77,24 @@ interface Genres {
 const MovieService = (function () {
     const API_KEY = '2e0bd1aa1c128cb18713465fe5dbfb12';
 
-    function getPopular(page: number) {
+    function getPopular(page: number): Promise<AxiosResponse<MovieCollection>> {
         return axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
     }
 
-    function getTopRated(page: number) {
+    function getTopRated(page: number): Promise<AxiosResponse<MovieCollection>> {
         return axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`);
     }
 
-    function getUpComing(page: number) {
+    function getUpComing(page: number): Promise<AxiosResponse<MovieCollectionWithDates>> {
         return axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=${page}`);
     }
 
-    function getDetails(movieId: number) {
+    //Get a list of movies in theatres that are playing now
+    function getNowPlaying(page: number): Promise<AxiosResponse<MovieCollectionWithDates>> {
+        return axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=${page}`);
+    }
+
+    function getDetails(movieId: number): Promise<AxiosResponse<MovieDetails>> {
         return axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
     }
 
@@ -90,6 +102,7 @@ const MovieService = (function () {
         getPopular: (page: number) => getPopular(page),
         getTopRated: (page: number) => getTopRated(page),
         getUpComing: (page: number) => getUpComing(page),
+        getNowPlaying: (page: number) => getNowPlaying(page),
         getDetails: (movieId: number) => getDetails(movieId),
     }
 })();
