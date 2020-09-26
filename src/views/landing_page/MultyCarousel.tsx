@@ -31,7 +31,7 @@ function SmallCarousel(props: Props) {
         <>
             <Carousel responsive={responsive} >
                 {props.movies !== undefined ? props.movies.map(movie => {
-                    return <ImageContainer movie={movie}/>
+                    // return <ImageContainer movie={movie}/>
                 }) : ''}
             </Carousel>;
 
