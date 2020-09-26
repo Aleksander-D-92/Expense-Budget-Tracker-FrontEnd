@@ -8,7 +8,7 @@ export interface MovieCollection {
     results: Movie[]
 }
 
-interface MovieCollectionWithDates extends MovieCollection {
+export interface MovieCollectionWithDates extends MovieCollection {
     dates: {
         maximum: Date,
         minimum: Date

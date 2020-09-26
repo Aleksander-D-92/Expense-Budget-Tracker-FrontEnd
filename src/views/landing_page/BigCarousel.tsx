@@ -1,38 +1,19 @@
 import React from "react";
-import {
-    Avatar,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardMedia,
-    createStyles,
-    Grid,
-    Theme,
-    Typography
-} from "@material-ui/core";
+import {Avatar, Button, Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import {Movie} from "../../services/the_movie_db/MovieService";
 import {formatDate} from "../../shared/utils/functions";
 import Carousel from "react-material-ui-carousel";
-import {makeStyles} from "@material-ui/core/styles";
+import {Link} from "react-router-dom";
 
 
 interface Props {
     movies?: Movie[]
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {},
-        title: {
-            fontSize: 25
-        },
-    }),
-);
 
-function ImageContainer(props: Props) {
-    const styles = useStyles();
+
+function BigCarousel(props: Props) {
     const arr = ['rgba(255,99,132,1)', 'rgba(75,192,192,1)', 'rgba(54,162,235,1)', 'rgba(255,206,86,1)', 'rgba(153,102,255,1)', 'rgba(255,159,64,1)']
     const imageBasePath = 'https://image.tmdb.org/t/p/original';
     return (
@@ -41,8 +22,8 @@ function ImageContainer(props: Props) {
                 {props.movies?.map(movie => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
-                            <Card className={'mt-2'} elevation={5}>
-                                <CardHeader className={styles.title}
+                            <Card className={'mt-2'} elevation={8}>
+                                <CardHeader
                                             avatar={
                                                 <Avatar aria-label="recipes"
                                                         style={{backgroundColor: arr[Math.floor(Math.random() * arr.length) + 1]}}>
@@ -60,6 +41,7 @@ function ImageContainer(props: Props) {
                                             subheader={`Release Date: ${formatDate(movie.release_date)}`}
                                 />
                                 <CardMedia
+                                    component={Link} to={`/movies/${movie.id}`}
                                     style={{height: 800}}
                                     image={imageBasePath + movie.backdrop_path}
                                 />
@@ -73,9 +55,8 @@ function ImageContainer(props: Props) {
                     </Grid>
                 })}
             </Carousel>
-
         </>
     )
 }
 
-export {ImageContainer}
+export {BigCarousel}

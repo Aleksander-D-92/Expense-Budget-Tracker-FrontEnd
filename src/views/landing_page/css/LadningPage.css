@@ -1,0 +1,12 @@
+.landingPageSmallImage:hover {
+    cursor: pointer;
+}
+
+.landingPageSmallCard:hover {
+    transform: scale(1.05);
+    transition: transform 200ms linear;
+    transition-duration: 0.25s;
+}
+.landingPageSmallCard:hover{
+
+}
