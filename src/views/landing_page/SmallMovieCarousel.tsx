@@ -11,7 +11,7 @@ interface Props {
     movies?: Movie[],
 }
 
-function SmallCarousel(props: Props) {
+function SmallMovieCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/original';
     const responsive = {
@@ -76,4 +76,4 @@ function SmallCarousel(props: Props) {
 }
 
 
-export {SmallCarousel}
+export {SmallMovieCarousel}

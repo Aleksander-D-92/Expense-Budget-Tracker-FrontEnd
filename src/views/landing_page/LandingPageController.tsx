@@ -1,50 +1,68 @@
-import React, {useEffect, useState, ChangeEvent} from "react";
-import {Grid, Typography, Tab, Tabs} from "@material-ui/core";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import {Grid, Tab, Tabs, Typography} from "@material-ui/core";
 import {MovieCollection, MovieCollectionWithDates, MovieService} from "../../services/the_movie_db/MovieService";
 import {BigCarousel} from "./BigCarousel";
 import {PageLoading} from "./PageLoading";
-import {SmallCarousel} from "./SmallCarousel";
+import {SmallMovieCarousel} from "./SmallMovieCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
-import {TabPanel} from "@material-ui/lab";
+import {TvShow, TvShowCollection, TvShowsService} from "../../services/the_movie_db/TvShowsService";
 
 function LandingPageController() {
-    const [selectedTab, setSelectedTab] = useState<number>(0);
-    const [topRated, setTopRated] = useState<MovieCollection>();
-    const [upComing, setUpComing] = useState<MovieCollection>();
-    const [popular, setPopular] = useState<MovieCollection>();
-    const [nowPlaying, setNowPlaying] = useState<MovieCollectionWithDates>();
+    //tab bar
+    const [selectedTab, setSelectedTabMovies] = useState<number>(0);
+    //movies
+    const [topRatedMovies, setTopRatedMovies] = useState<MovieCollection>();
+    const [upComingMovies, setUpComingMovies] = useState<MovieCollection>();
+    const [popularMovies, setPopularMovies] = useState<MovieCollection>();
+    const [nowPlayingMovies, setNowPlayingMovies] = useState<MovieCollectionWithDates>();
+    //tv shows
+    const [topRatedTvShows, setTopRatedTvShows] = useState<TvShowCollection>();
+    const [popularTvShows, setPopularTvShows] = useState<TvShowCollection>();
+    const [onTheAirTvShows, setOnTheAirTvShows] = useState<TvShowCollection>();
+
     useEffect(() => {
         MovieService.getTopRated(1).then((e) => {
-            setTopRated(e.data);
+            setTopRatedMovies(e.data);
         });
         MovieService.getUpComing(1).then((e) => {
-            setUpComing(e.data);
+            setUpComingMovies(e.data);
         });
         MovieService.getPopular(1).then((e) => {
-            setPopular(e.data)
+            setPopularMovies(e.data)
         });
         MovieService.getNowPlaying(1).then((e) => {
-            setNowPlaying(e.data);
-            console.log(e.data);
-        })
+            setNowPlayingMovies(e.data);
+        });
+
+        //Tv Shows
+        TvShowsService.getTopRated(1).then((e) => {
+            setTopRatedTvShows(e.data);
+        });
+        TvShowsService.getPopular(1).then((e) => {
+           setPopularTvShows(e.data)
+        });
+        TvShowsService.getOnTheAir(1).then((e) => {
+            setOnTheAirTvShows(e.data)
+        });
     }, []);
 
+
     function handleChange(event: ChangeEvent<{}>, newValue: number) {
-        setSelectedTab(newValue)
+        setSelectedTabMovies(newValue)
     }
 
     return (
         <>
             <Grid container={true} justify="center">
                 <Grid item={true} xs={12} md={12}>
-                    <PageLoading loading={topRated === undefined || upComing === undefined || popular === undefined}/>
+                    <PageLoading
+                        loading={topRatedMovies === undefined || upComingMovies === undefined || popularMovies === undefined}/>
 
                     <Typography align={'center'} variant={'h3'} className={'mt-2'}>Top Rated</Typography>
-                    <ScrollAnimation animateIn={'fadeIn'}>
-                        <BigCarousel movies={topRated?.results}/>
-                    </ScrollAnimation>
+                    <BigCarousel movies={topRatedMovies?.results}/>
 
                     <Tabs value={selectedTab}
+                          className={'mt-3'}
                           onChange={handleChange}
                           centered={true}
                           aria-label="movies or tv shows">
@@ -54,18 +72,18 @@ function LandingPageController() {
                     {selectedTab === 0 && <>
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
-                            <SmallCarousel movies={upComing?.results}/>
+                            <SmallMovieCarousel movies={upComingMovies?.results}/>
                         </ScrollAnimation>
 
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>Popular</Typography>
                         <ScrollAnimation animateIn={'fadeInRight'}>
-                            <SmallCarousel movies={popular?.results}/>
+                            <SmallMovieCarousel movies={popularMovies?.results}/>
                         </ScrollAnimation>
 
-                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>Now Playing in
-                            Theatres</Typography>
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>
+                            Now Playing in Theatres</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
-                            <SmallCarousel movies={nowPlaying?.results}/>
+                            <SmallMovieCarousel movies={nowPlayingMovies?.results}/>
                         </ScrollAnimation>
                     </>}
                     {selectedTab === 1 && <>second</>}
