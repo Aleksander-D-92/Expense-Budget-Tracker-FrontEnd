@@ -7,6 +7,7 @@ import {AppBar, Button, Hidden, IconButton, Menu, MenuItem, Toolbar} from "@mate
 import {Link} from "react-router-dom";
 import {capitalizeString} from "../../shared/utils/functions";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import HomeIcon from '@material-ui/icons/Home';
 
 interface Props {
     handleCLose: Function
@@ -21,6 +22,10 @@ function TopNav(props: Props) {
         <>
             <AppBar position="static">
                 <Toolbar>
+                    <Button color="inherit" component={Link} to={'/'}
+                            className={''}>
+                        <HomeIcon/>Home
+                    </Button>
                     <Hidden smDown={true}>
                         {props.loggedIn ?
                             <>

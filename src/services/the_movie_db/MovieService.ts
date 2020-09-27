@@ -32,7 +32,7 @@ export interface Movie {
     vote_count: number
 }
 
-interface MovieDetails {
+export interface MovieDetails {
     id: number
     adult: boolean
     backdrop_path: string

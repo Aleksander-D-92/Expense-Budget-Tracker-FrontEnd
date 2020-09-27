@@ -12,7 +12,7 @@ interface Props {
 
 function SmallTvShowCarousel(props: Props) {
     const history = useHistory();
-    const imageBasePath = 'https://image.tmdb.org/t/p/original';
+    const imageBasePath = 'https://image.tmdb.org/t/p/w780';
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -34,7 +34,7 @@ function SmallTvShowCarousel(props: Props) {
     };
 
     function redirect(e: MouseEvent) {
-        history.push(`/movies/${e.currentTarget.id}`)
+        history.push(`/tv-shows/${e.currentTarget.id}`)
     }
 
     return (

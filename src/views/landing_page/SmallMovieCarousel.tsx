@@ -13,7 +13,7 @@ interface Props {
 
 function SmallMovieCarousel(props: Props) {
     const history = useHistory();
-    const imageBasePath = 'https://image.tmdb.org/t/p/original';
+    const imageBasePath = 'https://image.tmdb.org/t/p/w780';
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
