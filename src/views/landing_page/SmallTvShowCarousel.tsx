@@ -1,17 +1,16 @@
 import React, {MouseEvent} from "react";
+import {TvShow} from "../../services/the_movie_db/TvShowsService";
+import {useHistory} from "react-router-dom";
 import Carousel from "react-multi-carousel";
-import {Movie} from "../../services/the_movie_db/MovieService";
 import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 import {formatDate} from "../../shared/utils/functions";
-import './css/LadningPage.css'
-import {useHistory} from 'react-router-dom';
+import AddIcon from "@material-ui/icons/Add";
 
 interface Props {
-    movies?: Movie[],
+    tvShows?: TvShow[]
 }
 
-function SmallMovieCarousel(props: Props) {
+function SmallTvShowCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/original';
     const responsive = {
@@ -41,7 +40,7 @@ function SmallMovieCarousel(props: Props) {
     return (
         <>
             <Carousel responsive={responsive}>
-                {props.movies !== undefined ? props.movies.map(movie => {
+                {props.tvShows !== undefined ? props.tvShows.map(tvShow => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 landingPageSmallCard'}
@@ -49,8 +48,8 @@ function SmallMovieCarousel(props: Props) {
                                   style={{maxHeight: 380}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={movie.title}
-                                    subheader={`Release Date: ${formatDate(movie.release_date)}`}
+                                    title={tvShow.name}
+                                    subheader={`Release Date: ${formatDate(tvShow.first_air_date)}`}
                                     action={
                                         <IconButton aria-label="settings">
                                             <Tooltip title={"Click to add to favorites"}
@@ -63,10 +62,10 @@ function SmallMovieCarousel(props: Props) {
                                 />
                                 <Tooltip title={"Double Click to see details"} placement={'top'} arrow={true}>
                                     <CardMedia className={'landingPageSmallImage'}
-                                               id={`${movie.id}`}
+                                               id={`${tvShow.id}`}
                                                onDoubleClick={redirect}
                                                style={{height: 300}}
-                                               image={imageBasePath + movie.backdrop_path}
+                                               image={imageBasePath + tvShow.backdrop_path}
                                     />
                                 </Tooltip>
                             </Card>
@@ -74,10 +73,8 @@ function SmallMovieCarousel(props: Props) {
                     </Grid>
                 }) : ''}
             </Carousel>;
-
         </>
     )
 }
 
-
-export {SmallMovieCarousel}
+export {SmallTvShowCarousel}

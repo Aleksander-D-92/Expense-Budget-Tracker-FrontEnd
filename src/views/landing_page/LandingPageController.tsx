@@ -5,7 +5,8 @@ import {BigCarousel} from "./BigCarousel";
 import {PageLoading} from "./PageLoading";
 import {SmallMovieCarousel} from "./SmallMovieCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
-import {TvShow, TvShowCollection, TvShowsService} from "../../services/the_movie_db/TvShowsService";
+import {TvShowCollection, TvShowsService} from "../../services/the_movie_db/TvShowsService";
+import {SmallTvShowCarousel} from "./SmallTvShowCarousel";
 
 function LandingPageController() {
     //tab bar
@@ -39,7 +40,7 @@ function LandingPageController() {
             setTopRatedTvShows(e.data);
         });
         TvShowsService.getPopular(1).then((e) => {
-           setPopularTvShows(e.data)
+            setPopularTvShows(e.data)
         });
         TvShowsService.getOnTheAir(1).then((e) => {
             setOnTheAirTvShows(e.data)
@@ -69,7 +70,8 @@ function LandingPageController() {
                         <Tab label="Movies" className={'mr-5'}/>
                         <Tab label="TV Shows"/>
                     </Tabs>
-                    {selectedTab === 0 && <>
+                    {selectedTab === 0 &&
+                    <>
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
                             <SmallMovieCarousel movies={upComingMovies?.results}/>
@@ -86,7 +88,29 @@ function LandingPageController() {
                             <SmallMovieCarousel movies={nowPlayingMovies?.results}/>
                         </ScrollAnimation>
                     </>}
-                    {selectedTab === 1 && <>second</>}
+                    {selectedTab === 1 &&
+                    <>
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>
+                            Top Rated
+                        </Typography>
+                        <ScrollAnimation animateIn={'fadeInLeft'}>
+                            <SmallTvShowCarousel tvShows={topRatedTvShows?.results}/>
+                        </ScrollAnimation>
+
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>
+                            Popular
+                        </Typography>
+                        <ScrollAnimation animateIn={'fadeInRight'}>
+                            <SmallTvShowCarousel tvShows={popularTvShows?.results}/>
+                        </ScrollAnimation>
+
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>
+                            Currently On The Air
+                        </Typography>
+                        <ScrollAnimation animateIn={'fadeInLeft'}>
+                            <SmallTvShowCarousel tvShows={onTheAirTvShows?.results}/>
+                        </ScrollAnimation>
+                    </>}
                 </Grid>
             </Grid>
         </>
