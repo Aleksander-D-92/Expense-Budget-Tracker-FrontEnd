@@ -3,7 +3,7 @@
 }
 
 .landingPageSmallCard:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
     transition: transform 200ms linear;
     transition-duration: 0.25s;
 }
@@ -14,7 +14,7 @@
 
 .backgroundDivForImage {
     background: rgb(0, 0, 0);
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.7) 35%, rgba(0, 0, 0, 0.9) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 35%, rgba(0, 0, 0, 0.8) 100%);
 }
 
 .backgroundDivForImage:hover {

@@ -1,16 +1,16 @@
-import React, {MouseEvent} from "react";
-import {TvShow} from "../../services/the_movie_db/TvShowsService";
+import React from "react";
 import {useHistory} from "react-router-dom";
+import {CastOrCrew} from "../../services/the_movie_db/MovieService";
 import Carousel from "react-multi-carousel";
-import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip} from "@material-ui/core";
-import {formatDate} from "../../shared/utils/functions";
+import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip, Typography} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 interface Props {
-    tvShows?: TvShow[]
+    cast?: CastOrCrew[]
 }
 
-function SmallTvShowCarousel(props: Props) {
+function CastCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
     const responsive = {
@@ -32,25 +32,19 @@ function SmallTvShowCarousel(props: Props) {
             items: 1
         }
     };
-
-    function redirect(e: MouseEvent) {
-        history.push(`/tv-shows/${e.currentTarget.id}`)
-    }
-    //tv show first_air_date  name id backdrop_path
-    //movie release_date title id  backdrop_path
     return (
         <>
             <Carousel responsive={responsive}>
-                {props.tvShows !== undefined ? props.tvShows.map(tvShow => {
+                {props.cast !== undefined ? props.cast.map(cast => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 380}}>
+                                  style={{maxHeight: 380, minHeight: 380}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={tvShow.name}
-                                    subheader={`Release Date: ${formatDate(tvShow.first_air_date)}`}
+                                    title={cast.name}
+                                    subheader={`Playing as: ${cast.character}`}
                                     action={
                                         <IconButton aria-label="settings">
                                             <Tooltip title={"Click to add to favorites"}
@@ -61,15 +55,19 @@ function SmallTvShowCarousel(props: Props) {
                                         </IconButton>
                                     }
                                 />
-                                <Tooltip title={"Double Click to see details"}
-                                         placement={'top'}
-                                         arrow={true}>
-                                    <CardMedia className={'landingPageSmallImage'}
-                                               id={`${tvShow.id}`}
-                                               onDoubleClick={redirect}
-                                               style={{height: 300}}
-                                               image={imageBasePath + tvShow.backdrop_path}
-                                    />
+                                <Tooltip title={"Double Click to see details"}>
+                                    {cast.profile_path !== null ? <CardMedia className={'landingPageSmallImage'}
+                                                                             id={`${cast.id}`}
+                                            // onDoubleClick={redirect}
+                                                                             style={{height: 300}}
+                                                                             image={imageBasePath + cast.profile_path}
+                                        /> :
+                                        <>
+                                            <Typography variant={'h5'} align={'center'}>
+                                                No image available <br/> <HighlightOffIcon fontSize={'large'}/>
+                                            </Typography>
+                                        </>
+                                    }
                                 </Tooltip>
                             </Card>
                         </Grid>
@@ -80,4 +78,4 @@ function SmallTvShowCarousel(props: Props) {
     )
 }
 
-export {SmallTvShowCarousel}
+export {CastCarousel}
