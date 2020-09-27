@@ -1,14 +1,15 @@
 import React, {MouseEvent} from "react";
 import {Avatar, Button, Card, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
-import {Movie} from "../../services/the_movie_db/MovieService";
+import {Genre, Movie} from "../../services/the_movie_db/MovieService";
 import {formatDate} from "../../shared/utils/functions";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Carousel from "react-multi-carousel";
 
 
 interface Props {
     movies?: Movie[]
+    genres?: Genre[]
 }
 
 
@@ -40,9 +41,17 @@ function BigCarousel(props: Props) {
         history.push(`/movies/${e.currentTarget.id}`)
     }
 
+    function genreName(id: number): string {
+        let genre = props.genres?.find((genre: Genre) => genre.id === id);
+        return genre?.name || '';
+    }
+
     return (
         <>
-            <Carousel autoPlay={true} responsive={responsive}>
+            <Carousel
+                // autoPlay={true}
+                responsive={responsive}
+                showDots={true}>
                 {props.movies !== undefined ? props.movies.map(movie => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
@@ -76,6 +85,17 @@ function BigCarousel(props: Props) {
                                             height: '100%',
                                         }} className={'backgroundDivForImage'}>
                                         </div>
+                                        <div className={'backgroundDivForImageText'}>
+                                            <Typography variant="h4">
+                                                Top Rated
+                                            </Typography>
+                                            <Typography variant="h3">
+                                                {movie.title}
+                                            </Typography>
+                                            <Typography variant="h4">
+                                                {genreName(movie.genre_ids[0])} | Rating: {movie.vote_average}
+                                            </Typography>
+                                        </div>
                                     </CardMedia>
                                 </Tooltip>
                                 <CardContent>
@@ -91,5 +111,6 @@ function BigCarousel(props: Props) {
         </>
     )
 }
+
 
 export {BigCarousel}

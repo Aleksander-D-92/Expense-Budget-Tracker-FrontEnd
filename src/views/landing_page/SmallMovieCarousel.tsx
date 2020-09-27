@@ -61,7 +61,9 @@ function SmallMovieCarousel(props: Props) {
                                         </IconButton>
                                     }
                                 />
-                                <Tooltip title={"Double Click to see details"} placement={'top'} arrow={true}>
+                                <Tooltip title={"Double Click to see details"}
+                                         placement={'top'}
+                                         arrow={true}>
                                     <CardMedia className={'landingPageSmallImage'}
                                                id={`${movie.id}`}
                                                onDoubleClick={redirect}

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {Grid, Tab, Tabs, Typography} from "@material-ui/core";
-import {MovieCollection, MovieCollectionWithDates, MovieService} from "../../services/the_movie_db/MovieService";
+import {Genre, MovieCollection, MovieCollectionWithDates, MovieService} from "../../services/the_movie_db/MovieService";
 import {BigCarousel} from "./BigCarousel";
 import {PageLoading} from "./PageLoading";
 import {SmallMovieCarousel} from "./SmallMovieCarousel";
@@ -11,6 +11,8 @@ import {SmallTvShowCarousel} from "./SmallTvShowCarousel";
 function LandingPageController() {
     //tab bar
     const [selectedTab, setSelectedTabMovies] = useState<number>(0);
+    //genres
+    const [genres, setGenres] = useState<Genre[]>();
     //movies
     const [topRatedMovies, setTopRatedMovies] = useState<MovieCollection>();
     const [upComingMovies, setUpComingMovies] = useState<MovieCollection>();
@@ -22,6 +24,11 @@ function LandingPageController() {
     const [onTheAirTvShows, setOnTheAirTvShows] = useState<TvShowCollection>();
 
     useEffect(() => {
+        //genres
+        MovieService.getGenres().then((e) => {
+            setGenres(e.data.genres);
+        })
+        //movies
         MovieService.getTopRated(1).then((e) => {
             setTopRatedMovies(e.data);
         });
@@ -60,7 +67,7 @@ function LandingPageController() {
                         loading={topRatedMovies === undefined || upComingMovies === undefined || popularMovies === undefined}/>
 
                     <Typography align={'center'} variant={'h3'} className={'mt-2'}>Top Rated</Typography>
-                    <BigCarousel movies={topRatedMovies?.results}/>
+                    <BigCarousel movies={topRatedMovies?.results} genres={genres}/>
 
                     <Tabs value={selectedTab}
                           className={'mt-3'}
@@ -73,7 +80,7 @@ function LandingPageController() {
                     {selectedTab === 0 &&
                     <>
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
-                        <ScrollAnimation animateIn={'fadeInLeft'} >
+                        <ScrollAnimation animateIn={'fadeInLeft'}>
                             <SmallMovieCarousel movies={upComingMovies?.results}/>
                         </ScrollAnimation>
 

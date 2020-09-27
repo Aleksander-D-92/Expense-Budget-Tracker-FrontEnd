@@ -36,7 +36,8 @@ function SmallTvShowCarousel(props: Props) {
     function redirect(e: MouseEvent) {
         history.push(`/tv-shows/${e.currentTarget.id}`)
     }
-
+    //tv show first_air_date  name id backdrop_path
+    //movie release_date title id  backdrop_path
     return (
         <>
             <Carousel responsive={responsive}>
@@ -60,7 +61,9 @@ function SmallTvShowCarousel(props: Props) {
                                         </IconButton>
                                     }
                                 />
-                                <Tooltip title={"Double Click to see details"} placement={'top'} arrow={true}>
+                                <Tooltip title={"Double Click to see details"}
+                                         placement={'top'}
+                                         arrow={true}>
                                     <CardMedia className={'landingPageSmallImage'}
                                                id={`${tvShow.id}`}
                                                onDoubleClick={redirect}

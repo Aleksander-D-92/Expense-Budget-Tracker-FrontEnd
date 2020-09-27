@@ -36,7 +36,6 @@ export interface MovieDetails {
     adult: boolean
     backdrop_path: string
     poster_path: string
-    genres: Genres[]
     original_language: string
     original_title: string
     title: string
@@ -46,6 +45,7 @@ export interface MovieDetails {
     video: boolean
     vote_average: number
     vote_count: number
+    genres: Genre[]
     production_companies: ProductionCompany[],
     production_countries: ProductionCountry[],
     spoken_languages: SpokenLanguages[]
@@ -68,7 +68,11 @@ interface SpokenLanguages {
     name: string
 }
 
-interface Genres {
+interface GetGenresResp {
+    genres: Genre[]
+}
+
+export interface Genre {
     id: number
     name: string
 }
@@ -124,6 +128,10 @@ const MovieService = (function () {
         return axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`);
     }
 
+    function getGenres(): Promise<AxiosResponse<GetGenresResp>> {
+        return axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`);
+    }
+
     return {
         getPopular: (page: number) => getPopular(page),
         getTopRated: (page: number) => getTopRated(page),
@@ -132,6 +140,7 @@ const MovieService = (function () {
         getCredits: (movieId: number) => getCredits(movieId),
         getByTitle: (title: string, page: number) => getByTitle(title, page),
         getDetails: (movieId: number) => getDetails(movieId),
+        getGenres: () => getGenres()
     }
 })();
 
