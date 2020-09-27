@@ -1,6 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
 
-
 export interface MovieCollection {
     page: string
     total_pages: number
@@ -74,6 +73,23 @@ interface Genres {
     name: string
 }
 
+export interface MovieCredits {
+    id: number,
+    cast: CastOrCrew[]
+    crew: CastOrCrew[]
+}
+
+export interface CastOrCrew {
+    cast_id: number
+    character: string
+    credit_id: string
+    gender: number
+    id: string
+    name: string
+    order: number
+    profile_path: string
+}
+
 const MovieService = (function () {
     const API_KEY = '2e0bd1aa1c128cb18713465fe5dbfb12';
 
@@ -103,11 +119,17 @@ const MovieService = (function () {
         return axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
     }
 
+    //returns the cast crew
+    function getCredits(movieId: number): Promise<AxiosResponse<MovieCredits>> {
+        return axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`);
+    }
+
     return {
         getPopular: (page: number) => getPopular(page),
         getTopRated: (page: number) => getTopRated(page),
         getUpComing: (page: number) => getUpComing(page),
         getNowPlaying: (page: number) => getNowPlaying(page),
+        getCredits: (movieId: number) => getCredits(movieId),
         getByTitle: (title: string, page: number) => getByTitle(title, page),
         getDetails: (movieId: number) => getDetails(movieId),
     }
