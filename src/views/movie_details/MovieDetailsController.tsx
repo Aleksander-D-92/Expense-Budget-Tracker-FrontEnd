@@ -5,6 +5,9 @@ import {CastCarousel} from "./CastCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
 import {Typography} from "@material-ui/core";
 import {MovieDescription} from "./MovieDescription";
+import {MovieBackground} from "./MovieBackground";
+import './css/MovieDetails.css'
+import {PageLoading} from "../landing_page/PageLoading";
 
 
 function MovieDetailsController() {
@@ -14,14 +17,16 @@ function MovieDetailsController() {
     useEffect(() => {
         MovieService.getDetails(movieId).then((e) => {
             setMovieDetails(e.data);
+            console.log(e.data);
         });
         MovieService.getCredits(movieId).then((e) => {
             setMovieCredits(e.data);
-            console.log(e.data);
         });
     }, [movieId]);
     return (
         <>
+            <PageLoading loading={movieCredits === undefined || movieDetails === undefined}/>
+            <MovieBackground movieDetails={movieDetails}/>
             <MovieDescription/>
             <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                 Cast

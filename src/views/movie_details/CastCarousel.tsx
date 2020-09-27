@@ -12,7 +12,7 @@ interface Props {
 
 function CastCarousel(props: Props) {
     const history = useHistory();
-    const imageBasePath = 'https://image.tmdb.org/t/p/w780';
+    const imageBasePath = 'https://image.tmdb.org/t/p/h632';
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.

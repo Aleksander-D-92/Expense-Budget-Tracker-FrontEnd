@@ -7,7 +7,6 @@ interface Props {
 function MovieDescription(props: Props) {
     return (
         <>
-            div
         </>
     )
 }
