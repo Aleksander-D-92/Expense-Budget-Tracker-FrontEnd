@@ -40,7 +40,7 @@ function UserRegisterForm(props: Props) {
         <>
             <Grid container justify="center">
                 <Grid xs={11} md={4} className={'mt-4'}>
-                    <Card>
+                    <Card elevation={8}>
                         <CardHeader title={'Registration form'}/>
                         <CardContent>
                             <form onSubmit={handleSubmit(data => props.handleSubmit(data))}>

@@ -90,7 +90,7 @@ function AccountSettingsController() {
         <>
             <Grid container justify="center">
                 <Grid xs={11} md={6} className={'mt-4'}>
-                    <Card>
+                    <Card elevation={8}>
                         {getUserDetailsLoading ? <LinearProgress/> : ''}
                         <CardHeader
                             avatar={

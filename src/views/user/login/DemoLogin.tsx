@@ -11,7 +11,7 @@ function DemoLogin(props: Props) {
     return (
         <>
             <Grid item={true} xs={11} md={4} className={'mt-4'}>
-                <Card>
+                <Card elevation={8}>
                     <CardHeader
                         action={
                             <IconButton aria-label="settings">

@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Grid, Typography} from "@material-ui/core";
+import React, {useEffect, useState, ChangeEvent} from "react";
+import {Grid, Typography, Tab, Tabs} from "@material-ui/core";
 import {MovieCollection, MovieCollectionWithDates, MovieService} from "../../services/the_movie_db/MovieService";
 import {BigCarousel} from "./BigCarousel";
 import {PageLoading} from "./PageLoading";
 import {SmallCarousel} from "./SmallCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
+import {TabPanel} from "@material-ui/lab";
 
 function LandingPageController() {
+    const [selectedTab, setSelectedTab] = useState<number>(0);
     const [topRated, setTopRated] = useState<MovieCollection>();
     const [upComing, setUpComing] = useState<MovieCollection>();
     const [popular, setPopular] = useState<MovieCollection>();
@@ -26,9 +28,13 @@ function LandingPageController() {
             console.log(e.data);
         })
     }, []);
+
+    function handleChange(event: ChangeEvent<{}>, newValue: number) {
+        setSelectedTab(newValue)
+    }
+
     return (
         <>
-            {/*fadeInLeft*/}
             <Grid container={true} justify="center">
                 <Grid item={true} xs={12} md={12}>
                     <PageLoading loading={topRated === undefined || upComing === undefined || popular === undefined}/>
@@ -38,20 +44,31 @@ function LandingPageController() {
                         <BigCarousel movies={topRated?.results}/>
                     </ScrollAnimation>
 
-                    <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
-                    <ScrollAnimation animateIn={'fadeInLeft'}>
-                        <SmallCarousel movies={upComing?.results}/>
-                    </ScrollAnimation>
+                    <Tabs value={selectedTab}
+                          onChange={handleChange}
+                          centered={true}
+                          aria-label="movies or tv shows">
+                        <Tab label="Movies" className={'mr-5'}/>
+                        <Tab label="TV Shows"/>
+                    </Tabs>
+                    {selectedTab === 0 && <>
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
+                        <ScrollAnimation animateIn={'fadeInLeft'}>
+                            <SmallCarousel movies={upComing?.results}/>
+                        </ScrollAnimation>
 
-                    <Typography align={'center'} variant={'h3'} className={'mt-2'}>Popular</Typography>
-                    <ScrollAnimation animateIn={'fadeInRight'}>
-                        <SmallCarousel movies={popular?.results}/>
-                    </ScrollAnimation>
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>Popular</Typography>
+                        <ScrollAnimation animateIn={'fadeInRight'}>
+                            <SmallCarousel movies={popular?.results}/>
+                        </ScrollAnimation>
 
-                    <Typography align={'center'} variant={'h3'} className={'mt-2'}>Now Playing in Theatres</Typography>
-                    <ScrollAnimation animateIn={'fadeInLeft'}>
-                        <SmallCarousel movies={nowPlaying?.results}/>
-                    </ScrollAnimation>
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>Now Playing in
+                            Theatres</Typography>
+                        <ScrollAnimation animateIn={'fadeInLeft'}>
+                            <SmallCarousel movies={nowPlaying?.results}/>
+                        </ScrollAnimation>
+                    </>}
+                    {selectedTab === 1 && <>second</>}
                 </Grid>
             </Grid>
         </>

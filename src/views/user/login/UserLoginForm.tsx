@@ -31,7 +31,7 @@ function UserLoginForm(props: Props) {
         <>
 
             <Grid item={true} xs={11} md={4} className={'mt-4'}>
-                <Card>
+                <Card elevation={8}>
                     <CardHeader title={'Login form'}/>
                     <CardContent>
                         <form onSubmit={handleSubmit(data => props.handleLogin(data))}>
