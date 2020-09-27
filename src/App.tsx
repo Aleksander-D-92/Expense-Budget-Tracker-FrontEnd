@@ -13,6 +13,13 @@ function App() {
         palette: {
             type: "dark",
             primary: purple
+        },
+        overrides: {
+            MuiTooltip: {
+                tooltip: {
+                    fontSize: "0.9em",
+                }
+            }
         }
     });
     return (

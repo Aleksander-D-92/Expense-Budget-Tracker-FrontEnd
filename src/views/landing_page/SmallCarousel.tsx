@@ -1,7 +1,7 @@
 import React, {MouseEvent} from "react";
 import Carousel from "react-multi-carousel";
 import {Movie} from "../../services/the_movie_db/MovieService";
-import {Card, CardHeader, CardMedia, Grid, IconButton} from "@material-ui/core";
+import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {formatDate} from "../../shared/utils/functions";
 import './css/LadningPage.css'
@@ -46,7 +46,7 @@ function SmallCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 480}}>
+                                  style={{maxHeight: 380}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={movie.title}
@@ -57,12 +57,14 @@ function SmallCarousel(props: Props) {
                                         </IconButton>
                                     }
                                 />
-                                <CardMedia className={'landingPageSmallImage'}
-                                           id={`${movie.id}`}
-                                           onDoubleClick={redirect}
-                                           style={{height: 400}}
-                                           image={imageBasePath + movie.backdrop_path}
-                                />
+                                <Tooltip title={"Double Click to see details"} placement={'top'} arrow={true}>
+                                    <CardMedia className={'landingPageSmallImage'}
+                                               id={`${movie.id}`}
+                                               onDoubleClick={redirect}
+                                               style={{height: 300}}
+                                               image={imageBasePath + movie.backdrop_path}
+                                    />
+                                </Tooltip>
                             </Card>
                         </Grid>
                     </Grid>
@@ -72,5 +74,6 @@ function SmallCarousel(props: Props) {
         </>
     )
 }
+
 
 export {SmallCarousel}

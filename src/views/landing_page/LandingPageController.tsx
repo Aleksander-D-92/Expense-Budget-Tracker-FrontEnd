@@ -34,7 +34,9 @@ function LandingPageController() {
                     <PageLoading loading={topRated === undefined || upComing === undefined || popular === undefined}/>
 
                     <Typography align={'center'} variant={'h3'} className={'mt-2'}>Top Rated</Typography>
-                    <BigCarousel movies={topRated?.results}/>
+                    <ScrollAnimation animateIn={'fadeIn'}>
+                        <BigCarousel movies={topRated?.results}/>
+                    </ScrollAnimation>
 
                     <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
                     <ScrollAnimation animateIn={'fadeInLeft'}>
