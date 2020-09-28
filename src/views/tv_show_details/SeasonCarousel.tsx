@@ -5,9 +5,11 @@ import {Card, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} fro
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {formatDate} from "../../shared/utils/functions";
 import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
+import {EpisodesList} from "./EpisodesList";
 
 interface Props {
-    seasons?: Season[]
+    seasons?: Season[],
+    tvShowId?: number
 }
 
 function SeasonCarousel(props: Props) {
@@ -20,10 +22,11 @@ function SeasonCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-5 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 520, minHeight: 520}}>
+                                  style={{maxHeight: 530, minHeight: 530}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={season.name}
+                                    subheader={`Air Date: ${(season.air_date === null) ? 'To Be Decided' : formatDate(season.air_date)}`}
                                 />
                                 <Tooltip title={"Double Click to see details"}>
                                     {season.poster_path !== null ? <CardMedia className={'landingPageSmallImage'}
@@ -39,10 +42,8 @@ function SeasonCarousel(props: Props) {
                                     }
                                 </Tooltip>
                                 <CardContent>
-                                    <Typography variant={'subtitle1'} align={'left'}>
-                                        Air
-                                        Date: {(season.air_date === null) ? 'To Be Decided' : formatDate(season.air_date)}
-                                    </Typography>
+                                    {/*modal prompt*/}
+                                    <EpisodesList seasonNumber={season.season_number} tvShowId={props.tvShowId}/>
                                     <Typography variant={'subtitle1'} align={'left'}>
                                         Number of Episodes: {season.episode_count}
                                     </Typography>

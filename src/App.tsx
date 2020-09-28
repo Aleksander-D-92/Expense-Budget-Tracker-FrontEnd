@@ -12,7 +12,7 @@ function App() {
     const theme = createMuiTheme({
         palette: {
             type: "dark",
-            primary: purple
+            // primary: purple
         },
         overrides: {
             MuiTooltip: {

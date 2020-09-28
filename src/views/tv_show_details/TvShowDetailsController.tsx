@@ -9,7 +9,6 @@ import ScrollAnimation from "react-animate-on-scroll";
 import {Typography} from "@material-ui/core";
 import {SeasonCarousel} from "./SeasonCarousel";
 import {TvShowDescription} from "./TvShowDescription";
-import {EpisodesModal} from "./EpisodesModal";
 
 function TvShowDetailsController() {
     const {tvShowId} = useParams();
@@ -31,7 +30,6 @@ function TvShowDetailsController() {
                                    title={tvShowDetails?.name}
                                    genres={tvShowDetails?.genres}
                                    vote_average={tvShowDetails?.vote_average}/>
-            <EpisodesModal/>
             <ScrollAnimation animateIn={'fadeInUp'}>
                 <TvShowDescription tvShowDetails={tvShowDetails}/>
             </ScrollAnimation>
@@ -39,7 +37,7 @@ function TvShowDetailsController() {
                 Seasons
             </Typography>
             <ScrollAnimation animateIn={'fadeInLeft'}>
-                <SeasonCarousel seasons={tvShowDetails?.seasons}/>
+                <SeasonCarousel seasons={tvShowDetails?.seasons} tvShowId={tvShowDetails?.id}/>
             </ScrollAnimation>
             <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                 Cast
