@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {Genre} from "./MovieService";
+import {Genre, Credits} from "./MovieService";
 
 export interface TvShowCollection {
     page: string
@@ -80,11 +80,16 @@ const TvShowsService = (function () {
         return axios.get(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`);
     }
 
+    function getCredits(id: number): Promise<AxiosResponse<Credits>> {
+        return axios.get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
+    }
+
     return {
         getPopular: (page: number) => getPopular(page),
         getTopRated: (page: number) => getTopRated(page),
         getOnTheAir: (page: number) => getOnTheAir(page),
         getDetails: (id: number) => getDetails(id),
+        getCredits: (id: number) => getCredits(id),
     }
 })();
 export {TvShowsService}

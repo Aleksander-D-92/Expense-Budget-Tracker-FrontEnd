@@ -77,7 +77,7 @@ export interface Genre {
     name: string
 }
 
-export interface MovieCredits {
+export interface Credits {
     id: number,
     cast: CastOrCrew[]
     crew: CastOrCrew[]
@@ -124,7 +124,7 @@ const MovieService = (function () {
     }
 
     //returns the cast crew
-    function getCredits(movieId: number): Promise<AxiosResponse<MovieCredits>> {
+    function getCredits(movieId: number): Promise<AxiosResponse<Credits>> {
         return axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`);
     }
 
