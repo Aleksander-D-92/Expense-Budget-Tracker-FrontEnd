@@ -27,7 +27,9 @@ function MovieDetailsController() {
         <>
             <PageLoading loading={movieCredits === undefined || movieDetails === undefined}/>
             <MovieBackground movieDetails={movieDetails}/>
-            <MovieDescription/>
+            <ScrollAnimation animateIn={'fadeInUp'}>
+                <MovieDescription movieDetails={movieDetails}/>
+            </ScrollAnimation>
             <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                 Cast
             </Typography>

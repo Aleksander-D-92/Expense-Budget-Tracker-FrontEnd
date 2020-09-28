@@ -1,4 +1,4 @@
-import React from "react";
+import React, {MouseEvent} from "react";
 import {useHistory} from "react-router-dom";
 import {CastOrCrew} from "../../services/the_movie_db/MovieService";
 import Carousel from "react-multi-carousel";
@@ -32,6 +32,11 @@ function CastCarousel(props: Props) {
             items: 1
         }
     };
+
+    function redirect(e: MouseEvent) {
+        history.push(`/actors/${e.currentTarget.id}`)
+    }
+
     return (
         <>
             <Carousel responsive={responsive}>
@@ -58,7 +63,7 @@ function CastCarousel(props: Props) {
                                 <Tooltip title={"Double Click to see details"}>
                                     {cast.profile_path !== null ? <CardMedia className={'landingPageSmallImage'}
                                                                              id={`${cast.id}`}
-                                            // onDoubleClick={redirect}
+                                                                             onDoubleClick={redirect}
                                                                              style={{height: 300}}
                                                                              image={imageBasePath + cast.profile_path}
                                         /> :
