@@ -5,9 +5,9 @@ import {CastCarousel} from "./CastCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
 import {Typography} from "@material-ui/core";
 import {MovieDescription} from "./MovieDescription";
-import {MovieBackground} from "./MovieBackground";
+import {MovieTvShowBackground} from "../shered/MovieTvShowBackground";
 import './css/MovieDetails.css'
-import {PageLoading} from "../landing_page/PageLoading";
+import {PageLoading} from "../shered/PageLoading";
 
 
 function MovieDetailsController() {
@@ -27,7 +27,11 @@ function MovieDetailsController() {
     return (
         <>
             <PageLoading loading={movieCredits === undefined || movieDetails === undefined}/>
-            <MovieBackground movieDetails={movieDetails}/>
+            <MovieTvShowBackground backdrop_path={movieDetails?.backdrop_path}
+                                   poster_path={movieDetails?.poster_path}
+                                   title={movieDetails?.title}
+                                   genres={movieDetails?.genres}
+                                   vote_average={movieDetails?.vote_average}/>
             <ScrollAnimation animateIn={'fadeInUp'}>
                 <MovieDescription movieDetails={movieDetails}/>
             </ScrollAnimation>

@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {Grid, Tab, Tabs, Typography} from "@material-ui/core";
 import {Genre, MovieCollection, MovieCollectionWithDates, MovieService} from "../../services/the_movie_db/MovieService";
 import {BigCarousel} from "./BigCarousel";
-import {PageLoading} from "./PageLoading";
+import {PageLoading} from "../shered/PageLoading";
 import {SmallMovieCarousel} from "./SmallMovieCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
 import {TvShowCollection, TvShowsService} from "../../services/the_movie_db/TvShowsService";

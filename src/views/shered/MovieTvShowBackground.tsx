@@ -1,14 +1,19 @@
 import React, {useEffect, useState} from "react";
-import {MovieDetails} from "../../services/the_movie_db/MovieService";
+import {Genre} from "../../services/the_movie_db/MovieService";
 import {Card, CardMedia, Grid, Typography} from "@material-ui/core";
 // @ts-ignore
 import ReactStars from "react-rating-stars-component";
 
 interface Props {
-    movieDetails?: MovieDetails
+    id?: number,
+    backdrop_path?: string,
+    poster_path?: string
+    title?: string,
+    genres?: Genre[]
+    vote_average?: number
 }
 
-function MovieBackground(props: Props) {
+function MovieTvShowBackground(props: Props) {
     const [visible, setVisible] = useState<boolean>(true)
     useEffect(() => {
         setVisible(false)
@@ -23,9 +28,9 @@ function MovieBackground(props: Props) {
                 <Grid item={true} xs={12} md={12}>
                     <Card elevation={8}>
                         <CardMedia
-                            id={`${props.movieDetails?.id}`}
+                            id={`${props.id}`}
                             style={{height: 800}}
-                            image={imageBasePath + props.movieDetails?.backdrop_path}
+                            image={imageBasePath + props.backdrop_path}
                         >
                             <div style={{
                                 width: '100%',
@@ -35,21 +40,21 @@ function MovieBackground(props: Props) {
 
                             <div className={'movieDetailsTextProps'}>
                                 <Typography variant="h4">
-                                    {props.movieDetails?.title}
+                                    {props.title}
                                 </Typography>
                                 <Typography variant="h5">
-                                    Genres: {props.movieDetails?.genres.map(genre => genre.name).join(`, `)} <br/>
-                                    Rating: {props.movieDetails?.vote_average} {props.movieDetails !== undefined ?
+                                    Genres: {props.genres?.map(genre => genre.name).join(`, `)} <br/>
+                                    Rating: {props.vote_average} {props.vote_average !== undefined ?
                                     <ReactStars style={{display: 'inline-block'}}
                                                 count={10}
                                                 size={30}
-                                                value={props.movieDetails.vote_average}
+                                                value={props.vote_average}
                                                 activeColor="#ffd700"
                                     /> : ''}
                                 </Typography>
-                                <img src={`https://image.tmdb.org/t/p/w342${props.movieDetails?.poster_path}`}
+                                <img src={`https://image.tmdb.org/t/p/w342${props.poster_path}`}
                                      style={{position: 'relative', bottom: 200, left: -160}} height={200}
-                                     width={150}/>
+                                     width={150} alt={'No image Available'}/>
                             </div>
                         </CardMedia>
                     </Card>
@@ -59,4 +64,4 @@ function MovieBackground(props: Props) {
     )
 }
 
-export {MovieBackground}
+export {MovieTvShowBackground}

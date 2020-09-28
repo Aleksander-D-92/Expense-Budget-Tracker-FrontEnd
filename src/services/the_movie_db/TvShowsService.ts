@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
+import {Genre} from "./MovieService";
 
 export interface TvShowCollection {
     page: string
@@ -24,8 +25,17 @@ export interface TvShow {
 }
 
 export interface TVShowDetails extends TvShow {
-    production_companies: TvShowProductionCompany[]
+    genres: Genre[]
+    production_companies: ProductionCompany[]
     seasons: Seasons[]
+    networks: NetWork[]
+}
+
+interface NetWork {
+    id: number
+    name: string
+    logo_path: string
+    origin_country: string
 }
 
 interface Seasons {
@@ -38,7 +48,7 @@ interface Seasons {
     season_number: number
 }
 
-interface TvShowProductionCompany {
+interface ProductionCompany {
     id: number
     logo_path: string
     name: string
