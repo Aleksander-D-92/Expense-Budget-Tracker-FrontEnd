@@ -6,6 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import {formatDate} from "../../shared/utils/functions";
 import './css/LadningPage.css'
 import {useHistory} from 'react-router-dom';
+import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
 
 interface Props {
     movies?: Movie[],
@@ -14,25 +15,6 @@ interface Props {
 function SmallMovieCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
-    const responsive = {
-        superLargeDesktop: {
-            // the naming can be any, depends on you.
-            breakpoint: {max: 4000, min: 3000},
-            items: 5
-        },
-        desktop: {
-            breakpoint: {max: 3000, min: 1024},
-            items: 5
-        },
-        tablet: {
-            breakpoint: {max: 1024, min: 464},
-            items: 2
-        },
-        mobile: {
-            breakpoint: {max: 464, min: 0},
-            items: 1
-        }
-    };
 
     function redirect(e: MouseEvent) {
         history.push(`/movies/${e.currentTarget.id}`)
@@ -40,11 +22,11 @@ function SmallMovieCarousel(props: Props) {
 
     return (
         <>
-            <Carousel responsive={responsive}>
+            <Carousel responsive={SMALL_CAROUSEL_RESPONSIVE}>
                 {props.movies !== undefined ? props.movies.map(movie => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
-                            <Card className={'mt-2 landingPageSmallCard'}
+                            <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
                                   style={{maxHeight: 380}}>
                                 <CardHeader

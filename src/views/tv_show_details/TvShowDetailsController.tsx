@@ -8,6 +8,7 @@ import {CastCarousel} from "../shered/CastCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
 import {Typography} from "@material-ui/core";
 import {SeasonCarousel} from "./SeasonCarousel";
+import {TvShowDescription} from "./TvShowDescription";
 
 function TvShowDetailsController() {
     const {tvShowId} = useParams();
@@ -29,12 +30,19 @@ function TvShowDetailsController() {
                                    title={tvShowDetails?.name}
                                    genres={tvShowDetails?.genres}
                                    vote_average={tvShowDetails?.vote_average}/>
+
+            <ScrollAnimation animateIn={'fadeInUp'}>
+                <TvShowDescription tvShowDetails={tvShowDetails}/>
+            </ScrollAnimation>
+            <Typography align={'center'} variant={'h3'} className={'mt-2'}>
+                Seasons
+            </Typography>
+            <ScrollAnimation animateIn={'fadeInLeft'}>
+                <SeasonCarousel seasons={tvShowDetails?.seasons}/>
+            </ScrollAnimation>
             <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                 Cast
             </Typography>
-            <ScrollAnimation animateIn={'fadeInLeft'}>
-                <SeasonCarousel/>
-            </ScrollAnimation>
             <ScrollAnimation animateIn={'fadeInRight'}>
                 <CastCarousel cast={tvShowCredits?.cast}/>
             </ScrollAnimation>

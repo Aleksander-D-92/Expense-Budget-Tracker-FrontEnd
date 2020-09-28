@@ -3,6 +3,9 @@ function formatDate(date: Date | undefined): string {
         return '';
     }
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    if (date === null) {
+        return '';
+    }
     let strings = date.toString().substring(0, 10).split('-').reverse();
     strings[1] = months[parseInt(strings[1]) - 1];
     return strings.join(" ").toString();

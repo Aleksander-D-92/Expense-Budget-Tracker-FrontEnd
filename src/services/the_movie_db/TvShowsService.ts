@@ -27,7 +27,7 @@ export interface TvShow {
 export interface TVShowDetails extends TvShow {
     genres: Genre[]
     production_companies: ProductionCompany[]
-    seasons: Seasons[]
+    seasons: Season[]
     networks: NetWork[]
 }
 
@@ -38,7 +38,7 @@ interface NetWork {
     origin_country: string
 }
 
-interface Seasons {
+export interface Season {
     air_date: Date
     episode_count: number
     id: number
