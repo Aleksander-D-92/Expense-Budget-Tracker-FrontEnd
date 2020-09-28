@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {MovieDetails} from "../../services/the_movie_db/MovieService";
 import {Card, CardMedia, Grid, Typography} from "@material-ui/core";
 // @ts-ignore
@@ -9,9 +9,16 @@ interface Props {
 }
 
 function MovieBackground(props: Props) {
+    const [visible, setVisible] = useState<boolean>(true)
+    useEffect(() => {
+        setVisible(false)
+    }, [])
+
     const imageBasePath = 'https://image.tmdb.org/t/p/original';
     return (
         <>
+            {/*input is here to fix autofocus bug*/}
+            <input type="text" autoFocus={true} style={{display: (visible) ? 'block' : 'none'}}/>
             <Grid container={true} justify={'center'}>
                 <Grid item={true} xs={12} md={12}>
                     <Card elevation={8}>

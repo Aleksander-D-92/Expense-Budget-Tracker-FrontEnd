@@ -23,6 +23,7 @@ function MovieDetailsController() {
             setMovieCredits(e.data);
         });
     }, [movieId]);
+
     return (
         <>
             <PageLoading loading={movieCredits === undefined || movieDetails === undefined}/>
