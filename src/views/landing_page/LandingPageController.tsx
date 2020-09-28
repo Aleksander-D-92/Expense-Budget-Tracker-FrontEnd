@@ -69,12 +69,12 @@ function LandingPageController() {
                     {/*<Typography align={'center'} variant={'h3'} className={'mt-2'}>Top Rated</Typography>*/}
                     <BigCarousel movies={topRatedMovies?.results} genres={genres}/>
                     <Tabs value={selectedTab}
-                          className={'mt-4 mb-2'}
+                          className={'mt-4 mb-5'}
                           onChange={handleChange}
                           centered={true}
                           aria-label="movies or tv shows">
-                        <Tab style={{fontSize: '1.2em'}} label="Movies" className={'mr-5'}/>
-                        <Tab style={{fontSize: '1.2em'}} label="TV Shows"/>
+                        <Tab style={{fontSize: '1.3em'}} label="Movies" className={'mr-5'}/>
+                        <Tab style={{fontSize: '1.3em'}} label="TV Shows"/>
                     </Tabs>
                     {selectedTab === 0 &&
                     <>

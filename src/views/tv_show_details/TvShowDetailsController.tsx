@@ -9,6 +9,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 import {Typography} from "@material-ui/core";
 import {SeasonCarousel} from "./SeasonCarousel";
 import {TvShowDescription} from "./TvShowDescription";
+import {EpisodesModal} from "./EpisodesModal";
 
 function TvShowDetailsController() {
     const {tvShowId} = useParams();
@@ -24,13 +25,13 @@ function TvShowDetailsController() {
     }, [tvShowId])
     return (
         <>
-            <PageLoading loading={tvShowDetails === undefined}/>
+            <PageLoading loading={tvShowDetails === undefined || tvShowCredits === undefined}/>
             <MovieTvShowBackground backdrop_path={tvShowDetails?.backdrop_path}
                                    poster_path={tvShowDetails?.poster_path}
                                    title={tvShowDetails?.name}
                                    genres={tvShowDetails?.genres}
                                    vote_average={tvShowDetails?.vote_average}/>
-
+            <EpisodesModal/>
             <ScrollAnimation animateIn={'fadeInUp'}>
                 <TvShowDescription tvShowDetails={tvShowDetails}/>
             </ScrollAnimation>

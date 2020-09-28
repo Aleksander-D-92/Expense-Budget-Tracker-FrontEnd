@@ -22,7 +22,7 @@ function TvShowDescription(props: Props) {
                 <Grid xs={11}>
                     <Card elevation={10} className={'mt-2'}>
                         <CardHeader
-                            title="Movie Info"
+                            title="Tv Show Info"
                         />
                         <CardContent>
                             <Typography variant={'h6'}>

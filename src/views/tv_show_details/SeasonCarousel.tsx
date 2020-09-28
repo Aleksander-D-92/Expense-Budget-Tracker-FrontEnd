@@ -1,8 +1,7 @@
 import React from "react";
 import {Season} from "../../services/the_movie_db/TvShowsService";
 import Carousel from "react-multi-carousel";
-import {Card, CardContent, CardHeader, CardMedia, Grid, IconButton, Tooltip, Typography} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+import {Card, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {formatDate} from "../../shared/utils/functions";
 import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
@@ -19,27 +18,17 @@ function SeasonCarousel(props: Props) {
                 {props.seasons !== undefined ? props.seasons.map(season => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
-                            <Card className={'mt-2 mb-4 landingPageSmallCard'}
+                            <Card className={'mt-2 mb-5 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 470, minHeight: 470}}>
+                                  style={{maxHeight: 520, minHeight: 520}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={season.name}
-                                    subheader={`Season: ${season.season_number}`}
-                                    action={
-                                        <IconButton aria-label="settings">
-                                            <Tooltip title={"Click to add to favorites"}
-                                                     placement={'top'}
-                                                     arrow={true}>
-                                                <AddIcon/>
-                                            </Tooltip>
-                                        </IconButton>
-                                    }
                                 />
                                 <Tooltip title={"Double Click to see details"}>
                                     {season.poster_path !== null ? <CardMedia className={'landingPageSmallImage'}
                                                                               id={`${season.id}`}
-                                                                              style={{height: 300}}
+                                                                              style={{height: 380}}
                                                                               image={imageBasePath + season.poster_path}
                                         /> :
                                         <>
@@ -51,7 +40,8 @@ function SeasonCarousel(props: Props) {
                                 </Tooltip>
                                 <CardContent>
                                     <Typography variant={'subtitle1'} align={'left'}>
-                                        Air Date: {(season.air_date === null) ? 'To Be Decided' : formatDate(season.air_date)}
+                                        Air
+                                        Date: {(season.air_date === null) ? 'To Be Decided' : formatDate(season.air_date)}
                                     </Typography>
                                     <Typography variant={'subtitle1'} align={'left'}>
                                         Number of Episodes: {season.episode_count}
