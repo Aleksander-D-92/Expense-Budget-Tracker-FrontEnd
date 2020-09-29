@@ -43,7 +43,7 @@ function ActorDetailsController() {
                         </Typography>
                         <ActorMovieTvShowCarousel tvOrMovie={actorMovieCredits?.cast}/>
                         <Typography align={'center'} variant={'h4'} className={'mt-2'}>
-                            Tv Shows known for
+                            TV Shows known for
                         </Typography>
                         <ActorMovieTvShowCarousel tvOrMovie={actorTvCredits?.cast}/>
                     </ScrollAnimation>

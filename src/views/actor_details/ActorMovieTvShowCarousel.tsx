@@ -29,9 +29,9 @@ function ActorMovieTvShowCarousel(props: Props) {
                 {props.tvOrMovie !== undefined ? props.tvOrMovie.filter(show => show.backdrop_path !== null).map(show => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
-                            <Card className={'mt-2 mb-4 landingPageSmallCard'}
+                            <Card className={'mt-2 mb-5 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 450}}>
+                                  style={{maxHeight: 480, minHeight: 480}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={(show.title === undefined) ? show.name : show.title}

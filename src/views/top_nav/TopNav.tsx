@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import {capitalizeString} from "../../shared/utils/functions";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
+import {TopNavSearch} from "./TopNavSearch";
 
 interface Props {
     handleCLose: Function
@@ -20,12 +21,13 @@ interface Props {
 function TopNav(props: Props) {
     return (
         <>
-            <AppBar position={'sticky'}>
-                <Toolbar>
+            <AppBar position={'sticky'} style={{height: '60px'}} color={'inherit'}>
+                <Toolbar style={{height: '60px'}}>
                     <Button color="inherit" component={Link} to={'/'}
                             className={''}>
                         <HomeIcon/>Home
                     </Button>
+                    <TopNavSearch/>
                     <Hidden smDown={true}>
                         {props.loggedIn ?
                             <>

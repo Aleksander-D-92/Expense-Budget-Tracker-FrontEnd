@@ -53,8 +53,10 @@ function MovieTvShowBackground(props: Props) {
                                     /> : ''}
                                 </Typography>
                                 <img src={`https://image.tmdb.org/t/p/w342${props.poster_path}`}
-                                     style={{position: 'relative', bottom: 200, left: -160}} height={200}
-                                     width={150} alt={'No image Available'}/>
+                                     style={{position: 'relative', bottom: 200, left: -160}}
+                                     height={200}
+                                     width={150}
+                                     alt={'Not Available'}/>
                             </div>
                         </CardMedia>
                     </Card>

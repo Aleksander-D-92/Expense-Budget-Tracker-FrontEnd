@@ -18,11 +18,11 @@ function ActorBackground(props: Props) {
         <>
             {/*input is here to fix autofocus bug*/}
             <input type="text" autoFocus={true} style={{display: (visible) ? 'block' : 'none'}}/>
-            <Card elevation={8}>
+            <Card elevation={8} className={'mt-2'}>
                 <CardMedia
-                    id={`${props.actorDetails?.id}`}
-                    style={{height: 1050}}
-                    image={imageBasePath + props.actorDetails?.profile_path}
+                           id={`${props.actorDetails?.id}`}
+                           style={{height: 1110}}
+                           image={imageBasePath + props.actorDetails?.profile_path}
                 >
                     <div className={'movieDetailsTextProps'}>
                         <Typography variant="h4">

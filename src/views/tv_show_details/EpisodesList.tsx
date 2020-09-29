@@ -42,18 +42,20 @@ function EpisodesList(props: Props) {
                 View Episodes List
             </Button>
             <Dialog
+                style={{minWidth: '600px'}}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{`${seasonDetails?.name} - ${seasonDetails?.episodes.length} episodes`}</DialogTitle>
+                <DialogTitle
+                    id="alert-dialog-title">{`${seasonDetails?.name} - ${seasonDetails?.episodes.length} episodes`}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <List component="nav" aria-label="main mailbox folders">
                             {seasonDetails?.episodes.map(e => {
                                 return <>
-                                    <ListItem button >
+                                    <ListItem button>
                                         <ListItemText primary={`${e.episode_number} : ${e.name}`}/>
                                     </ListItem>
                                     <Divider/>

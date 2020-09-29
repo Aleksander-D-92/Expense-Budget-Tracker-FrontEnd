@@ -1,7 +1,7 @@
 import React from "react";
 import {Season} from "../../services/the_movie_db/TvShowsService";
 import Carousel from "react-multi-carousel";
-import {Card, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
+import {Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {formatDate} from "../../shared/utils/functions";
 import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
