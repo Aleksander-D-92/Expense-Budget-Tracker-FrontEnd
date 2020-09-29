@@ -3,8 +3,10 @@ import {useParams} from 'react-router-dom';
 import {ActorDetails, ActorMovieOrTvCreditsResponse, ActorService} from "../../services/the_movie_db/ActorService";
 import {PageLoading} from "../shered/PageLoading";
 import {ActorBackground} from "./ActorBackground";
-import {Grid} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 import {ActorDescription} from "./ActorDescription";
+import {ActorMovieTvShowCarousel} from "./ActorMovieTvShowCarousel";
+import ScrollAnimation from "react-animate-on-scroll";
 
 function ActorDetailsController() {
     const {actorId} = useParams();
@@ -27,12 +29,31 @@ function ActorDetailsController() {
             <PageLoading
                 loading={actorDetails === undefined || actorTvCredits === undefined || actorMovieCredits === undefined}
             />
-            <Grid container={true} justify={'center'}>
+            <Grid container={true} justify={'center'} spacing={1}>
                 <Grid item={true} xs={12} md={6}>
-                    <ActorBackground actorDetails={actorDetails}/>
+                    <ScrollAnimation animateIn={'fadeInLeft'}>
+                        <ActorBackground actorDetails={actorDetails}/>
+                    </ScrollAnimation>
                 </Grid>
                 <Grid item={true} xs={12} md={6}>
-                    <ActorDescription actorDetails={actorDetails}/>
+
+                    <ScrollAnimation animateIn={'fadeInRight'}>
+                        <Typography align={'center'} variant={'h4'} className={'mt-2'}>
+                            Movies know for
+                        </Typography>
+                        <ActorMovieTvShowCarousel tvOrMovie={actorMovieCredits?.cast}/>
+                        <Typography align={'center'} variant={'h4'} className={'mt-2'}>
+                            Tv Shows known for
+                        </Typography>
+                        <ActorMovieTvShowCarousel tvOrMovie={actorTvCredits?.cast}/>
+                    </ScrollAnimation>
+
+
+                </Grid>
+                <Grid item={true} xs={12} md={11}>
+                    <ScrollAnimation animateIn={'fadeInUp'}>
+                        <ActorDescription actorDetails={actorDetails}/>
+                    </ScrollAnimation>
                 </Grid>
             </Grid>
         </>

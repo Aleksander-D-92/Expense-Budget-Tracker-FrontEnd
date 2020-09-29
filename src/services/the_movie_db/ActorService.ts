@@ -18,18 +18,20 @@ export interface ActorDetails {
 }
 
 export interface ActorMovieOrTvCreditsResponse {
-    cast: ActorMovieCredits[]
+    cast: ActorMovieOrTvCredits[]
 }
 
-export interface ActorMovieCredits {
+export interface ActorMovieOrTvCredits {
     character: string
     credit_id: string
     release_date: Date
+    first_air_date: Date
     vote_count: number
     video: boolean
     adult: boolean
     vote_average: number
     title: string
+    name: string
     genre_ids: number[]
     original_language: string
     original_title: string

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ActorDetails} from "../../services/the_movie_db/ActorService";
-import {Card, CardMedia, Grid, Typography} from "@material-ui/core";
+import {Card, CardMedia, Typography} from "@material-ui/core";
 
 interface Props {
     actorDetails?: ActorDetails
@@ -21,7 +21,7 @@ function ActorBackground(props: Props) {
             <Card elevation={8}>
                 <CardMedia
                     id={`${props.actorDetails?.id}`}
-                    style={{height: 800}}
+                    style={{height: 1050}}
                     image={imageBasePath + props.actorDetails?.profile_path}
                 >
                     <div className={'movieDetailsTextProps'}>

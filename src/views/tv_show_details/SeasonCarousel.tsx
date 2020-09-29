@@ -35,7 +35,7 @@ function SeasonCarousel(props: Props) {
                                     /> :
                                     <>
                                         <Typography variant={'h5'} align={'center'}>
-                                            Not out yet <br/> <HighlightOffIcon fontSize={'large'}/>
+                                            No image available <br/> <HighlightOffIcon fontSize={'large'}/>
                                         </Typography>
                                     </>
                                 }

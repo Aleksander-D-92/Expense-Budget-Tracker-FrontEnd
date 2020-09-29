@@ -1,36 +1,41 @@
 import React, {MouseEvent} from "react";
-import {TvShow} from "../../services/the_movie_db/TvShowsService";
+import {ActorMovieOrTvCredits} from "../../services/the_movie_db/ActorService";
 import {useHistory} from "react-router-dom";
 import Carousel from "react-multi-carousel";
-import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip} from "@material-ui/core";
+import {ACTOR_DETAILS_CAROUSEL} from "../../shared/utils/variables";
+import {Card, CardContent, CardHeader, CardMedia, Grid, IconButton, Tooltip, Typography} from "@material-ui/core";
 import {formatDate} from "../../shared/utils/functions";
 import AddIcon from "@material-ui/icons/Add";
-import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
 
 interface Props {
-    tvShows?: TvShow[]
+    tvOrMovie?: ActorMovieOrTvCredits[]
 }
 
-function SmallTvShowCarousel(props: Props) {
+function ActorMovieTvShowCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
 
     function redirect(e: MouseEvent) {
-        history.push(`/tv-shows/${e.currentTarget.id}`)
+        if (props.tvOrMovie?.[0].first_air_date === undefined) {
+            history.push(`/movies/${e.currentTarget.id}`)
+        } else {
+            history.push(`/tv-shows/${e.currentTarget.id}`)
+        }
     }
+
     return (
         <>
-            <Carousel responsive={SMALL_CAROUSEL_RESPONSIVE}>
-                {props.tvShows !== undefined ? props.tvShows.map(tvShow => {
+            <Carousel responsive={ACTOR_DETAILS_CAROUSEL}>
+                {props.tvOrMovie !== undefined ? props.tvOrMovie.filter(show => show.backdrop_path !== null).map(show => {
                     return <Grid container={true} justify={'center'}>
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 380}}>
+                                  style={{maxHeight: 450}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={tvShow.name}
-                                    subheader={`Release Date: ${formatDate(tvShow.first_air_date)}`}
+                                    title={(show.title === undefined) ? show.name : show.title}
+                                    subheader={`Release Date: ${(show.release_date !== undefined) ? formatDate(show.release_date) : formatDate(show.first_air_date)}`}
                                     action={
                                         <IconButton aria-label="settings">
                                             <Tooltip title={"Click to add to favorites"}
@@ -45,12 +50,17 @@ function SmallTvShowCarousel(props: Props) {
                                          placement={'top'}
                                          arrow={true}>
                                     <CardMedia className={'landingPageSmallImage'}
-                                               id={`${tvShow.id}`}
+                                               id={`${show.id}`}
                                                onDoubleClick={redirect}
                                                style={{height: 300}}
-                                               image={imageBasePath + tvShow.backdrop_path}
+                                               image={imageBasePath + show.backdrop_path}
                                     />
                                 </Tooltip>
+                                <CardContent>
+                                    <Typography variant={'h6'}>
+                                        Playing as : {show.character}
+                                    </Typography>
+                                </CardContent>
                             </Card>
                         </Grid>
                     </Grid>
@@ -60,4 +70,4 @@ function SmallTvShowCarousel(props: Props) {
     )
 }
 
-export {SmallTvShowCarousel}
+export {ActorMovieTvShowCarousel}
