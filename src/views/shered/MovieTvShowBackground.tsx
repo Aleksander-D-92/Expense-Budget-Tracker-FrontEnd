@@ -17,7 +17,7 @@ function MovieTvShowBackground(props: Props) {
     const [visible, setVisible] = useState<boolean>(true)
     useEffect(() => {
         setVisible(false)
-    }, [])
+    }, []);
 
     const imageBasePath = 'https://image.tmdb.org/t/p/original';
     return (

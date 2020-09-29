@@ -7,8 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {SeasonDetails, TvShowsService} from "../../services/the_movie_db/TvShowsService";
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import {Divider, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Divider, List, ListItem, ListItemText} from "@material-ui/core";
 
 
 interface Props {
@@ -23,9 +22,8 @@ function EpisodesList(props: Props) {
         if (props.tvShowId !== undefined) {
             TvShowsService.getSeasonDetails(props.tvShowId, props.seasonNumber).then((e) => {
                 setSeasonDetails(e.data)
-            })
+            });
         }
-        console.log(props.seasonNumber, props.tvShowId);
     }, [props.tvShowId, props.seasonNumber])
 
     const handleClickOpen = () => {
@@ -49,13 +47,13 @@ function EpisodesList(props: Props) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Episode List"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{`${seasonDetails?.name} - ${seasonDetails?.episodes.length} episodes`}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <List component="nav" aria-label="main mailbox folders">
                             {seasonDetails?.episodes.map(e => {
                                 return <>
-                                    <ListItem button component={Link} to={'/tv-shows/episode/2'}>
+                                    <ListItem button >
                                         <ListItemText primary={`${e.episode_number} : ${e.name}`}/>
                                     </ListItem>
                                     <Divider/>

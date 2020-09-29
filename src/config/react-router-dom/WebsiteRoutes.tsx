@@ -9,6 +9,7 @@ import {AdminEditUserController} from "../../views/admin/edit-user/AdminEditUser
 import {LandingPageController} from "../../views/landing_page/LandingPageController";
 import {MovieDetailsController} from "../../views/movie_details/MovieDetailsController";
 import {TvShowDetailsController} from "../../views/tv_show_details/TvShowDetailsController";
+import {ActorDetailsController} from "../../views/actor_details/ActorDetailsController";
 
 function WebsiteRoutes() {
     return (
@@ -22,6 +23,7 @@ function WebsiteRoutes() {
             <Route exact={true} path={'/admins/edit-user/:userId'}><AdminEditUserController/></Route>
             <Route exact={true} path={'/movies/:movieId'}><MovieDetailsController/></Route>
             <Route exact={true} path={'/tv-shows/:tvShowId'}><TvShowDetailsController/></Route>
+            <Route exact={true} path={'/actors/:actorId'}><ActorDetailsController/></Route>
         </Switch>
     )
 }

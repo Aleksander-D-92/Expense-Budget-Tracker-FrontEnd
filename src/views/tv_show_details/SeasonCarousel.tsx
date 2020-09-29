@@ -28,25 +28,20 @@ function SeasonCarousel(props: Props) {
                                     title={season.name}
                                     subheader={`Air Date: ${(season.air_date === null) ? 'To Be Decided' : formatDate(season.air_date)}`}
                                 />
-                                <Tooltip title={"Double Click to see details"}>
-                                    {season.poster_path !== null ? <CardMedia className={'landingPageSmallImage'}
-                                                                              id={`${season.id}`}
-                                                                              style={{height: 380}}
-                                                                              image={imageBasePath + season.poster_path}
-                                        /> :
-                                        <>
-                                            <Typography variant={'h5'} align={'center'}>
-                                                Not out yet <br/> <HighlightOffIcon fontSize={'large'}/>
-                                            </Typography>
-                                        </>
-                                    }
-                                </Tooltip>
+                                {season.poster_path !== null ? <CardMedia className={'landingPageSmallImage'}
+                                                                          id={`${season.id}`}
+                                                                          style={{height: 380}}
+                                                                          image={imageBasePath + season.poster_path}
+                                    /> :
+                                    <>
+                                        <Typography variant={'h5'} align={'center'}>
+                                            Not out yet <br/> <HighlightOffIcon fontSize={'large'}/>
+                                        </Typography>
+                                    </>
+                                }
                                 <CardContent>
                                     {/*modal prompt*/}
                                     <EpisodesList seasonNumber={season.season_number} tvShowId={props.tvShowId}/>
-                                    <Typography variant={'subtitle1'} align={'left'}>
-                                        Number of Episodes: {season.episode_count}
-                                    </Typography>
                                 </CardContent>
                             </Card>
                         </Grid>

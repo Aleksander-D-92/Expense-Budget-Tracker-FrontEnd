@@ -20,7 +20,7 @@ function TvShowDetailsController() {
         });
         TvShowsService.getCredits(tvShowId).then((e) => {
             setTvShowCredits(e.data);
-        })
+        });
     }, [tvShowId])
     return (
         <>

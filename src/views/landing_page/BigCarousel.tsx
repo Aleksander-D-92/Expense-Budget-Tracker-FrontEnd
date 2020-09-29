@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState} from "react";
+import React, {MouseEvent, useEffect, useState} from "react";
 import {Card, CardMedia, Grid, LinearProgress, Tooltip, Typography} from "@material-ui/core";
 import {Genre, Movie} from "../../services/the_movie_db/MovieService";
 import {useHistory} from "react-router-dom";
@@ -12,7 +12,8 @@ interface Props {
 
 
 function BigCarousel(props: Props) {
-    const [progressValue, setProgressValue] = useState<number>(1)
+    const [progressValue, setProgressValue] = useState<number>(1);
+    const [visible, setVisible] = useState<boolean>(true);
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/original';
     const responsive = {
@@ -34,7 +35,9 @@ function BigCarousel(props: Props) {
             items: 1
         }
     };
-
+    useEffect(() => {
+        setVisible(false)
+    }, []);
     function redirect(e: MouseEvent) {
         history.push(`/movies/${e.currentTarget.id}`)
     }
@@ -50,6 +53,7 @@ function BigCarousel(props: Props) {
 
     return (
         <>
+            <input type="text" autoFocus={true} style={{display: (visible) ? 'block' : 'none'}}/>
             <LinearProgress variant={'determinate'} color={'secondary'} value={progressValue}/>
             <Carousel beforeChange={(e) => handleClick(e)}
                       autoPlay={true}
