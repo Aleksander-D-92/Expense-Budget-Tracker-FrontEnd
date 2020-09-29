@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
-import {
-    ActorDetails,
-    ActorMovieOrTvCreditsResponse,
-    ActorService
-} from "../../services/the_movie_db/ActorService";
+import {ActorDetails, ActorMovieOrTvCreditsResponse, ActorService} from "../../services/the_movie_db/ActorService";
+import {PageLoading} from "../shered/PageLoading";
+import {ActorBackground} from "./ActorBackground";
+import {Grid} from "@material-ui/core";
+import {ActorDescription} from "./ActorDescription";
 
 function ActorDetailsController() {
     const {actorId} = useParams();
@@ -24,7 +24,17 @@ function ActorDetailsController() {
     }, [actorId])
     return (
         <>
-            div {actorId}
+            <PageLoading
+                loading={actorDetails === undefined || actorTvCredits === undefined || actorMovieCredits === undefined}
+            />
+            <Grid container={true} justify={'center'}>
+                <Grid item={true} xs={12} md={6}>
+                    <ActorBackground actorDetails={actorDetails}/>
+                </Grid>
+                <Grid item={true} xs={12} md={6}>
+                    <ActorDescription actorDetails={actorDetails}/>
+                </Grid>
+            </Grid>
         </>
     )
 }

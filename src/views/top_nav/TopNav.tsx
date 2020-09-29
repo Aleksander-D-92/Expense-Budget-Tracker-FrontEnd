@@ -20,7 +20,7 @@ interface Props {
 function TopNav(props: Props) {
     return (
         <>
-            <AppBar position="fixed">
+            <AppBar position={'sticky'}>
                 <Toolbar>
                     <Button color="inherit" component={Link} to={'/'}
                             className={''}>
