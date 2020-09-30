@@ -6,16 +6,14 @@ import {useHistory} from 'react-router-dom';
 
 
 function TopNavSearch() {
-    const [response, setResponse] = useState<MultiSearchResult[]>([]);
+    const [results, setResults] = useState<MultiSearchResult[]>([]);
     const [currentValue, setCurrentValue] = useState<string>();
     const history = useHistory();
 
     function getResults(event: ChangeEvent<{}>, value: string) {
         setCurrentValue(value);
-        if (value.includes(' - ')) {
-            return;
-        }
-        if (value === '' || value === undefined) {
+        //this condition is used to no reset the value of 'response' state, when the final result is picked
+        if (value.includes(' - ') || value === '' || value === undefined) {
             return;
         }
         let respObj = {
@@ -24,6 +22,7 @@ function TopNavSearch() {
             title: '',
             name: ''
         }
+        //fetching results from the DB and casting them to MultiSearchResult
         MultiSearchService.getResults(value).then((e) => {
             let mapped = e.data.results.map(result => {
                 switch (result.media_type) {
@@ -55,10 +54,10 @@ function TopNavSearch() {
                         return respObj
                 }
             });
-            setResponse(mapped);
+            setResults(mapped);
         });
     }
-
+    //this is used to properly visualize the suggestions
     function visualizeResult(obj: MultiSearchResult): string {
         if (obj.title === '') {
             return `${obj.name} - ${obj.media_type}`;
@@ -66,7 +65,7 @@ function TopNavSearch() {
             return `${obj.title} - ${obj.media_type}`;
         }
     }
-
+    //used to redirect
     function handleSubmit(e: MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         if (currentValue === undefined) {
@@ -74,35 +73,29 @@ function TopNavSearch() {
         }
 
         let strings = currentValue.split(' - ');
-        console.log('strings[0] ', strings[0]);
-        console.log('strings[1] ', strings[1]);
         switch (strings[1]) {
             case 'movie':
-                console.log('movie');
-                response.find((r) => {
+                results.find((r) => {
                     if (r.title === strings[0] && r.media_type === 'movie') {
                         history.push(`/movies/${r.id}`)
                     }
                 });
                 break;
             case 'tv':
-                console.log('tv')
-                response.find((r) => {
+                results.find((r) => {
                     if (r.name === strings[0] && r.media_type === 'tv') {
                         history.push(`/tv-shows/${r.id}`)
                     }
                 });
                 break;
             case 'person':
-                console.log('person')
-                response.find((r) => {
+                results.find((r) => {
                     if (r.name === strings[0] && r.media_type === 'person') {
                         history.push(`/actors/${r.id}`)
                     }
                 });
                 break;
         }
-        console.log(response);
     }
 
     return (
@@ -110,7 +103,7 @@ function TopNavSearch() {
             <form className={'ml-auto mr-auto mt-4'}>
                 <Autocomplete
                     id="combo-box-demo"
-                    options={response}
+                    options={results}
                     getOptionLabel={(option) => visualizeResult(option)}
                     style={{width: 320}}
                     onInputChange={(a, b) => getResults(a, b)}

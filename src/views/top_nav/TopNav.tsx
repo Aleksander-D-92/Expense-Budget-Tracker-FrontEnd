@@ -9,6 +9,8 @@ import {capitalizeString} from "../../shared/utils/functions";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
 import {TopNavSearch} from "./TopNavSearch";
+import MenuIcon from '@material-ui/icons/Menu';
+
 
 interface Props {
     handleCLose: Function
@@ -22,12 +24,20 @@ function TopNav(props: Props) {
     return (
         <>
             <AppBar position={'sticky'} style={{height: '70px'}} color={'inherit'}>
-                <Toolbar style={{height: '60px'}}>
-                    <Button color="inherit" component={Link} to={'/'}
-                            className={''}>
-                        <HomeIcon/>Home
-                    </Button>
-                    <TopNavSearch/>
+                <Toolbar>
+                    <Hidden mdUp={true}>
+                        <IconButton color="inherit">
+                            <MenuIcon/>
+                        </IconButton>
+                    </Hidden>
+                    <Hidden smDown={true}>
+                        <Button color="inherit" component={Link} to={'/'}
+                                className={''}>
+                            <HomeIcon/>Home
+                        </Button>
+                        <TopNavSearch/>
+                    </Hidden>
+
                     <Hidden smDown={true}>
                         {props.loggedIn ?
                             <>

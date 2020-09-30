@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import {SeasonDetails, TvShowsService} from "../../services/the_movie_db/TvShowsService";
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import {Divider, List, ListItem, ListItemText} from "@material-ui/core";
+import {formatDate} from "../../shared/utils/functions";
 
 
 interface Props {
@@ -55,8 +56,9 @@ function EpisodesList(props: Props) {
                         <List component="nav" aria-label="main mailbox folders">
                             {seasonDetails?.episodes.map(e => {
                                 return <>
-                                    <ListItem button>
-                                        <ListItemText primary={`${e.episode_number} : ${e.name}`}/>
+                                    <ListItem>
+                                        <ListItemText
+                                            primary={`${e.episode_number} : ${e.name} - ${formatDate(e.air_date)}`}/>
                                     </ListItem>
                                     <Divider/>
                                 </>
