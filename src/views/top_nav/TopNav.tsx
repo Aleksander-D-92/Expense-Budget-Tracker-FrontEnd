@@ -21,7 +21,7 @@ interface Props {
 function TopNav(props: Props) {
     return (
         <>
-            <AppBar position={'sticky'} style={{height: '60px'}} color={'inherit'}>
+            <AppBar position={'sticky'} style={{height: '70px'}} color={'inherit'}>
                 <Toolbar style={{height: '60px'}}>
                     <Button color="inherit" component={Link} to={'/'}
                             className={''}>
