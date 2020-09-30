@@ -1,31 +1,66 @@
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 import {Autocomplete} from "@material-ui/lab";
+import {MediaType, MultiSearchResult, MultiSearchService} from "../../services/the_movie_db/MultiSearchService";
 
 
 function TopNavSearch() {
-    function getResults(event: object, value: string, reason: string) {
-        console.log(event);
-        console.log(value);
-        console.log(reason);
-        // @ts-ignore
-        // MultiSearchService.getResults(e.currentTarget.value).then((e) => {
-        //     console.log(e);
-        // })
+    const [response, setResponse] = useState<MultiSearchResult[]>();
+
+    function getResults(event: ChangeEvent<{}>, value: string) {
+        let respObj = {
+            id: 0,
+            media_type: MediaType.movie,
+            title: '',
+            name: ''
+        }
+        MultiSearchService.getResults(value).then((e) => {
+            console.log(e.data);
+            let mapped = e.data.results.map(result => {
+                switch (result.media_type) {
+                    case MediaType.movie:
+                        respObj = {
+                            id: result.id,
+                            title: result.title,
+                            name: '',
+                            media_type: MediaType.movie
+                        }
+                        return respObj;
+                    case MediaType.tv:
+                        respObj = {
+                            id: result.id,
+                            title: '',
+                            name: result.name,
+                            media_type: MediaType.tv
+                        }
+                        return respObj;
+                    case MediaType.person:
+                        respObj = {
+                            id: result.id,
+                            title: '',
+                            name: result.name,
+                            media_type: MediaType.person
+                        }
+                        return respObj;
+                    default:
+                        return respObj
+                }
+            });
+            setResponse(mapped);
+        });
     }
+
 
     return (
         <>
-            <form className={' ml-auto mr-auto'}>
+            <form className={'ml-auto mr-auto'}>
                 <Autocomplete
                     id="combo-box-demo"
                     options={top100Films}
                     getOptionLabel={(option) => option.title}
                     style={{width: 300}}
-                    // @ts-ignore
-                    onInputChange={(a, b, c) => getResults(a, b, c)}
-                    renderInput={(params) => <TextField {...params}
-                                                        label="Combo box"/>}
+                    onInputChange={(a, b) => getResults(a, b)}
+                    renderInput={(params) => <TextField {...params} label="Combo box"/>}
                 />
             </form>
         </>

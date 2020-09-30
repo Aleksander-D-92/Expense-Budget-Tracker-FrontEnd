@@ -4,18 +4,18 @@ export interface MultiSearchResp {
     page: number
     total_results: number
     total_pages: number
-    results: MultiSearchRespResult[]
+    results: MultiSearchResult[]
 }
 
-export interface MultiSearchRespResult {
+export interface MultiSearchResult {
     media_type: MediaType
     id: number
-    original_title: string
-    title: string
+    title: string// for movies
+    name: string// for tv shows and person
 }
 
-enum MediaType {
-    tv, movie, person
+export enum MediaType {
+    tv = 'tv', movie = 'movie', person = 'person'
 }
 
 const MultiSearchService = (function () {
