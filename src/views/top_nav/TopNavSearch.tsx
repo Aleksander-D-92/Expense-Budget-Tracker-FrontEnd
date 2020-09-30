@@ -4,15 +4,18 @@ import {Autocomplete} from "@material-ui/lab";
 import {MediaType, MultiSearchResult, MultiSearchService} from "../../services/the_movie_db/MultiSearchService";
 import {useHistory} from 'react-router-dom';
 
+interface Props {
+    drawer: boolean
+}
 
-function TopNavSearch() {
+function TopNavSearch(props: Props) {
     const [results, setResults] = useState<MultiSearchResult[]>([]);
     const [currentValue, setCurrentValue] = useState<string>();
     const history = useHistory();
 
     function getResults(event: ChangeEvent<{}>, value: string) {
         setCurrentValue(value);
-        //this condition is used to no reset the value of 'response' state, when the final result is picked
+        //this condition is used to not reset the value of 'response' state, when the final result is picked
         if (value.includes(' - ') || value === '' || value === undefined) {
             return;
         }
@@ -57,6 +60,7 @@ function TopNavSearch() {
             setResults(mapped);
         });
     }
+
     //this is used to properly visualize the suggestions
     function visualizeResult(obj: MultiSearchResult): string {
         if (obj.title === '') {
@@ -65,6 +69,7 @@ function TopNavSearch() {
             return `${obj.title} - ${obj.media_type}`;
         }
     }
+
     //used to redirect
     function handleSubmit(e: MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -111,7 +116,7 @@ function TopNavSearch() {
                 />
                 <Button variant="contained"
                         color="secondary"
-                        style={btnStyles}
+                        style={(props.drawer) ? btnStylesDrawer : btnStyles}
                         onClick={(e: MouseEvent<HTMLButtonElement>) => handleSubmit(e)}>
                     Search
                 </Button>
@@ -124,5 +129,9 @@ const btnStyles = {
     position: 'relative',
     left: '325px',
     top: '-35px',
+} as CSSProperties
+
+const btnStylesDrawer = {
+    marginTop: '5px'
 } as CSSProperties
 export {TopNavSearch}

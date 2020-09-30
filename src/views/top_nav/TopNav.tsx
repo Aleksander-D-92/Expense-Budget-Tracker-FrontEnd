@@ -10,6 +10,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
 import {TopNavSearch} from "./TopNavSearch";
 import MenuIcon from '@material-ui/icons/Menu';
+import {TopNavDrawer} from "./TopNavDrawer";
 
 
 interface Props {
@@ -26,16 +27,14 @@ function TopNav(props: Props) {
             <AppBar position={'sticky'} style={{height: '70px'}} color={'inherit'}>
                 <Toolbar>
                     <Hidden mdUp={true}>
-                        <IconButton color="inherit">
-                            <MenuIcon/>
-                        </IconButton>
+                       <TopNavDrawer/>
                     </Hidden>
                     <Hidden smDown={true}>
                         <Button color="inherit" component={Link} to={'/'}
                                 className={''}>
                             <HomeIcon/>Home
                         </Button>
-                        <TopNavSearch/>
+                        <TopNavSearch drawer={false}/>
                     </Hidden>
 
                     <Hidden smDown={true}>
