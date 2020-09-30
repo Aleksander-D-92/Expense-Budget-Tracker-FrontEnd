@@ -57,7 +57,7 @@ function SmallMovieCarousel(props: Props) {
                         </Grid>
                     </Grid>
                 }) : ''}
-            </Carousel>;
+            </Carousel>
 
         </>
     )
