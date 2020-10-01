@@ -44,6 +44,7 @@ function DemoLogin(props: Props) {
                         {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
                     </Button>
                     <Button variant="contained"
+                            className={'mb-2'}
                             color="primary"
                             fullWidth={true}
                             name={'admin_login'}

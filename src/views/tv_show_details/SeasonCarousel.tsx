@@ -13,7 +13,7 @@ interface Props {
 }
 
 function SeasonCarousel(props: Props) {
-    const imageBasePath = 'https://image.tmdb.org/t/p/h632';
+    const imageBasePath = 'https://image.tmdb.org/t/p/w500';
     return (
         <>
             <Carousel responsive={SMALL_CAROUSEL_RESPONSIVE}>
@@ -22,7 +22,7 @@ function SeasonCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-5 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 530, minHeight: 530}}>
+                                  style={{maxHeight: 600, minHeight: 600}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={season.name}
@@ -30,7 +30,7 @@ function SeasonCarousel(props: Props) {
                                 />
                                 {season.poster_path !== null ? <CardMedia 
                                                                           id={`${season.id}`}
-                                                                          style={{height: 380}}
+                                                                          style={{height: 450}}
                                                                           image={imageBasePath + season.poster_path}
                                     /> :
                                     <>

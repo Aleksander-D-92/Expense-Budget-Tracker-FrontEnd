@@ -26,7 +26,7 @@ function SmallTvShowCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 380}}>
+                                  style={{maxHeight: 600}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={tvShow.name}
@@ -47,7 +47,7 @@ function SmallTvShowCarousel(props: Props) {
                                     <CardMedia className={'landingPageSmallImage'}
                                                id={`${tvShow.id}`}
                                                onDoubleClick={redirect}
-                                               style={{height: 300}}
+                                               style={{height: 480}}
                                                image={imageBasePath + tvShow.backdrop_path}
                                     />
                                 </Tooltip>

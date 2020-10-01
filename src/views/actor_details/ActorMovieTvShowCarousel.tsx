@@ -23,6 +23,15 @@ function ActorMovieTvShowCarousel(props: Props) {
         }
     }
 
+    function playingAs(val: string): string {
+        let arr = val.split(' / ');
+        if (arr.length <= 1) {
+            return val;
+        } else {
+            return `${arr[0]}, ${arr[1]} and others...`
+        }
+    }
+
     return (
         <>
             <Carousel responsive={ACTOR_DETAILS_CAROUSEL}>
@@ -57,8 +66,8 @@ function ActorMovieTvShowCarousel(props: Props) {
                                     />
                                 </Tooltip>
                                 <CardContent>
-                                    <Typography variant={'h6'}>
-                                        Playing as : {show.character}
+                                    <Typography variant={'subtitle1'} color={'textSecondary'}>
+                                        Playing as : {playingAs(show.character)}
                                     </Typography>
                                 </CardContent>
                             </Card>

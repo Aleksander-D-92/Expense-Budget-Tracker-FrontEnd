@@ -29,7 +29,7 @@ function MovieTvShowBackground(props: Props) {
                     <Card elevation={8}>
                         <CardMedia
                             id={`${props.id}`}
-                            style={{height: 800}}
+                            style={{height: 950}}
                             image={imageBasePath + props.backdrop_path}
                         >
                             <div style={{

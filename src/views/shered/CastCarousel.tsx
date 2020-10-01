@@ -14,8 +14,18 @@ interface Props {
 function CastCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/h632';
+
     function redirect(e: MouseEvent) {
         history.push(`/actors/${e.currentTarget.id}`)
+    }
+
+    function playingAs(val: string): string {
+        let arr = val.split(' / ');
+        if (arr.length <= 1) {
+            return val;
+        } else {
+            return `${arr[0]}, ${arr[1]} and others...`
+        }
     }
 
     return (
@@ -26,11 +36,11 @@ function CastCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 460, minHeight: 460}}>
+                                  style={{maxHeight: 540, minHeight: 540}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={cast.name}
-                                    subheader={`Playing: ${cast.character}`}
+                                    subheader={`Playing: ${playingAs(cast.character)}`}
                                     action={
                                         <IconButton aria-label="settings">
                                             <Tooltip title={"Click to add to favorites"}
@@ -41,11 +51,11 @@ function CastCarousel(props: Props) {
                                         </IconButton>
                                     }
                                 />
-                                <Tooltip title={"Double Click to see details"}>
+                                <Tooltip title={"Double Click to see details"} placement={'top'}>
                                     {cast.profile_path !== null ? <CardMedia className={'landingPageSmallImage'}
                                                                              id={`${cast.id}`}
                                                                              onDoubleClick={redirect}
-                                                                             style={{height: 380}}
+                                                                             style={{height: 450}}
                                                                              image={imageBasePath + cast.profile_path}
                                         /> :
                                         <>
