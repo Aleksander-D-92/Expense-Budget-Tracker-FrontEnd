@@ -2,9 +2,8 @@ import React, {MouseEvent, useEffect} from "react";
 import {UserLoginForm} from "./UserLoginForm";
 import {useMutation} from "@apollo/client";
 import {toast, ToastContainer} from 'react-toastify';
-import {removeAllCookies} from "../../../shared/utils/cookieUtils";
 import {useDispatch} from 'react-redux';
-import {userLoggedInAction, userDetailsAction} from "../../../config/redux/ReduxStore";
+import {userDetailsAction, userLoggedInAction} from "../../../config/redux/ReduxStore";
 import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../services/apollo/mutations/UserMutations";
 import {DemoLogin} from "./DemoLogin";
 import {Grid} from "@material-ui/core";
@@ -64,13 +63,11 @@ function UserLoginController() {
     }
 
     useEffect(() => {
-        if (data !== undefined && data !== null) {
-            updateCookiesAndStore(data.createJWT.idToken)
-        }
-
-        function updateCookiesAndStore(jwt: string) {
-            removeAllCookies();
-            document.cookie = `jwt=${jwt}`;
+        if (data === undefined || data === null) {
+            return;
+        } else {
+            const jwt = data.createJWT.idToken;
+            localStorage.setItem('jwt', jwt);
             let jwtPayload = JSON.parse(atob(jwt.split('.')[1])); //parse the JWT payload to JSON object
             dispatch(userLoggedInAction());
             dispatch(userDetailsAction({
@@ -80,7 +77,7 @@ function UserLoginController() {
                 exp: jwtPayload.exp,
                 authorizationHeader: `Bearer ${jwt}`
             }));
-            history.push("/")
+            history.push("/");
         }
     }, [data, dispatch, history])
 

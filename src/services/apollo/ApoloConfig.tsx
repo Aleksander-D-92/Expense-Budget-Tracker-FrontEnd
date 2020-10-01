@@ -1,5 +1,4 @@
 import {ApolloClient, InMemoryCache} from '@apollo/client';
-import {readCookieByKeyName} from "../../shared/utils/cookieUtils";
 
 const DEV_URL = 'http://localhost:8080/graphql';
 const PROD_URL = 'http://localhost:8080/graphql';
@@ -7,7 +6,7 @@ const PROD_URL = 'http://localhost:8080/graphql';
 const client = new ApolloClient({
     uri: DEV_URL,
     headers: {
-        Authorization: `Bearer ${readCookieByKeyName('jwt')}`
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
     },
     cache: new InMemoryCache()
 });

@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
 import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import {removeAllCookies} from "../../../shared/utils/cookieUtils";
-import {userLoggedOutAction, userDetailsAction} from "../../../config/redux/ReduxStore";
+import {userDetailsAction, userLoggedOutAction} from "../../../config/redux/ReduxStore";
 
 function UserLogoutController() {
     const history = useHistory();
@@ -11,7 +10,7 @@ function UserLogoutController() {
         console.log('logout se izvika');
         dispatch(userLoggedOutAction());
         dispatch(userDetailsAction({}));
-        removeAllCookies();
+        localStorage.removeItem('jwt')
         history.push("/users/login");
     })
     return (

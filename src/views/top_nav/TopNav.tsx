@@ -81,7 +81,7 @@ function TopNav(props: Props) {
                                 <AccountCircleIcon/>Account Settings
                             </MenuItem>
                             <MenuItem component={Link} to={'/users/logout'} onClick={() => props.handleCLose()}>
-                                <ExitToAppIcon/>Logout {capitalizeString(props.username)}
+                                <ExitToAppIcon/>Logout
                             </MenuItem>
                         </>
                         :

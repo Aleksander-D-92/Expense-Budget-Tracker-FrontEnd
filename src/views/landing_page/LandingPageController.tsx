@@ -78,7 +78,7 @@ function LandingPageController() {
                     </Tabs>
                     {selectedTab === 0 &&
                     <>
-                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming</Typography>
+                        <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming In Theatres</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
                             <SmallMovieCarousel movies={upComingMovies?.results}/>
                         </ScrollAnimation>
@@ -89,7 +89,7 @@ function LandingPageController() {
                         </ScrollAnimation>
 
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>
-                            Now Playing in Theatres</Typography>
+                            Now Playing In Theatres</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
                             <SmallMovieCarousel movies={nowPlayingMovies?.results}/>
                         </ScrollAnimation>

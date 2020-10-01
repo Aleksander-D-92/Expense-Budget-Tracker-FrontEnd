@@ -22,7 +22,7 @@ function SmallTvShowCarousel(props: Props) {
         <>
             <Carousel responsive={SMALL_CAROUSEL_RESPONSIVE}>
                 {props.tvShows !== undefined ? props.tvShows.map(tvShow => {
-                    return <Grid container={true} justify={'center'}>
+                    return <Grid container={true} justify={'center'} key={tvShow.id}>
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}

@@ -28,7 +28,7 @@ function SeasonCarousel(props: Props) {
                                     title={season.name}
                                     subheader={`Air Date: ${(season.air_date === null) ? 'To Be Decided' : formatDate(season.air_date)}`}
                                 />
-                                {season.poster_path !== null ? <CardMedia className={'landingPageSmallImage'}
+                                {season.poster_path !== null ? <CardMedia 
                                                                           id={`${season.id}`}
                                                                           style={{height: 380}}
                                                                           image={imageBasePath + season.poster_path}

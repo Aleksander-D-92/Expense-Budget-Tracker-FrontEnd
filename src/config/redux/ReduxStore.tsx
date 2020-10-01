@@ -1,5 +1,4 @@
-import {Action, combineReducers, createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
+import {Action, combineReducers, createStore} from 'redux';
 
 
 const USER_LOGGED_IN = 'userLoggedIn';
@@ -63,7 +62,7 @@ export interface ReduxState {
 const rootReducer = combineReducers({userLoggedIn: userLoggedIn, userDetails: userDetails});
 // @ts-ignore
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-const store = createStore(rootReducer, reduxDevTools, applyMiddleware(thunk));
+const store = createStore(rootReducer, reduxDevTools);
 
 
 export {

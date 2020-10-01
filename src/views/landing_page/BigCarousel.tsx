@@ -59,7 +59,7 @@ function BigCarousel(props: Props) {
                       autoPlay={true}
                       responsive={responsive}>
                 {props.movies !== undefined ? props.movies.map(movie => {
-                    return <Grid container={true} justify={'center'}>
+                    return <Grid container={true} justify={'center'} key={movie.id}>
                         <Grid item={true} xs={12} md={12}>
                             <Card elevation={8}>
                                 <Tooltip title={"Double Click to see details"} placement={'top'} arrow={true}>
