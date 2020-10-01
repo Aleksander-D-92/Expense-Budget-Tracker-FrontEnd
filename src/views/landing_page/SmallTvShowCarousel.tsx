@@ -26,7 +26,7 @@ function SmallTvShowCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 600}}>
+                                  style={{height: 565}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={tvShow.name}

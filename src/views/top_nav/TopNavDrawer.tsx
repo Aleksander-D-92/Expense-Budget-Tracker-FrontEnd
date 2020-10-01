@@ -4,6 +4,7 @@ import {TopNavSearch} from "./TopNavSearch";
 import {Link} from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 
 interface Props {
 
@@ -33,6 +34,11 @@ function TopNavDrawer(props: Props) {
                             <HomeIcon/>Home
                         </Button>
                         <Divider/>
+                    </ListItem>
+                    <ListItem>
+                        <IconButton onClick={toggleClose} style={{position: 'relative', top: '-60px', left: '280px'}}>
+                            <CloseIcon/>
+                        </IconButton>
                     </ListItem>
                     <ListItem>
                         <TopNavSearch drawer={true}/>

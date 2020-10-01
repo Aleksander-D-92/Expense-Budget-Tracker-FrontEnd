@@ -30,7 +30,6 @@ function deleteAllCookiesFactory(window: Window) {
 }
 
 function removeAllCookies() {
-    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
     // @ts-ignore
     window.clearCookies = deleteAllCookiesFactory(window);
     // @ts-ignore

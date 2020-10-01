@@ -13,6 +13,7 @@ interface Props {
 }
 
 function SmallMovieCarousel(props: Props) {
+
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
 
@@ -28,7 +29,7 @@ function SmallMovieCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 600}}>
+                                  style={{height: 565}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={movie.title}

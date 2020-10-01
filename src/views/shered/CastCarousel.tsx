@@ -36,7 +36,7 @@ function CastCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 540, minHeight: 540}}>
+                                  style={{maxHeight: 600, minHeight: 600}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={cast.name}
@@ -55,7 +55,7 @@ function CastCarousel(props: Props) {
                                     {cast.profile_path !== null ? <CardMedia className={'landingPageSmallImage'}
                                                                              id={`${cast.id}`}
                                                                              onDoubleClick={redirect}
-                                                                             style={{height: 450}}
+                                                                             style={{height: 510}}
                                                                              image={imageBasePath + cast.profile_path}
                                         /> :
                                         <>
