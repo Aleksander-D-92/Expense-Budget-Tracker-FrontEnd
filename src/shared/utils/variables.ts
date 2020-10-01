@@ -30,11 +30,11 @@ const ACTOR_DETAILS_CAROUSEL = {
     },
     tablet: {
         breakpoint: {max: 1024, min: 464},
-        items: 1
+        items: 2
     },
     mobile: {
         breakpoint: {max: 464, min: 0},
-        items: 1
+        items: 2
     }
 }
 export {SMALL_CAROUSEL_RESPONSIVE, ACTOR_DETAILS_CAROUSEL}

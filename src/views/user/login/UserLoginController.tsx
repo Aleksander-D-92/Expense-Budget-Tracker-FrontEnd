@@ -4,7 +4,7 @@ import {useMutation} from "@apollo/client";
 import {toast, ToastContainer} from 'react-toastify';
 import {removeAllCookies} from "../../../shared/utils/cookieUtils";
 import {useDispatch} from 'react-redux';
-import {USER_DETAILS, USER_LOGGED_IN} from "../../../config/redux/ReduxStore";
+import {userLoggedInAction, userDetailsAction} from "../../../config/redux/ReduxStore";
 import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../services/apollo/mutations/UserMutations";
 import {DemoLogin} from "./DemoLogin";
 import {Grid} from "@material-ui/core";
@@ -67,25 +67,23 @@ function UserLoginController() {
         if (data !== undefined && data !== null) {
             updateCookiesAndStore(data.createJWT.idToken)
         }
-    }, [data])
 
-    function updateCookiesAndStore(jwt: string) {
-        removeAllCookies();
-        document.cookie = `jwt=${jwt}`;
-        let jwtPayload = JSON.parse(atob(jwt.split('.')[1])); //parse the JWT payload to JSON object
-        dispatch({type: USER_LOGGED_IN});
-        dispatch({
-            type: USER_DETAILS,
-            payload: {
+        function updateCookiesAndStore(jwt: string) {
+            removeAllCookies();
+            document.cookie = `jwt=${jwt}`;
+            let jwtPayload = JSON.parse(atob(jwt.split('.')[1])); //parse the JWT payload to JSON object
+            dispatch(userLoggedInAction());
+            dispatch(userDetailsAction({
                 userId: jwtPayload.id,
                 username: jwtPayload.sub,
                 authority: jwtPayload.authorities,
                 exp: jwtPayload.exp,
                 authorizationHeader: `Bearer ${jwt}`
-            }
-        });
-        history.push("/")
-    }
+            }));
+            history.push("/")
+        }
+    }, [data, dispatch, history])
+
 
     return (
         <>

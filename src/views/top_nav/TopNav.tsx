@@ -9,7 +9,6 @@ import {capitalizeString} from "../../shared/utils/functions";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
 import {TopNavSearch} from "./TopNavSearch";
-import MenuIcon from '@material-ui/icons/Menu';
 import {TopNavDrawer} from "./TopNavDrawer";
 
 

@@ -5,7 +5,6 @@ import {TopNavController} from "./views/top_nav/TopNavController";
 import {WebsiteRoutes} from "./config/react-router-dom/WebsiteRoutes";
 import {CheckIfLoggedIn} from "./views/user/check-if-logged-in/CheckIfLoggedIn";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
-import {purple} from "@material-ui/core/colors";
 import {Footer} from "./views/footer/Footer";
 
 

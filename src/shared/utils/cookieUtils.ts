@@ -1,4 +1,5 @@
 function clearAllPaths(window: Window, cookieBase: string) {
+    console.log('function clearAllPaths(window: Window, cookieBase: string)');
     let p = window.location.pathname.split('/');
     window.document.cookie = cookieBase + '; path=/';
     while (p.length > 0) {
@@ -9,6 +10,7 @@ function clearAllPaths(window: Window, cookieBase: string) {
 }
 
 function cookieUtils(window: Window) {
+    console.log('function cookieUtils(window: Window)');
     let cookies = window.document.cookie.split("; ");
     for (let c = 0; c < cookies.length; c++) {
         let encodedCookieName = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]);
@@ -28,6 +30,7 @@ function deleteAllCookiesFactory(window: Window) {
 }
 
 function removeAllCookies() {
+    console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
     // @ts-ignore
     window.clearCookies = deleteAllCookiesFactory(window);
     // @ts-ignore

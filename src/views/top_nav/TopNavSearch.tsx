@@ -80,21 +80,21 @@ function TopNavSearch(props: Props) {
         let strings = currentValue.split(' - ');
         switch (strings[1]) {
             case 'movie':
-                results.find((r) => {
+                results.forEach((r) => {
                     if (r.title === strings[0] && r.media_type === 'movie') {
-                        history.push(`/movies/${r.id}`)
+                        history.push(`/movies/${r.id}`);
                     }
                 });
                 break;
             case 'tv':
-                results.find((r) => {
+                results.forEach((r) => {
                     if (r.name === strings[0] && r.media_type === 'tv') {
                         history.push(`/tv-shows/${r.id}`)
                     }
                 });
                 break;
             case 'person':
-                results.find((r) => {
+                results.forEach((r) => {
                     if (r.name === strings[0] && r.media_type === 'person') {
                         history.push(`/actors/${r.id}`)
                     }

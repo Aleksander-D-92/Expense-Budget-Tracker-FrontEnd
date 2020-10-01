@@ -1,7 +1,17 @@
-import {Action, combineReducers, createStore} from 'redux';
+import {Action, combineReducers, createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+
 
 const USER_LOGGED_IN = 'userLoggedIn';
 const USER_LOGGED_OUT = 'userLoggedOut';
+
+function userLoggedInAction() {
+    return {type: USER_LOGGED_IN}
+}
+
+function userLoggedOutAction() {
+    return {type: USER_LOGGED_OUT}
+}
 
 function userLoggedIn(state = false, action: Action) {
     switch (action.type) {
@@ -17,6 +27,13 @@ function userLoggedIn(state = false, action: Action) {
 interface userDetailsActions {
     type: string,
     payload: {}
+}
+
+function userDetailsAction(userDetails: UserDetails | {}) {
+    return {
+        type: USER_DETAILS,
+        payload: userDetails
+    }
 }
 
 const USER_DETAILS = 'userDetails';
@@ -46,7 +63,15 @@ export interface ReduxState {
 const rootReducer = combineReducers({userLoggedIn: userLoggedIn, userDetails: userDetails});
 // @ts-ignore
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-const store = createStore(rootReducer, reduxDevTools);
+const store = createStore(rootReducer, reduxDevTools, applyMiddleware(thunk));
 
 
-export {store, USER_LOGGED_IN, USER_LOGGED_OUT, USER_DETAILS}
+export {
+    store,
+    USER_LOGGED_IN,
+    USER_LOGGED_OUT,
+    USER_DETAILS,
+    userDetailsAction,
+    userLoggedInAction,
+    userLoggedOutAction
+}
