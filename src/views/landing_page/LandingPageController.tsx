@@ -119,21 +119,21 @@ function LandingPageController() {
                             Top Rated
                         </Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
-                            <SmallTvShowCarousel tvShows={topRatedTvShows?.results}/>
+                            <SmallTvShowCarousel tvShows={topRatedTvShows?.results} initialStateLoading={loading}/>
                         </ScrollAnimation>
 
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                             Popular
                         </Typography>
                         <ScrollAnimation animateIn={'fadeInRight'}>
-                            <SmallTvShowCarousel tvShows={popularTvShows?.results}/>
+                            <SmallTvShowCarousel tvShows={popularTvShows?.results} initialStateLoading={loading}/>
                         </ScrollAnimation>
 
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                             Currently On The Air
                         </Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
-                            <SmallTvShowCarousel tvShows={onTheAirTvShows?.results}/>
+                            <SmallTvShowCarousel tvShows={onTheAirTvShows?.results} initialStateLoading={loading}/>
                         </ScrollAnimation>
                     </>}
                 </Grid>

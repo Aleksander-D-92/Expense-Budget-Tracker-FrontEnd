@@ -14,7 +14,6 @@ import {ReduxState} from "./config/redux/ReduxStore";
 
 function App() {
     const jwt = useSelector((state: ReduxState) => state.userDetails.authorizationHeader);
-    console.log(jwt);
     const theme = createMuiTheme({
         palette: {
             type: "dark",

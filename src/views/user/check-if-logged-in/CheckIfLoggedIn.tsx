@@ -5,7 +5,6 @@ import {userDetailsAction, userLoggedInAction} from "../../../config/redux/User"
 function CheckIfLoggedIn() {
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log('check if logged in')
         const token = localStorage.getItem('jwt');
         if (token !== null && token !== undefined) {
             let jwtPayload = JSON.parse(atob(token.split('.')[1])); //parse the JWT payload to JSON object

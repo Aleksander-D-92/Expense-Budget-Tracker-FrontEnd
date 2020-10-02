@@ -30,7 +30,7 @@ interface Props {
 function SmallMovieCarousel(props: Props) {
     const history = useHistory();
     const userId = useSelector((state: ReduxState) => state.userDetails.userId);
-    const favorites = useSelector((state: ReduxState) => state.favorites);
+    const favoriteMovies = useSelector((state: ReduxState) => state.favorites.filter(f => f.favoriteType === FavoriteType.MOVIE));
     const dispatch = useDispatch();
 
     const [createFavorite, {data, loading: createLoading}] = useMutation<CreateFavoriteResp, CreateFavoriteVars>(CREATE_FAVORITE);
@@ -60,7 +60,7 @@ function SmallMovieCarousel(props: Props) {
         let currentTargetId = e.currentTarget.id;
         console.log(currentTargetId);
         // @ts-ignore
-        const id = favorites.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;
+        const id = favoriteMovies.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;
         if (id === undefined) {
             return;
         }
@@ -70,7 +70,7 @@ function SmallMovieCarousel(props: Props) {
                     favoriteId: id
                 }
         }).then(() => {
-            let fav = favorites.find(f => f.favoriteId == id);
+            let fav = favoriteMovies.find(f => f.favoriteId == id);
             if (fav !== undefined) {
                 dispatch(deleteFavoriteAction(fav))
             }
@@ -92,7 +92,7 @@ function SmallMovieCarousel(props: Props) {
                                     subheader={`Release Date: ${formatDate(movie.release_date)}`}
                                     action={
                                         <>
-                                            {!(favorites.filter(f => f.movieDBId == movie.id && f.favoriteType === FavoriteType.MOVIE).length > 0) ?
+                                            {!(favoriteMovies.filter(f => f.movieDBId == movie.id && f.favoriteType === FavoriteType.MOVIE).length > 0) ?
                                                 <>
                                                     <IconButton aria-label="settings"
                                                                 style={{display: (deleteLoading || createLoading || props.initialStateLoading) ? 'none' : 'inline-flex'}}
