@@ -1,11 +1,11 @@
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
 
 const ADD_FAVORITE = 'ADD_FAVORITE';
-const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
+const DELETE_FAVORITE = 'REMOVE_FAVORITE';
 
 interface FavoritesAction {
     type: string,
-    payload: JSON
+    payload: Favorite
 }
 
 export interface Favorite {
@@ -21,23 +21,23 @@ function addFavoriteAction(newValue: Favorite) {
     }
 }
 
-function deleteFavoriteAction() {
-
+function deleteFavoriteAction(favorite: Favorite) {
+    return {
+        type: DELETE_FAVORITE,
+        payload: favorite
+    }
 }
 
-function favoritesReducer(state: Array<JSON> = [], action: FavoritesAction) {
+function favoritesReducer(state: Favorite[] = [], action: FavoritesAction) {
     switch (action.type) {
         case ADD_FAVORITE:
             return [...state, action.payload]
-        case REMOVE_FAVORITE:
-            let newState = [...state];
-            const index = newState.indexOf(action.payload);
-            newState.splice(index, 1);
-            return newState;
+        case DELETE_FAVORITE:
+            return [...state].filter(f => f.favoriteId !== action.payload.favoriteId);
         default:
             return state
 
     }
 }
 
-export {favoritesReducer, addFavoriteAction}
+export {favoritesReducer, addFavoriteAction, deleteFavoriteAction}

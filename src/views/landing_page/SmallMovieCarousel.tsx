@@ -2,7 +2,7 @@ import React, {MouseEvent, useEffect} from "react";
 import CloseIcon from '@material-ui/icons/Close';
 import Carousel from "react-multi-carousel";
 import {Movie} from "../../services/the_movie_db/MovieService";
-import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip} from "@material-ui/core";
+import {Card, CardHeader, CardMedia, CircularProgress, Grid, IconButton, Tooltip} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {formatDate} from "../../shared/utils/functions";
 import './css/LadningPage.css'
@@ -12,22 +12,25 @@ import {useMutation} from "@apollo/client";
 import {
     CREATE_FAVORITE,
     CreateFavoriteResp,
-    CreateFavoriteVars, DELETE_FAVORITE, DeleteFavoriteVars,
+    CreateFavoriteVars,
+    DELETE_FAVORITE,
+    DeleteFavoriteVars,
     FavoriteType
 } from "../../services/apollo/mutations/FavoriteMutations";
 import {useDispatch, useSelector} from "react-redux";
 import {ReduxState} from "../../config/redux/ReduxStore";
-import {addFavoriteAction} from "../../config/redux/Favorites";
+import {addFavoriteAction, deleteFavoriteAction} from "../../config/redux/Favorites";
 import {Dummy} from "../../services/apollo/ApoloConfig";
 
 interface Props {
     movies?: Movie[],
+    initialStateLoading: boolean
 }
 
 function SmallMovieCarousel(props: Props) {
     const userId = useSelector((state: ReduxState) => state.userDetails.userId);
-    const favorites = useSelector((state: ReduxState) => state.favorites.filter(e => e.favoriteType === FavoriteType.MOVIE)).map(e => e.movieDBId);
-    // console.log(favorites);
+    const favorites = useSelector((state: ReduxState) => state.favorites);
+    //.filter(e => e.favoriteType === FavoriteType.MOVIE)).map(e => e.movieDBId);
 
     const dispatch = useDispatch();
 
@@ -53,11 +56,25 @@ function SmallMovieCarousel(props: Props) {
         })
     }
 
-    function removeFavorite(e: MouseEvent) {
-        deleteFavorite({variables: {favoriteId: 1}})
-            .then((e) => {
-                // console.log(e);
-            });
+    function removeFavorite(e: number | undefined) {
+        console.log(e);
+        if (e === undefined) {
+            return;
+        }
+        deleteFavorite({
+            variables:
+                {
+                    favoriteId: e
+                }
+        }).then(() => {
+            console.log(favorites);
+            let fav = favorites.find(f => f.favoriteId == e);
+            if (fav !== undefined) {
+                dispatch(deleteFavoriteAction(fav))
+            }
+        }).catch(() => {
+
+        });
     }
 
     useEffect(() => {
@@ -83,24 +100,39 @@ function SmallMovieCarousel(props: Props) {
                                     subheader={`Release Date: ${formatDate(movie.release_date)}`}
                                     action={
                                         <>
-                                            {!(favorites.filter(f => f == movie.id).length > 0) ?
-                                                <IconButton aria-label="settings" onClick={addFavorite}
-                                                            id={`${movie.id}`}>
-                                                    <Tooltip title={"Click to Add to favorites"}
-                                                             placement={'top'}
-                                                             arrow={true}>
-                                                        <AddIcon/>
-                                                    </Tooltip>
-                                                </IconButton>
+                                            {/*inline-flex*/}
+
+                                            {!(favorites.filter(f => f.movieDBId == movie.id && f.favoriteType === FavoriteType.MOVIE).length > 0) ?
+                                                <>
+                                                    <IconButton aria-label="settings"
+                                                                style={{display: (deleteLoading || createLoading || props.initialStateLoading) ? 'none' : 'inline-flex'}}
+                                                                onClick={addFavorite}
+                                                                id={`${movie.id}`}>
+                                                        <Tooltip title={"Click to Add to favorites"}
+                                                                 placement={'top'}
+                                                                 arrow={true}>
+                                                            <AddIcon/>
+                                                        </Tooltip>
+                                                    </IconButton>
+                                                    <CircularProgress size={30}
+                                                                      thickness={10}
+                                                                      style={{display: (deleteLoading || createLoading || props.initialStateLoading) ? 'block' : 'none'}}/>
+                                                </>
                                                 :
-                                                <IconButton aria-label="settings" onClick={removeFavorite}
-                                                            id={`${movie.id}`}>
-                                                    <Tooltip title={"Click to Remove from favorites"}
-                                                             placement={'top'}
-                                                             arrow={true}>
-                                                        <CloseIcon/>
-                                                    </Tooltip>
-                                                </IconButton>
+                                                <>
+                                                    <IconButton aria-label="settings"
+                                                                style={{display: (deleteLoading || createLoading || props.initialStateLoading) ? 'none' : 'inline-flex'}}
+                                                                onClick={() => removeFavorite(favorites.find(f => f.favoriteType === FavoriteType.MOVIE && f.movieDBId == movie.id)?.favoriteId)}>
+                                                        <Tooltip title={"Click to Remove from favorites"}
+                                                                 placement={'top'}
+                                                                 arrow={true}>
+                                                            <CloseIcon/>
+                                                        </Tooltip>
+                                                    </IconButton>
+                                                    <CircularProgress size={30}
+                                                                      thickness={10}
+                                                                      style={{display: (deleteLoading || createLoading || props.initialStateLoading) ? 'block' : 'none'}}/>
+                                                </>
                                             }
                                         </>
                                     }

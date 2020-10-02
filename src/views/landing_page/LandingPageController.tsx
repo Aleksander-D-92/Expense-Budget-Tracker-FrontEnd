@@ -7,8 +7,27 @@ import {SmallMovieCarousel} from "./SmallMovieCarousel";
 import ScrollAnimation from "react-animate-on-scroll";
 import {TvShowCollection, TvShowsService} from "../../services/the_movie_db/TvShowsService";
 import {SmallTvShowCarousel} from "./SmallTvShowCarousel";
+import {useQuery} from "@apollo/client";
+import {
+    AllFavoritesByUserResp,
+    AllFavoritesByUserVars,
+    GET_FAVORITES_BY_USERID
+} from "../../services/apollo/queries/FavoriteQueries";
+import {addFavoriteAction} from "../../config/redux/Favorites";
+import {useDispatch, useSelector} from "react-redux";
+import {ReduxState} from "../../config/redux/ReduxStore";
 
 function LandingPageController() {
+    const userId = useSelector((state: ReduxState) => state.userDetails.userId);
+    const dispatch = useDispatch();
+    const {data, loading} = useQuery<AllFavoritesByUserResp, AllFavoritesByUserVars>(GET_FAVORITES_BY_USERID, {variables: {id: userId}});
+    useEffect(() => {
+        if (!loading && data !== undefined) {
+            data.allFavoritesByUser.forEach((e) => {
+                dispatch(addFavoriteAction(e));
+            })
+        }
+    }, [data, dispatch, loading]);
     //tab bar
     const [selectedTab, setSelectedTabMovies] = useState<number>(0);
     //genres
@@ -80,18 +99,18 @@ function LandingPageController() {
                     <>
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>Upcoming In Theatres</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
-                            <SmallMovieCarousel movies={upComingMovies?.results}/>
+                            <SmallMovieCarousel movies={upComingMovies?.results} initialStateLoading={loading}/>
                         </ScrollAnimation>
 
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>Popular</Typography>
                         <ScrollAnimation animateIn={'fadeInRight'}>
-                            <SmallMovieCarousel movies={popularMovies?.results}/>
+                            <SmallMovieCarousel movies={popularMovies?.results} initialStateLoading={loading}/>
                         </ScrollAnimation>
 
                         <Typography align={'center'} variant={'h3'} className={'mt-2'}>
                             Now Playing In Theatres</Typography>
                         <ScrollAnimation animateIn={'fadeInLeft'}>
-                            <SmallMovieCarousel movies={nowPlayingMovies?.results}/>
+                            <SmallMovieCarousel movies={nowPlayingMovies?.results} initialStateLoading={loading}/>
                         </ScrollAnimation>
                     </>}
                     {selectedTab === 1 &&
