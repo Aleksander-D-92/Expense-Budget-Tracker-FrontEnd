@@ -17,7 +17,7 @@ export interface CreateFavoriteVars {
 
 export interface CreateFavoriteResp {
     createFavorite: {
-        userId: number
+        favoriteId: number
         movieDBId: number
         favoriteType: FavoriteType
     }
@@ -46,7 +46,7 @@ const CREATE_FAVORITE = gql`
     ${FAVORITE_FRAGMENT}
 `
 
-interface DeleteFavoriteVars {
+export interface DeleteFavoriteVars {
     favoriteId: number
 }
 

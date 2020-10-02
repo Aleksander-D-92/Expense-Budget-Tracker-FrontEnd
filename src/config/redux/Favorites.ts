@@ -9,7 +9,7 @@ interface FavoritesAction {
 }
 
 export interface Favorite {
-    userId: number
+    favoriteId: number
     movieDBId: number
     favoriteType: FavoriteType
 }
@@ -19,6 +19,10 @@ function addFavoriteAction(newValue: Favorite) {
         type: ADD_FAVORITE,
         payload: newValue
     }
+}
+
+function deleteFavoriteAction() {
+
 }
 
 function favoritesReducer(state: Array<JSON> = [], action: FavoritesAction) {
