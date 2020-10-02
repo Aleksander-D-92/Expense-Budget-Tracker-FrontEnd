@@ -3,12 +3,12 @@ import {UserLoginForm} from "./UserLoginForm";
 import {useMutation} from "@apollo/client";
 import {toast, ToastContainer} from 'react-toastify';
 import {useDispatch} from 'react-redux';
-import {userDetailsAction, userLoggedInAction} from "../../../config/redux/ReduxStore";
 import {CREATE_JWT, CreateJWTResp, CreateJWTVars} from "../../../services/apollo/mutations/UserMutations";
 import {DemoLogin} from "./DemoLogin";
 import {Grid} from "@material-ui/core";
 import {ADMIN_CREDENTIALS, FREE_USER_CREDENTIALS, PAID_USER_CREDENTIALS} from "./variables";
 import {useHistory} from 'react-router-dom';
+import {userDetailsAction, userLoggedInAction} from "../../../config/redux/User";
 
 
 function UserLoginController() {

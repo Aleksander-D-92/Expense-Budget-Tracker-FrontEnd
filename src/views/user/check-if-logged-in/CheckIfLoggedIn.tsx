@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {userDetailsAction, userLoggedInAction} from "../../../config/redux/ReduxStore";
+import {userDetailsAction, userLoggedInAction} from "../../../config/redux/User";
 
 function CheckIfLoggedIn() {
     const dispatch = useDispatch();

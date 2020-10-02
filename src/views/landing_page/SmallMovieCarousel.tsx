@@ -15,7 +15,8 @@ import {
     FavoriteType
 } from "../../services/apollo/mutations/FavoriteMutations";
 import {useDispatch, useSelector} from "react-redux";
-import {addFavoriteAction, ReduxState} from "../../config/redux/ReduxStore";
+import {ReduxState} from "../../config/redux/ReduxStore";
+import {addFavoriteAction} from "../../config/redux/Favorites";
 
 interface Props {
     movies?: Movie[],
