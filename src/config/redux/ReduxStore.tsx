@@ -1,4 +1,5 @@
 import {Action, combineReducers, createStore} from 'redux';
+import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
 
 
 const USER_LOGGED_IN = 'userLoggedIn';
@@ -23,7 +24,7 @@ function userLoggedIn(state = false, action: Action) {
     }
 }
 
-interface userDetailsActions {
+interface UserDetailsAction {
     type: string,
     payload: {}
 }
@@ -37,12 +38,48 @@ function userDetailsAction(userDetails: UserDetails | {}) {
 
 const USER_DETAILS = 'userDetails';
 
-function userDetails(state = {}, action: userDetailsActions) {
+function userDetails(state = {}, action: UserDetailsAction) {
     switch (action.type) {
         case USER_DETAILS:
             return action.payload;
         default:
             return state;
+    }
+}
+
+const ADD_FAVORITE = 'ADD_FAVORITE';
+const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
+
+interface FavoritesAction {
+    type: string,
+    payload: JSON
+}
+
+interface Favorite {
+    userId: number
+    movieDBId: number
+    favoriteType: FavoriteType
+}
+
+export function addFavoriteAction(newValue: Favorite) {
+    return {
+        type: ADD_FAVORITE,
+        payload: newValue
+    }
+}
+
+function favoritesReducer(state: Array<JSON> = [], action: FavoritesAction) {
+    switch (action.type) {
+        case ADD_FAVORITE:
+            return [...state, action.payload]
+        case REMOVE_FAVORITE:
+            let newState = [...state];
+            const index = newState.indexOf(action.payload);
+            newState.splice(index, 1);
+            return newState;
+        default:
+            return state
+
     }
 }
 
@@ -56,10 +93,15 @@ interface UserDetails {
 
 export interface ReduxState {
     userLoggedIn: boolean,
-    userDetails: UserDetails
+    userDetails: UserDetails,
+    favorites: Favorite[]
 }
 
-const rootReducer = combineReducers({userLoggedIn: userLoggedIn, userDetails: userDetails});
+const rootReducer = combineReducers({
+    userLoggedIn: userLoggedIn,
+    userDetails: userDetails,
+    favorites: favoritesReducer
+});
 // @ts-ignore
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 const store = createStore(rootReducer, reduxDevTools);

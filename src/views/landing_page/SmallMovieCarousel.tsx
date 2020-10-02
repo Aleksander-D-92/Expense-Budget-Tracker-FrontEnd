@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react";
+import React, {MouseEvent, useEffect} from "react";
 import Carousel from "react-multi-carousel";
 import {Movie} from "../../services/the_movie_db/MovieService";
 import {Card, CardHeader, CardMedia, Grid, IconButton, Tooltip} from "@material-ui/core";
@@ -7,19 +7,52 @@ import {formatDate} from "../../shared/utils/functions";
 import './css/LadningPage.css'
 import {useHistory} from 'react-router-dom';
 import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
+import {useMutation} from "@apollo/client";
+import {
+    CREATE_FAVORITE,
+    CreateFavoriteResp,
+    CreateFavoriteVars,
+    FavoriteType
+} from "../../services/apollo/mutations/FavoriteMutations";
+import {useDispatch, useSelector} from "react-redux";
+import {addFavoriteAction, ReduxState} from "../../config/redux/ReduxStore";
 
 interface Props {
     movies?: Movie[],
 }
 
 function SmallMovieCarousel(props: Props) {
-
+    const userId = useSelector((state: ReduxState) => state.userDetails.userId);
+    const favorites = useSelector((state: ReduxState) => state.favorites.filter(e => e.favoriteType === FavoriteType.MOVIE));
+    const dispatch = useDispatch();
+    const [createFavorite, {data, loading}] = useMutation<CreateFavoriteResp, CreateFavoriteVars>(CREATE_FAVORITE)
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
 
     function redirect(e: MouseEvent) {
         history.push(`/movies/${e.currentTarget.id}`)
     }
+
+    function addFavorite(e: MouseEvent) {
+        console.log(e.currentTarget.id);
+        createFavorite({
+            variables: {
+                userId: userId,
+                movieDBId: parseInt(e.currentTarget.id),
+                favoriteType: FavoriteType.MOVIE
+            }
+        }).catch((e) => {
+            console.log(e.graphQLErrors[0].message);
+        })
+    }
+
+    useEffect(() => {
+        if (data === undefined || data === null) {
+            return;
+        } else {
+            dispatch(addFavoriteAction(data.createFavorite));
+        }
+    }, [data, dispatch])
 
     return (
         <>
@@ -35,7 +68,7 @@ function SmallMovieCarousel(props: Props) {
                                     title={movie.title}
                                     subheader={`Release Date: ${formatDate(movie.release_date)}`}
                                     action={
-                                        <IconButton aria-label="settings">
+                                        <IconButton aria-label="settings" onClick={addFavorite} id={`${movie.id}`}>
                                             <Tooltip title={"Click to add to favorites"}
                                                      placement={'top'}
                                                      arrow={true}>

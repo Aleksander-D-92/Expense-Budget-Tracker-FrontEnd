@@ -9,19 +9,21 @@ const FAVORITE_TYPE = gql`
     }
 `
 
-interface CreateFavoriteVars {
+export interface CreateFavoriteVars {
     userId: number
     movieDBId: number
     favoriteType: FavoriteType
 }
 
-interface CreateFavoriteResp {
-    userId: number
-    movieDBId: number
-    favoriteType: FavoriteType
+export interface CreateFavoriteResp {
+    createFavorite: {
+        userId: number
+        movieDBId: number
+        favoriteType: FavoriteType
+    }
 }
 
-enum FavoriteType {
+export enum FavoriteType {
     MOVIE = 'MOVIE', TV = 'TV', ACTOR = 'ACTOR'
 }
 
