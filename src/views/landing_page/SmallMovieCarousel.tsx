@@ -1,4 +1,4 @@
-import React, {MouseEvent, useEffect} from "react";
+import React, {MouseEvent} from "react";
 import CloseIcon from '@material-ui/icons/Close';
 import Carousel from "react-multi-carousel";
 import {Movie} from "../../services/the_movie_db/MovieService";
@@ -28,15 +28,13 @@ interface Props {
 }
 
 function SmallMovieCarousel(props: Props) {
+    const history = useHistory();
     const userId = useSelector((state: ReduxState) => state.userDetails.userId);
     const favorites = useSelector((state: ReduxState) => state.favorites);
-    //.filter(e => e.favoriteType === FavoriteType.MOVIE)).map(e => e.movieDBId);
-
     const dispatch = useDispatch();
 
     const [createFavorite, {data, loading: createLoading}] = useMutation<CreateFavoriteResp, CreateFavoriteVars>(CREATE_FAVORITE);
     const [deleteFavorite, {loading: deleteLoading}] = useMutation<Dummy, DeleteFavoriteVars>(DELETE_FAVORITE)
-    const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
 
     function redirect(e: MouseEvent) {
@@ -44,46 +42,40 @@ function SmallMovieCarousel(props: Props) {
     }
 
     function addFavorite(e: MouseEvent) {
-        // console.log(e.currentTarget.id);
         createFavorite({
             variables: {
                 userId: userId,
                 movieDBId: parseInt(e.currentTarget.id),
                 favoriteType: FavoriteType.MOVIE
             }
-        }).catch((e) => {
-            // console.log(e.graphQLErrors[0].message);
+        }).then((e) => {
+            if (e.data === null || e.data === undefined) {
+                return;
+            }
+            dispatch(addFavoriteAction(e.data.createFavorite));
         })
     }
 
-    function removeFavorite(e: number | undefined) {
-        console.log(e);
-        if (e === undefined) {
+    function removeFavorite(e: MouseEvent) {
+        let currentTargetId = e.currentTarget.id;
+        console.log(currentTargetId);
+        // @ts-ignore
+        const id = favorites.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;
+        if (id === undefined) {
             return;
         }
         deleteFavorite({
             variables:
                 {
-                    favoriteId: e
+                    favoriteId: id
                 }
         }).then(() => {
-            console.log(favorites);
-            let fav = favorites.find(f => f.favoriteId == e);
+            let fav = favorites.find(f => f.favoriteId == id);
             if (fav !== undefined) {
                 dispatch(deleteFavoriteAction(fav))
             }
-        }).catch(() => {
-
-        });
+        })
     }
-
-    useEffect(() => {
-        if (data === undefined || data === null) {
-            return;
-        } else {
-            dispatch(addFavoriteAction(data.createFavorite));
-        }
-    }, [data, dispatch])
 
     return (
         <>
@@ -100,8 +92,6 @@ function SmallMovieCarousel(props: Props) {
                                     subheader={`Release Date: ${formatDate(movie.release_date)}`}
                                     action={
                                         <>
-                                            {/*inline-flex*/}
-
                                             {!(favorites.filter(f => f.movieDBId == movie.id && f.favoriteType === FavoriteType.MOVIE).length > 0) ?
                                                 <>
                                                     <IconButton aria-label="settings"
@@ -121,8 +111,9 @@ function SmallMovieCarousel(props: Props) {
                                                 :
                                                 <>
                                                     <IconButton aria-label="settings"
+                                                                id={`${movie.id}`}
                                                                 style={{display: (deleteLoading || createLoading || props.initialStateLoading) ? 'none' : 'inline-flex'}}
-                                                                onClick={() => removeFavorite(favorites.find(f => f.favoriteType === FavoriteType.MOVIE && f.movieDBId == movie.id)?.favoriteId)}>
+                                                                onClick={(e: MouseEvent) => removeFavorite(e)}>
                                                         <Tooltip title={"Click to Remove from favorites"}
                                                                  placement={'top'}
                                                                  arrow={true}>
