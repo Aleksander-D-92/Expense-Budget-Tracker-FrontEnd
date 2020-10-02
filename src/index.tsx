@@ -6,18 +6,16 @@ import * as serviceWorker from './serviceWorker';
 import 'fontsource-roboto';
 import {BrowserRouter} from "react-router-dom";
 import {ApolloProvider} from '@apollo/client';
-import {client} from "./services/apollo/ApoloConfig";
 import {store} from "./config/redux/ReduxStore";
 import {Provider} from "react-redux";
+import {GetClient} from "./services/apollo/ApoloConfig";
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <ApolloProvider client={client}>
-                <BrowserRouter>
-                    <App/>
-                </BrowserRouter>
-            </ApolloProvider>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

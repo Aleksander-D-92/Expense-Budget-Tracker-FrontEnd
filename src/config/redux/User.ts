@@ -24,10 +24,10 @@ function userLoggedInReducer(state = false, action: Action) {
 
 interface UserDetailsAction {
     type: string,
-    payload: {}
+    payload: UserDetails | {}
 }
 
-interface UserDetails {
+export interface UserDetails {
     userId: number,
     username: string,
     authority: string,

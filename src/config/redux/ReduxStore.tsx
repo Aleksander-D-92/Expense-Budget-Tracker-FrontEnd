@@ -1,7 +1,6 @@
 import {combineReducers, createStore} from 'redux';
 import {Favorite, favoritesReducer} from "./Favorites";
-import {userDetailsReducer, userLoggedInReducer} from "./User";
-import {UserDetails} from "../../services/apollo/queries/UserQueries";
+import {UserDetails, userDetailsReducer, userLoggedInReducer} from "./User";
 
 
 export interface ReduxState {
