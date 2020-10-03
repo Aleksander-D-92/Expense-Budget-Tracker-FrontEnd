@@ -1,11 +1,11 @@
 import React, {MouseEvent, useEffect, useState} from "react";
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory, Link} from 'react-router-dom';
 import {useMutation, useQuery} from "@apollo/client";
 import {Authority, UserByIdQueryVars, UserDetails} from "../../../services/apollo/queries/UserQueries";
 import {AdminEditUserResp, USER_DETAILS_AND_AUTHORITIES} from "../../../services/apollo/queries/AdminQueries";
 import {AdminLockAccount} from "./AdminLockAccount";
 import {AdminEditAuthority} from "./AdminEditAuthority";
-import {Avatar, Card, CardHeader, Grid, LinearProgress, List, ListItemText} from "@material-ui/core";
+import {Avatar, Button, Card, CardHeader, Grid, LinearProgress, List, ListItemText} from "@material-ui/core";
 import {capitalizeString, formatDate} from "../../../shared/utils/functions";
 import {
     ADMIN_UPDATE_ACCOUNT_LOCK,
@@ -15,6 +15,8 @@ import {
 } from "../../../services/apollo/mutations/AdminMutations";
 import {Dummy} from "../../../services/apollo/ApoloConfig";
 import {cloneDeep} from 'lodash';
+import EditIcon from "@material-ui/icons/Edit";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 function AdminEditUserController() {
@@ -115,6 +117,10 @@ function AdminEditUserController() {
                                             updateAuthorityLoading={updateAuthorityLoading}
                                             authorities={authorities}
                         />
+                        <Button color="inherit" component={Link} to={`/admins/all-users`}
+                                className={'ml-auto mb-2'}>
+                            <ArrowBackIcon/>Go Back
+                        </Button>
                     </Card>
                 </Grid>
             </Grid>
