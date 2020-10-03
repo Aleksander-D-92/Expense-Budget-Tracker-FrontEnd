@@ -88,7 +88,7 @@ export interface CastOrCrew {
     character: string
     credit_id: string
     gender: number
-    id: string
+    id: number
     name: string
     order: number
     profile_path: string

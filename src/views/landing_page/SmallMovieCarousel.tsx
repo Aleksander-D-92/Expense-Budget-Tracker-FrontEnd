@@ -58,7 +58,6 @@ function SmallMovieCarousel(props: Props) {
 
     function removeFavorite(e: MouseEvent) {
         let currentTargetId = e.currentTarget.id;
-        console.log(currentTargetId);
         // @ts-ignore
         const id = favoriteMovies.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;
         if (id === undefined) {
