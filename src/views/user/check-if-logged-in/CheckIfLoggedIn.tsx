@@ -11,7 +11,7 @@ import {addFavoriteAction} from "../../../config/redux/Favorites";
 
 function CheckIfLoggedIn() {
     const dispatch = useDispatch();
-    const [getFavorites, {data, loading}] = useLazyQuery<AllFavoritesByUserResp, AllFavoritesByUserVars>(GET_FAVORITES_BY_USERID);
+    const [getFavorites, {data}] = useLazyQuery<AllFavoritesByUserResp, AllFavoritesByUserVars>(GET_FAVORITES_BY_USERID);
     const devUrl = 'http://localhost:3000/'
     useEffect(() => {
         const token = localStorage.getItem('jwt');
@@ -41,7 +41,7 @@ function CheckIfLoggedIn() {
                 dispatch(addFavoriteAction(f));
             })
         }
-    }, [data])
+    }, [data, dispatch])
 
     return (
         <>

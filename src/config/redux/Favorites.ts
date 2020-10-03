@@ -39,7 +39,12 @@ function deleteAllFavoritesAction() {
 function favoritesReducer(state: Favorite[] = [], action: FavoritesAction) {
     switch (action.type) {
         case ADD_FAVORITE:
-            return [...state, action.payload]
+            const newState = [...state];
+            if (newState.find(f => f.favoriteId == action.payload.favoriteId) === undefined) {
+                return [...newState, action.payload]
+            } else {
+                return [...newState]
+            }
         case DELETE_FAVORITE:
             return [...state].filter(f => f.favoriteId !== action.payload.favoriteId);
         case DELETE_ALL_FAVORITE:
