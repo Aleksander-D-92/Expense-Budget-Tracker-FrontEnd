@@ -29,8 +29,8 @@ function App() {
     });
     return (
         <>
-            <CheckIfLoggedIn/>
             <ApolloProvider client={GetClient(jwt)}>
+                <CheckIfLoggedIn/>
                 <ThemeProvider theme={theme}>
                     <Paper>
                         <Grid container spacing={0}>

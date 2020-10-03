@@ -30,7 +30,6 @@ function deleteFavoriteAction(favorite: Favorite) {
 }
 
 function deleteAllFavoritesAction() {
-    console.log('v actiona sme');
     return {
         type: DELETE_ALL_FAVORITE,
         payload: {}
@@ -44,7 +43,6 @@ function favoritesReducer(state: Favorite[] = [], action: FavoritesAction) {
         case DELETE_FAVORITE:
             return [...state].filter(f => f.favoriteId !== action.payload.favoriteId);
         case DELETE_ALL_FAVORITE:
-            console.log('v redusera sme');
             return []
         default:
             return state
