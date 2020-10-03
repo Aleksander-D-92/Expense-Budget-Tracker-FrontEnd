@@ -119,7 +119,7 @@ function TvShowDescription(props: Props) {
                                                 </Tooltip>
                                             </IconButton>
                                             <CircularProgress size={40}
-                                                              thickness={45}
+                                                              thickness={15}
                                                               style={{display: (deleteLoading || createLoading) ? 'block' : 'none'}}/>
                                         </>
                                     }

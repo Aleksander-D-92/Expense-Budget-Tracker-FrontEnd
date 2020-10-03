@@ -2,6 +2,8 @@ import React from "react";
 import MaterialTable from "material-table";
 import {Link} from "react-router-dom";
 import {UserDetails} from "../../../services/apollo/queries/UserQueries";
+import {Button} from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
 
 interface Props {
     users?: UserDetails[]
@@ -12,6 +14,7 @@ function AllUsersTable(props: Props) {
     return (
         <MaterialTable
             title="All users currently registered"
+            style={{}}
             columns={[
                 {
                     title: 'User id', field: 'userId', type: 'numeric', headerStyle: {
@@ -27,7 +30,12 @@ function AllUsersTable(props: Props) {
                 {
                     title: 'Edit User',
                     field: 'userId',
-                    render: rowData => <Link to={`/admins/edit-user/${rowData.userId}`}>Edit this user</Link>
+                    sorting: false,
+                    render: rowData =>
+                        <Button color="inherit" component={Link} to={`/admins/edit-user/${rowData.userId}`}
+                                className={'ml-auto'}>
+                            <EditIcon/>Edit User
+                        </Button>
                 },
             ]}
             data={props.users !== undefined ? props.users : []}
@@ -39,4 +47,5 @@ function AllUsersTable(props: Props) {
     )
 }
 
+// `/admins/edit-user/${rowData.userId}`
 export {AllUsersTable}

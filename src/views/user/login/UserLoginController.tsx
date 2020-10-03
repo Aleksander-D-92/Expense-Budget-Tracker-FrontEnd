@@ -9,12 +9,17 @@ import {Grid} from "@material-ui/core";
 import {ADMIN_CREDENTIALS, FREE_USER_CREDENTIALS, PAID_USER_CREDENTIALS} from "./variables";
 import {useHistory} from 'react-router-dom';
 import {userDetailsAction, userLoggedInAction} from "../../../config/redux/User";
+import {deleteAllFavoritesAction} from "../../../config/redux/Favorites";
 
 
 function UserLoginController() {
     const [createJWT, {data, loading}] = useMutation<CreateJWTResp, CreateJWTVars>(CREATE_JWT);
     const dispatch = useDispatch();
     const history = useHistory();
+    //to fix a bug with state no being deleted
+    useEffect(() => {
+    dispatch(deleteAllFavoritesAction())
+    }, [])
 
     function handleLogin(formData: any) {
         createJWT({

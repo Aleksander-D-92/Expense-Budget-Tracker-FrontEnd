@@ -3,6 +3,7 @@ import {AllUsersTable} from "./AllUsersTable";
 import {ALL_USERS, AllUsersQueryResp, UserDetails} from "../../../services/apollo/queries/UserQueries";
 import {useQuery} from "@apollo/client";
 import {cloneDeep} from 'lodash';
+import {Grid, Paper} from "@material-ui/core";
 
 
 function AllUsersController() {
@@ -13,8 +14,14 @@ function AllUsersController() {
     }, [data])
     return (
         <>
-            <AllUsersTable users={allUsers}
-                           loading={loading}/>
+            <Grid container={true} justify={'center'}>
+                <Grid item={true} xs={11} className={'mt-2'}>
+                    <Paper elevation={10}>
+                        <AllUsersTable users={allUsers}
+                                       loading={loading}/>
+                    </Paper>
+                </Grid>
+            </Grid>
         </>
     )
 }
