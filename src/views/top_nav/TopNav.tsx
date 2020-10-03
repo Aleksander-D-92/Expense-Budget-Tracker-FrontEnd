@@ -10,8 +10,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
 import {TopNavSearch} from "./TopNavSearch";
 import {TopNavDrawer} from "./TopNavDrawer";
-import {useSelector} from "react-redux";
-import {ReduxState} from "../../config/redux/ReduxStore";
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 
@@ -20,11 +18,11 @@ interface Props {
     handleClick: Function
     anchorEl: null | HTMLElement
     loggedIn: boolean,
-    username: string
+    username: string,
+    authority: string
 }
 
 function TopNav(props: Props) {
-    const authority = useSelector((state: ReduxState) => state.userDetails.authority)
     return (
         <>
             <AppBar position={'sticky'} style={{height: '70px'}} color={'inherit'}>
@@ -43,10 +41,13 @@ function TopNav(props: Props) {
                     <Hidden smDown={true}>
                         {props.loggedIn ?
                             <>
-                                <Button color="inherit" component={Link} to={'/admins/all-users'}
+                                {props.authority === 'ROLE_ADMIN' &&
+                                <Button color="inherit" component={Link}
+                                        to={'/admins/all-users'}
                                         className={'ml-auto'}>
                                     <PeopleAltIcon/>Manage Users
                                 </Button>
+                                }
                                 <Button color="inherit" component={Link} to={'/users/account-settings'}
                                         className={''}>
                                     <AccountCircleIcon/>Account Settings

@@ -7,6 +7,7 @@ function TopNavController() {
     const state = useSelector((state: ReduxState) => state);
     const loggedIn = state.userLoggedIn;
     const username = state.userDetails.username;
+    const authority = state.userDetails.authority;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleClose = () => {
         setAnchorEl(null);
@@ -20,7 +21,8 @@ function TopNavController() {
                     handleCLose={handleClose}
                     anchorEl={anchorEl}
                     loggedIn={loggedIn}
-                    username={username}/>
+                    username={username}
+                    authority={authority}/>
         </>
     )
 }

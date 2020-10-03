@@ -85,7 +85,7 @@ function AdminEditUserController() {
             <Grid container justify="center">
                 <Grid xs={11} md={6} className={'mt-4'}>
                     <LinearProgress hidden={!loading}/>
-                    <Card>
+                    <Card elevation={10}>
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe">
