@@ -35,6 +35,10 @@ function CastCarousel(props: Props) {
     const imageBasePath = 'https://image.tmdb.org/t/p/h632';
 
     function addFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login");
+            return
+        }
         createFavorite({
             variables: {
                 userId: userId,
@@ -50,6 +54,10 @@ function CastCarousel(props: Props) {
     }
 
     function removeFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login");
+            return
+        }
         let currentTargetId = e.currentTarget.id;
         // @ts-ignore
         const id = favoriteActors.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;

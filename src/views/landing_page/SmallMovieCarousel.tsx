@@ -42,6 +42,10 @@ function SmallMovieCarousel(props: Props) {
     }
 
     function addFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login");
+            return
+        }
         createFavorite({
             variables: {
                 userId: userId,
@@ -57,6 +61,10 @@ function SmallMovieCarousel(props: Props) {
     }
 
     function removeFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         let currentTargetId = e.currentTarget.id;
         // @ts-ignore
         const id = favoriteMovies.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;

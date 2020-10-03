@@ -1,4 +1,5 @@
 import React, {MouseEvent} from "react";
+import {useHistory} from 'react-router-dom';
 import {
     Card,
     CardContent,
@@ -30,6 +31,7 @@ interface Props {
 }
 
 function MovieDescription(props: Props) {
+    const history = useHistory();
     const userId = useSelector((state: ReduxState) => state.userDetails.userId);
     const favoriteMovies = useSelector((state: ReduxState) => state.favorites.filter(f => f.favoriteType === FavoriteType.MOVIE));
     const dispatch = useDispatch();
@@ -37,6 +39,10 @@ function MovieDescription(props: Props) {
     const [deleteFavorite, {loading: deleteLoading}] = useMutation<Dummy, DeleteFavoriteVars>(DELETE_FAVORITE)
 
     function addFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         createFavorite({
             variables: {
                 userId: userId,
@@ -52,6 +58,10 @@ function MovieDescription(props: Props) {
     }
 
     function removeFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         let currentTargetId = e.currentTarget.id;
         // @ts-ignore
         const id = favoriteMovies.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;

@@ -15,19 +15,26 @@ import {Dummy} from "../../services/apollo/ApoloConfig";
 import {addFavoriteAction, deleteFavoriteAction} from "../../config/redux/Favorites";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
+import {useHistory} from "react-router-dom";
 
 interface Props {
     actorDetails?: ActorDetails
 }
 
 function ActorDescription(props: Props) {
+    const history = useHistory();
     const userId = useSelector((state: ReduxState) => state.userDetails.userId);
     const favoriteActors = useSelector((state: ReduxState) => state.favorites.filter(f => f.favoriteType === FavoriteType.ACTOR));
     const dispatch = useDispatch();
 
     const [createFavorite, {data, loading: createLoading}] = useMutation<CreateFavoriteResp, CreateFavoriteVars>(CREATE_FAVORITE);
     const [deleteFavorite, {loading: deleteLoading}] = useMutation<Dummy, DeleteFavoriteVars>(DELETE_FAVORITE);
+
     function addFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         createFavorite({
             variables: {
                 userId: userId,
@@ -43,6 +50,10 @@ function ActorDescription(props: Props) {
     }
 
     function removeFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         let currentTargetId = e.currentTarget.id;
         // @ts-ignore
         const id = favoriteActors.find(f => f.movieDBId == parseInt(currentTargetId)).favoriteId;

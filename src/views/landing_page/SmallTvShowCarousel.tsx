@@ -39,6 +39,10 @@ function SmallTvShowCarousel(props: Props) {
     }
 
     function addFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login");
+            return
+        }
         createFavorite({
             variables: {
                 userId: userId,
@@ -54,6 +58,10 @@ function SmallTvShowCarousel(props: Props) {
     }
 
     function removeFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login");
+            return
+        }
         let currentTargetId = e.currentTarget.id;
         console.log(currentTargetId);
         // @ts-ignore

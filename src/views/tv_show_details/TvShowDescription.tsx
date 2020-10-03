@@ -1,4 +1,5 @@
 import React, {MouseEvent, useEffect, useState} from "react";
+import {useHistory} from 'react-router-dom';
 import {TVShowDetails} from "../../services/the_movie_db/TvShowsService";
 import {
     Card,
@@ -30,6 +31,7 @@ interface Props {
 }
 
 function TvShowDescription(props: Props) {
+    const history = useHistory();
     const userId = useSelector((state: ReduxState) => state.userDetails.userId);
     const favoriteTV = useSelector((state: ReduxState) => state.favorites.filter(f => f.favoriteType === FavoriteType.TV));
     const dispatch = useDispatch();
@@ -46,6 +48,10 @@ function TvShowDescription(props: Props) {
     }, [props.tvShowDetails])
 
     function addFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         createFavorite({
             variables: {
                 userId: userId,
@@ -61,6 +67,10 @@ function TvShowDescription(props: Props) {
     }
 
     function removeFavorite(e: MouseEvent) {
+        if (userId === undefined) {
+            history.push("/users/login")
+            return;
+        }
         let currentTargetId = e.currentTarget.id;
         console.log(currentTargetId);
         // @ts-ignore
@@ -93,7 +103,7 @@ function TvShowDescription(props: Props) {
                                     {!(favoriteTV.filter(f => f.movieDBId == props.tvShowDetails?.id && f.favoriteType === FavoriteType.TV).length > 0) ?
                                         <>
                                             <IconButton aria-label="settings"
-                                                        style={{display: (deleteLoading || createLoading ) ? 'none' : 'inline-flex'}}
+                                                        style={{display: (deleteLoading || createLoading) ? 'none' : 'inline-flex'}}
                                                         onClick={addFavorite}
                                                         id={`${props.tvShowDetails?.id}`}>
                                                 <Tooltip title={"Click to Add to favorites"}
@@ -104,13 +114,13 @@ function TvShowDescription(props: Props) {
                                             </IconButton>
                                             <CircularProgress size={40}
                                                               thickness={15}
-                                                              style={{display: (deleteLoading || createLoading ) ? 'block' : 'none'}}/>
+                                                              style={{display: (deleteLoading || createLoading) ? 'block' : 'none'}}/>
                                         </>
                                         :
                                         <>
                                             <IconButton aria-label="settings"
                                                         id={`${props.tvShowDetails?.id}`}
-                                                        style={{display: (deleteLoading || createLoading ) ? 'none' : 'inline-flex'}}
+                                                        style={{display: (deleteLoading || createLoading) ? 'none' : 'inline-flex'}}
                                                         onClick={(e: MouseEvent) => removeFavorite(e)}>
                                                 <Tooltip title={"Click to Remove from favorites"}
                                                          placement={'top'}
