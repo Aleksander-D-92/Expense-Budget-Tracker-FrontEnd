@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import {Paper} from "@material-ui/core";
 import {TopNavController} from "./views/top_nav/TopNavController";
@@ -27,6 +27,15 @@ function App() {
             }
         }
     });
+    useEffect(() => {
+        //removes the loading screen
+        const loadingScreenHtml = document.getElementById('loading screen');
+        const loadingScreenCss = document.getElementById('loading screen css');
+        if (loadingScreenHtml !== null && loadingScreenCss !== null) {
+            loadingScreenHtml.style.display = 'none'
+            loadingScreenCss.remove();
+        }
+    }, [])
     return (
         <>
             <ApolloProvider client={GetClient(jwt)}>

@@ -23,7 +23,7 @@ function AllUsersController() {
     return (
         <>
             <Grid container={true} justify={'center'}>
-                <Grid item={true} xs={11} className={'mt-2'}>
+                <Grid item={true} xs={11} className={'mt-3'}>
                     <Paper elevation={10}>
                         <AllUsersTable users={allUsers}
                                        loading={loading}/>

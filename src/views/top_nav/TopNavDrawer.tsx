@@ -6,11 +6,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
-interface Props {
 
-}
-
-function TopNavDrawer(props: Props) {
+function TopNavDrawer() {
     const [open, setOpen] = useState<boolean>(false);
 
     function toggleOpen() {

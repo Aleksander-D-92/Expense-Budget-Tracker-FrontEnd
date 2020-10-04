@@ -3,9 +3,8 @@ import {ActorMovieOrTvCredits} from "../../services/the_movie_db/ActorService";
 import {useHistory} from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import {ACTOR_DETAILS_CAROUSEL} from "../../shared/utils/variables";
-import {Card, CardContent, CardHeader, CardMedia, Grid, IconButton, Tooltip, Typography} from "@material-ui/core";
+import {Card, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
 import {formatDate} from "../../shared/utils/functions";
-import AddIcon from "@material-ui/icons/Add";
 
 interface Props {
     tvOrMovie?: ActorMovieOrTvCredits[]
@@ -45,15 +44,6 @@ function ActorMovieTvShowCarousel(props: Props) {
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={(show.title === undefined) ? show.name : show.title}
                                     subheader={`Release Date: ${(show.release_date !== undefined) ? formatDate(show.release_date) : formatDate(show.first_air_date)}`}
-                                    action={
-                                        <IconButton aria-label="settings">
-                                            <Tooltip title={"Click to add to favorites"}
-                                                     placement={'top'}
-                                                     arrow={true}>
-                                                <AddIcon/>
-                                            </Tooltip>
-                                        </IconButton>
-                                    }
                                 />
                                 <Tooltip title={"Double Click to see details"}
                                          placement={'top'}

@@ -85,6 +85,12 @@ function TopNav(props: Props) {
                 >
                     {props.loggedIn ?
                         <>
+                            {props.authority === 'ROLE_ADMIN' &&
+                            <MenuItem component={Link} to={'/admins/all-users'}
+                                      onClick={() => props.handleCLose()}>
+                                <PeopleAltIcon/>Manage Users
+                            </MenuItem>
+                            }
                             <MenuItem component={Link} to={'/users/account-settings'}
                                       onClick={() => props.handleCLose()}>
                                 <AccountCircleIcon/>Account Settings
