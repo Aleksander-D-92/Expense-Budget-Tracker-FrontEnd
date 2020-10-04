@@ -45,7 +45,8 @@ function WebsiteRoutes() {
             <Route exact={true} path={'/tv-shows/:tvShowId'}><TvShowDetailsController/></Route>
             <Route exact={true} path={'/actors/:actorId'}><ActorDetailsController/></Route>
             <Route exact={true} path={'/favorites'}>
-                {(userLoggedIn) ? <FavoriteController/> : <Redirect to={'/users/login'}/>}
+                {/*{(userLoggedIn) ? <FavoriteController/> : <Redirect to={'/users/login'}/>}*/}
+                <FavoriteController/>
             </Route>
             <Route path="*">
                 <Redirect to={'/'}/>

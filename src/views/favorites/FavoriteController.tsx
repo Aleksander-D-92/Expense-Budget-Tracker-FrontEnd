@@ -1,85 +1,79 @@
 import React, {useEffect, useState} from "react";
-import {useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
 import {Card, Grid} from "@material-ui/core";
-import {useQuery} from "@apollo/client";
-import {
-    GET_FAVORITES_COUNT_BY_USERID,
-    GetFavoritesCountResp,
-    GetFavoritesCountVars
-} from "../../services/apollo/queries/FavoriteQueries";
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
+import {MovieDetails, MovieService} from "../../services/the_movie_db/MovieService";
+import {TVShowDetails, TvShowsService} from "../../services/the_movie_db/TvShowsService";
+import {ActorDetails, ActorService} from "../../services/the_movie_db/ActorService";
+import {FavoriteCard} from "./FavoriteCard";
 
 
 function FavoriteController() {
-    const history = useHistory();
-    const userDetails = useSelector((state: ReduxState) => state.userDetails);
-    const userId = userDetails.userId;
-    if (userId === undefined || userId === null) {
-        history.push("/users/login")
-    }
-    const [favoriteMovies, setFavoriteMovies] = useState(
-        {
-            type: FavoriteType.MOVIE,
-            count: 0
-        });
-    const [favoriteTV, setFavoriteTV] = useState(
-        {
-            type: FavoriteType.TV,
-            count: 0
-        });
-    const [favoriteActor, setFavoriteActor] = useState(
-        {
-            type: FavoriteType.ACTOR,
-            count: 0
-        });
+    const favorites = useSelector((state: ReduxState) => state.favorites);
 
-    const {data, loading} = useQuery<GetFavoritesCountResp, GetFavoritesCountVars>(GET_FAVORITES_COUNT_BY_USERID, {
-        variables: {
-            id: userId
-        }
-    });
+    const [favoriteMovies, setFavoriteMovies] = useState<MovieDetails[]>([]);
+    const [favoriteTv, setFavoriteTv] = useState<TVShowDetails[]>([]);
+    const [favoriteActors, setFavoriteActors] = useState<ActorDetails[]>();
+
+    // let movies: MovieDetails[] = [];
+    // let tvShows: TVShowDetails[] = [];
+    // let actors: ActorDetails[] = [];
+
     useEffect(() => {
-        if (data !== undefined) {
-            data.countFavoriteByUser.forEach((e) => {
-                switch (e.favoriteType) {
-                    case FavoriteType.MOVIE:
-                        setFavoriteMovies({type: FavoriteType.MOVIE, count: e.count});
-                        break;
-                    case FavoriteType.TV:
-                        setFavoriteTV({type: FavoriteType.TV, count: e.count});
-                        break;
-                    case FavoriteType.ACTOR:
-                        setFavoriteActor({type: FavoriteType.ACTOR, count: e.count});
-                        break;
-                }
-            })
-        }
-    }, [data]);
-
+        favorites.forEach((fav) => {
+            switch (fav.favoriteType) {
+                case FavoriteType.MOVIE:
+                    MovieService.getDetails(fav.movieDBId).then((e) => {
+                        setFavoriteMovies([...favoriteMovies, e.data])
+                        // movies.push(e.data);
+                        // console.log('movies');
+                        // console.log(movies);
+                    });
+                    break;
+                case FavoriteType.TV:
+                    TvShowsService.getDetails(fav.movieDBId).then((e) => {
+                        setFavoriteTv([...favoriteTv, e.data])
+                        // tvShows.push(e.data);
+                        // console.log('tvshows');
+                        // console.log(tvShows);
+                    });
+                    break;
+                case FavoriteType.ACTOR:
+                    ActorService.getDetails(fav.movieDBId).then((e) => {
+                        // actors.push(e.data)
+                        // console.log('actors.log');
+                        // console.log(actors);
+                    });
+                    break;
+            }
+        })
+    }, []);
+    // useEffect(()=>{
+    //     console.log('actors ot useeefect');
+    //     setFavoriteActors(actors)
+    // },[actors])
+    //fetch favorites from movieDB
     return (
-        <Grid container={true} justify={'center'} spacing={5}>
-
-            <Grid item={true} xs={11} md={3}>
-                <Card elevation={10} className={'mt-3'}>
-                    <h1>Movies</h1>
-                </Card>
+        <>
+            <Grid container={true} justify={'center'} spacing={5}>
+                <FavoriteCard label={'Movies'} count={favoriteMovies?.length} loading={favoriteMovies === undefined}
+                              favorites={favoriteMovies}/>
+                <FavoriteCard label={'TV Shows'} count={favoriteTv?.length} loading={favoriteTv === undefined}
+                              favorites={favoriteTv}/>
+                <FavoriteCard label={'Actors'} count={favoriteActors?.length} loading={favoriteActors === undefined}
+                              favorites={favoriteActors}/>
             </Grid>
-
-            <Grid item={true} xs={11} md={3}>
-                <Card elevation={10} className={'mt-3'}>
-                    <h1>TV</h1>
-                </Card>
+            <Grid container={true} justify={'center'} spacing={5}>
+                <Grid xs={9}>
+                    <Card elevation={10} className={'mt-4'}>
+                        <h1>sdaasd</h1>
+                        {favoriteTv?.map(e => e.name).join(", ")}
+                        {favoriteMovies?.map(e => e.title).join(", ")}
+                    </Card>
+                </Grid>
             </Grid>
-
-            <Grid item={true} xs={11} md={3}>
-                <Card elevation={10} className={'mt-3'}>
-                    <h1>Actors</h1>
-                </Card>
-            </Grid>
-
-        </Grid>
+        </>
     )
 }
 

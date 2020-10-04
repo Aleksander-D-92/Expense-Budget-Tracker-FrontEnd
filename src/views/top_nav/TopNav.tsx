@@ -5,12 +5,12 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import {AppBar, Button, Hidden, IconButton, Menu, MenuItem, Toolbar} from "@material-ui/core";
 import {Link} from "react-router-dom";
-import {capitalizeString} from "../../shared/utils/functions";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import HomeIcon from '@material-ui/icons/Home';
 import {TopNavSearch} from "./TopNavSearch";
 import {TopNavDrawer} from "./TopNavDrawer";
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 
 
 interface Props {
@@ -48,12 +48,16 @@ function TopNav(props: Props) {
                                     <PeopleAltIcon/>Manage Users
                                 </Button>
                                 }
+                                <Button color="inherit" component={Link} to={'/favorites'}
+                                        className={''}>
+                                    <CollectionsBookmarkIcon/>Favorites
+                                </Button>
                                 <Button color="inherit" component={Link} to={'/users/account-settings'}
                                         className={''}>
                                     <AccountCircleIcon/>Account Settings
                                 </Button>
                                 <Button color="inherit" component={Link}
-                                        to={'/users/logout'}><ExitToAppIcon/>Logout {capitalizeString(props.username)}
+                                        to={'/users/logout'}><ExitToAppIcon/>Logout
                                 </Button>
                             </>
                             :
@@ -91,6 +95,10 @@ function TopNav(props: Props) {
                                 <PeopleAltIcon/>Manage Users
                             </MenuItem>
                             }
+                            <MenuItem component={Link} to={'/favorites'}
+                                      onClick={() => props.handleCLose()}>
+                                <CollectionsBookmarkIcon/>Favorites
+                            </MenuItem>
                             <MenuItem component={Link} to={'/users/account-settings'}
                                       onClick={() => props.handleCLose()}>
                                 <AccountCircleIcon/>Account Settings
