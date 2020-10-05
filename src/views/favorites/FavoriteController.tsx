@@ -1,24 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
-import {Card, Grid} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
-import {MovieDetails, MovieService} from "../../services/the_movie_db/MovieService";
-import {TVShowDetails, TvShowsService} from "../../services/the_movie_db/TvShowsService";
-import {ActorDetails, ActorService} from "../../services/the_movie_db/ActorService";
+import {MovieService} from "../../services/the_movie_db/MovieService";
+import {TvShowsService} from "../../services/the_movie_db/TvShowsService";
+import {ActorService} from "../../services/the_movie_db/ActorService";
 import {FavoriteCard} from "./FavoriteCard";
-import {addActorAction, addMovieAction, addTvShowAction} from "../../config/redux/FavoriteVIew";
+import {
+    addActorAction,
+    addMovieAction,
+    addTvShowAction,
+    deleteFavoriteViewState
+} from "../../config/redux/FavoriteVIew";
+import {FavoriteMovieCarousel} from "./FavoriteMovieCarousel";
+import {FavoriteTvShowCarousel} from "./FavoriteTvShowCarousel";
+import {FavoriteActorsCarousel} from "./FavoriteActorsCarousel";
 
 
 function FavoriteController() {
-    const favorites = useSelector((state: ReduxState) => state.favorites);
     const dispatch = useDispatch();
-    const stateArray = useSelector((state: ReduxState) => state.favoritesView)
-
-    const [favoriteMovies, setFavoriteMovies] = useState<MovieDetails[]>([]);
-    const [favoriteTv, setFavoriteTv] = useState<TVShowDetails[]>([]);
-    const [favoriteActors, setFavoriteActors] = useState<ActorDetails[]>();
-
+    const favorites = useSelector((state: ReduxState) => state.favorites);
+    const favoritesView = useSelector((state: ReduxState) => state.favoritesView);
 
     useEffect(() => {
         favorites.forEach((fav) => {
@@ -41,25 +44,28 @@ function FavoriteController() {
             }
         })
     }, []);
-
+    useEffect(() => {
+        return () => {
+            console.log('componenet will dismount');
+            dispatch(deleteFavoriteViewState());
+        }
+    }, [])
     return (
         <>
             <Grid container={true} justify={'center'} spacing={5}>
-
-                <FavoriteCard label={'Movies'} count={0} loading={stateArray === undefined}
-                              favorites={favoriteMovies}/>
-                <FavoriteCard label={'TV Shows'} count={0} loading={stateArray === undefined}
-                              favorites={favoriteTv}/>
-                <FavoriteCard label={'Actors'} count={0} loading={stateArray === undefined}
-                              favorites={favoriteActors}/>
+                <FavoriteCard label={'Movies'} count={favoritesView.movies.length}/>
+                <FavoriteCard label={'TV Shows'} count={favoritesView.tvShows.length}/>
+                <FavoriteCard label={'Actors'} count={favoritesView.actors.length}/>
             </Grid>
             <Grid container={true} justify={'center'} spacing={5}>
-                <Grid xs={9}>
-                    <Card elevation={10} className={'mt-4'}>
-                        <h1>sdaasd</h1>
-                        {favoriteTv?.map(e => e.name).join(", ")}
-                        {favoriteMovies?.map(e => e.title).join(", ")}
-                    </Card>
+                <Grid xs={12}>
+                    <FavoriteMovieCarousel movies={favoritesView.movies}/>
+                </Grid>
+                <Grid xs={12}>
+                    <FavoriteTvShowCarousel tvShows={favoritesView.tvShows}/>
+                </Grid>
+                <Grid xs={12}>
+                    <FavoriteActorsCarousel actors={favoritesView.actors}/>
                 </Grid>
             </Grid>
         </>

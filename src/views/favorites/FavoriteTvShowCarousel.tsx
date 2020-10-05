@@ -1,17 +1,17 @@
 import React, {MouseEvent} from "react";
-import {useHistory} from 'react-router-dom';
-import {MovieDetails} from "../../services/the_movie_db/MovieService";
+import {TVShowDetails} from "../../services/the_movie_db/TvShowsService";
+import {Card, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import {SMALL_CAROUSEL_RESPONSIVE} from "../../shared/utils/variables";
-import {Card, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
 import {formatDate} from "../../shared/utils/functions";
 import {NoFavorite} from "./NoFavorite";
+import {useHistory} from "react-router-dom";
 
 interface Props {
-    movies?: MovieDetails[]
+    tvShows?: TVShowDetails[]
 }
 
-function FavoriteMovieCarousel(props: Props) {
+function FavoriteTvShowCarousel(props: Props) {
     const history = useHistory();
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
 
@@ -21,27 +21,27 @@ function FavoriteMovieCarousel(props: Props) {
 
     return (
         <>
-            <Typography variant={'h3'} align={'center'} className={'mt-4'}>Favorite Movies</Typography>
+            <Typography variant={'h3'} align={'center'} className={'mt-4'}>Favorite TV Shows</Typography>
             <Carousel responsive={SMALL_CAROUSEL_RESPONSIVE}>
-                {props.movies !== undefined ? props.movies.map(movie => {
-                    return <Grid container={true} justify={'center'} key={movie.id}>
+                {props.tvShows !== undefined ? props.tvShows.map(tvShow => {
+                    return <Grid container={true} justify={'center'} key={tvShow.id}>
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-4 landingPageSmallCard'}
                                   elevation={10}
                                   style={{height: 565}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={movie.title}
-                                    subheader={`Release Date: ${formatDate(movie.release_date)}`}
+                                    title={tvShow.name}
+                                    subheader={`Release Date: ${formatDate(tvShow.first_air_date)}`}
                                 />
                                 <Tooltip title={"Double Click to see details"}
                                          placement={'top'}
                                          arrow={true}>
                                     <CardMedia className={'landingPageSmallImage'}
-                                               id={`${movie.id}`}
+                                               id={`${tvShow.id}`}
                                                onDoubleClick={redirect}
                                                style={{height: 480}}
-                                               image={imageBasePath + movie.backdrop_path}
+                                               image={imageBasePath + tvShow.backdrop_path}
                                     />
                                 </Tooltip>
                             </Card>
@@ -49,9 +49,9 @@ function FavoriteMovieCarousel(props: Props) {
                     </Grid>
                 }) : ''}
             </Carousel>
-            {(props.movies === undefined || props.movies.length <= 0) && <NoFavorite text={'No Favorite Movies'}/>}
+            {(props.tvShows === undefined || props.tvShows.length <= 0) && <NoFavorite text={'No Favorite TV Shows'}/>}
         </>
     )
 }
 
-export {FavoriteMovieCarousel}
+export {FavoriteTvShowCarousel}

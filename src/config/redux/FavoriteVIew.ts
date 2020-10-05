@@ -15,17 +15,24 @@ interface Action {
 }
 
 const ADD_MOVIE = 'ADD_MOVIE';
-const REMOVE_MOVIE = 'REMOVE_MOVIE';
+const DELETE_MOVIE = 'REMOVE_MOVIE';
 const ADD_TV_SHOW = 'REMOVE_TV';
-const REMOVE_TV = 'REMOVE_TV';
+const DELETE_TV = 'REMOVE_TV';
 const ADD_ACTOR = 'ADD_ACTOR';
-const REMOVE_ACTOR = 'REMOVE_ACTOR';
+const DELETE_ACTOR = 'REMOVE_ACTOR';
 const DELETE_FAVORITE_VIEW_STATE = 'DELETE_STATE'
 
 
 function addMovieAction(payload: MovieDetails) {
     return {
         type: ADD_MOVIE,
+        payload: payload
+    }
+}
+
+function deleteMovieAction(payload: MovieDetails) {
+    return {
+        type: DELETE_MOVIE,
         payload: payload
     }
 }
@@ -58,16 +65,19 @@ function favoriteViewReducer(state: FavoriteVIewState = {movies: [], tvShows: []
             // @ts-ignore
             newState.movies.push(action.payload);
             return newState;
-        case REMOVE_MOVIE:
+        case DELETE_MOVIE:
             newState = cloneDeep(state);
+            console.log(newState);
             // @ts-ignore
-            return newState.movies.filter(m => m.id !== action.payload.id)
+            newState.movies = newState.movies.filter(m => m.id != action.payload.id)
+            console.log(newState);
+            return newState;
         case ADD_TV_SHOW:
             newState = cloneDeep(state);
             // @ts-ignore
             newState.tvShows.push(action.payload)
             return newState
-        case REMOVE_TV:
+        case DELETE_TV:
             newState = cloneDeep(state);
             // @ts-ignore
             return newState.tvShows.filter(m => m.id !== action.payload.id)
@@ -76,7 +86,7 @@ function favoriteViewReducer(state: FavoriteVIewState = {movies: [], tvShows: []
             // @ts-ignore
             newState.actors.push(action.payload)
             return newState
-        case REMOVE_ACTOR:
+        case DELETE_ACTOR:
             newState = cloneDeep(state);
             // @ts-ignore
             return newState.actors.filter(m => m.id !== action.payload.id)
@@ -88,4 +98,11 @@ function favoriteViewReducer(state: FavoriteVIewState = {movies: [], tvShows: []
     }
 }
 
-export {favoriteViewReducer, addMovieAction, addTvShowAction, addActorAction, deleteFavoriteViewState}
+export {
+    favoriteViewReducer,
+    addMovieAction,
+    addTvShowAction,
+    addActorAction,
+    deleteFavoriteViewState,
+    deleteMovieAction
+}
