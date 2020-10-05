@@ -6,12 +6,14 @@ const DARK_THEME = 'DARK_THEME';
 const LIGHT_THEME = 'LIGHT_THEME';
 
 function setDarkTheme() {
+    localStorage.setItem("theme", DARK_THEME);
     return {
         type: DARK_THEME
     }
 }
 
 function setLightTheme() {
+    localStorage.setItem("theme", LIGHT_THEME);
     return {
         type: LIGHT_THEME
     }
@@ -28,4 +30,4 @@ function themeReducer(state: boolean = false, action: Action) {
     }
 }
 
-export {themeReducer, setDarkTheme, setLightTheme}
+export {themeReducer, setDarkTheme, setLightTheme, DARK_THEME, LIGHT_THEME}
