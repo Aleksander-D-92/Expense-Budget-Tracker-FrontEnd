@@ -1,0 +1,10 @@
+.theme-paper {
+    position: fixed;
+    top: 90%;
+    right: 2%;
+    z-index: 5000;
+}
+
+.theme-paper:hover {
+    cursor: pointer;
+}

@@ -10,9 +10,11 @@ import {GetClient} from "./services/apollo/ApoloConfig";
 import {ApolloProvider} from "@apollo/client";
 import {useSelector} from "react-redux";
 import {ReduxState} from "./config/redux/ReduxStore";
+import {ThemeBuilder} from "./views/thene/ThemeBuilder";
 
 
 function App() {
+    const darkTheme = useSelector((state: ReduxState) => state.darkTheme);
     const jwt = useSelector((state: ReduxState) => state.userDetails.authorizationHeader);
     const theme = createMuiTheme({
         palette: {
@@ -27,6 +29,7 @@ function App() {
             }
         }
     });
+
     useEffect(() => {
         //removes the loading screen
         const loadingScreenHtml = document.getElementById('loading screen');
@@ -40,6 +43,7 @@ function App() {
         <>
             <ApolloProvider client={GetClient(jwt)}>
                 <CheckIfLoggedIn/>
+                <ThemeBuilder/>
                 <ThemeProvider theme={theme}>
                     <Paper>
                         <Grid container spacing={0}>

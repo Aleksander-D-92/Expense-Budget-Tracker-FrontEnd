@@ -58,13 +58,13 @@ function FavoriteController() {
                 <FavoriteCard label={'Actors'} count={favoritesView.actors.length}/>
             </Grid>
             <Grid container={true} justify={'center'} spacing={5}>
-                <Grid xs={12}>
+                <Grid xs={11}>
                     <FavoriteMovieCarousel movies={favoritesView.movies}/>
                 </Grid>
-                <Grid xs={12}>
+                <Grid xs={11}>
                     <FavoriteTvShowCarousel tvShows={favoritesView.tvShows}/>
                 </Grid>
-                <Grid xs={12}>
+                <Grid xs={11}>
                     <FavoriteActorsCarousel actors={favoritesView.actors}/>
                 </Grid>
             </Grid>
