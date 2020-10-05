@@ -11,6 +11,7 @@ function UserLogoutController() {
         dispatch(deleteAllFavoritesAction());
         dispatch(userLoggedOutAction());
         dispatch(userDetailsAction({}));
+        dispatch(deleteAllFavoritesAction());
         localStorage.removeItem('jwt')
         history.push("/users/login");
     })

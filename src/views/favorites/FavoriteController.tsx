@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
 import {Card, Grid} from "@material-ui/core";
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
@@ -7,61 +7,50 @@ import {MovieDetails, MovieService} from "../../services/the_movie_db/MovieServi
 import {TVShowDetails, TvShowsService} from "../../services/the_movie_db/TvShowsService";
 import {ActorDetails, ActorService} from "../../services/the_movie_db/ActorService";
 import {FavoriteCard} from "./FavoriteCard";
+import {addActorAction, addMovieAction, addTvShowAction} from "../../config/redux/FavoriteVIew";
 
 
 function FavoriteController() {
     const favorites = useSelector((state: ReduxState) => state.favorites);
+    const dispatch = useDispatch();
+    const stateArray = useSelector((state: ReduxState) => state.favoritesView)
 
     const [favoriteMovies, setFavoriteMovies] = useState<MovieDetails[]>([]);
     const [favoriteTv, setFavoriteTv] = useState<TVShowDetails[]>([]);
     const [favoriteActors, setFavoriteActors] = useState<ActorDetails[]>();
 
-    // let movies: MovieDetails[] = [];
-    // let tvShows: TVShowDetails[] = [];
-    // let actors: ActorDetails[] = [];
 
     useEffect(() => {
         favorites.forEach((fav) => {
             switch (fav.favoriteType) {
                 case FavoriteType.MOVIE:
                     MovieService.getDetails(fav.movieDBId).then((e) => {
-                        setFavoriteMovies([...favoriteMovies, e.data])
-                        // movies.push(e.data);
-                        // console.log('movies');
-                        // console.log(movies);
+                        dispatch(addMovieAction(e.data));
                     });
                     break;
                 case FavoriteType.TV:
                     TvShowsService.getDetails(fav.movieDBId).then((e) => {
-                        setFavoriteTv([...favoriteTv, e.data])
-                        // tvShows.push(e.data);
-                        // console.log('tvshows');
-                        // console.log(tvShows);
+                        dispatch(addTvShowAction(e.data));
                     });
                     break;
                 case FavoriteType.ACTOR:
                     ActorService.getDetails(fav.movieDBId).then((e) => {
-                        // actors.push(e.data)
-                        // console.log('actors.log');
-                        // console.log(actors);
+                        dispatch(addActorAction(e.data));
                     });
                     break;
             }
         })
     }, []);
-    // useEffect(()=>{
-    //     console.log('actors ot useeefect');
-    //     setFavoriteActors(actors)
-    // },[actors])
-    //fetch favorites from movieDB
+
     return (
         <>
             <Grid container={true} justify={'center'} spacing={5}>
-                <FavoriteCard label={'Movies'} count={favoriteMovies?.length} loading={favoriteMovies === undefined}
+
+                <FavoriteCard label={'Movies'} count={0} loading={stateArray === undefined}
                               favorites={favoriteMovies}/>
-                <FavoriteCard label={'TV Shows'} count={favoriteTv?.length} loading={favoriteTv === undefined}
+                <FavoriteCard label={'TV Shows'} count={0} loading={stateArray === undefined}
                               favorites={favoriteTv}/>
-                <FavoriteCard label={'Actors'} count={favoriteActors?.length} loading={favoriteActors === undefined}
+                <FavoriteCard label={'Actors'} count={0} loading={stateArray === undefined}
                               favorites={favoriteActors}/>
             </Grid>
             <Grid container={true} justify={'center'} spacing={5}>
