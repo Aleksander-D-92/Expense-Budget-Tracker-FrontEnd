@@ -24,7 +24,7 @@ function themeReducer(state: boolean = false, action: Action) {
         case LIGHT_THEME:
             return false;
         default:
-            return false;
+            return state;
     }
 }
 

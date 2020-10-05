@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import {Paper} from "@material-ui/core";
 import {TopNavController} from "./views/top_nav/TopNavController";
@@ -11,14 +11,15 @@ import {ApolloProvider} from "@apollo/client";
 import {useSelector} from "react-redux";
 import {ReduxState} from "./config/redux/ReduxStore";
 import {ThemeBuilder} from "./views/thene/ThemeBuilder";
+import {Theme} from "@material-ui/core/styles/createMuiTheme";
 
 
 function App() {
-    const darkTheme = useSelector((state: ReduxState) => state.darkTheme);
     const jwt = useSelector((state: ReduxState) => state.userDetails.authorizationHeader);
-    const theme = createMuiTheme({
+    const darkTheme = useSelector((state: ReduxState) => state.darkTheme);
+    const defaultTHeme = createMuiTheme({
         palette: {
-            type: "dark",
+            type: "light",
             // primary: purple
         },
         overrides: {
@@ -29,7 +30,40 @@ function App() {
             }
         }
     });
+    const [currentTheme, setCurrentTheme] = useState<Theme>();
 
+    useEffect(() => {
+        if (darkTheme) {
+            setCurrentTheme(createMuiTheme({
+                palette: {
+                    type: "dark",
+                    // primary: purple
+                },
+                overrides: {
+                    MuiTooltip: {
+                        tooltip: {
+                            fontSize: "0.9em",
+                        }
+                    }
+                }
+            }));
+        } else {
+            setCurrentTheme(createMuiTheme({
+                palette: {
+                    type: "light",
+                    // primary: purple
+                },
+                overrides: {
+                    MuiTooltip: {
+                        tooltip: {
+                            fontSize: "0.9em",
+                        }
+                    }
+                }
+            }));
+        }
+
+    }, [darkTheme])
     useEffect(() => {
         //removes the loading screen
         const loadingScreenHtml = document.getElementById('loading screen');
@@ -44,7 +78,7 @@ function App() {
             <ApolloProvider client={GetClient(jwt)}>
                 <CheckIfLoggedIn/>
                 <ThemeBuilder/>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider theme={(currentTheme === undefined) ? defaultTHeme : currentTheme}>
                     <Paper>
                         <Grid container spacing={0}>
                             <Grid item xs={12}>
