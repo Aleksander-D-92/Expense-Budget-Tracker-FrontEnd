@@ -13,13 +13,8 @@ function DemoLogin(props: Props) {
             <Grid item={true} xs={11} md={4} className={'mt-4'}>
                 <Card elevation={8}>
                     <CardHeader
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon/>
-                            </IconButton>
-                        }
                         title="Demo Login"
-                        subheader="Allowes you to log in with a demo account with a lot of test data"
+                        subheader="Allows you to log in with a demo account with a lot of test data"
                     />
                     <Button variant="contained"
                             color="primary"

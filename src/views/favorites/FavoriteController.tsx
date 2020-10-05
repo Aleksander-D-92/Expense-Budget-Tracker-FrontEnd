@@ -16,6 +16,7 @@ import {
 import {FavoriteMovieCarousel} from "./FavoriteMovieCarousel";
 import {FavoriteTvShowCarousel} from "./FavoriteTvShowCarousel";
 import {FavoriteActorsCarousel} from "./FavoriteActorsCarousel";
+import ScrollAnimation from "react-animate-on-scroll";
 
 
 function FavoriteController() {
@@ -52,20 +53,29 @@ function FavoriteController() {
     }, [])
     return (
         <>
-            <Grid container={true} justify={'center'} spacing={5}>
-                <FavoriteCard label={'Movies'} count={favoritesView.movies.length}/>
-                <FavoriteCard label={'TV Shows'} count={favoritesView.tvShows.length}/>
-                <FavoriteCard label={'Actors'} count={favoritesView.actors.length}/>
-            </Grid>
+            <ScrollAnimation animateIn={'fadeInUp'}>
+                <Grid container={true} justify={'center'} spacing={5}>
+                    <FavoriteCard label={'Movies'} count={favoritesView.movies.length}/>
+                    <FavoriteCard label={'TV Shows'} count={favoritesView.tvShows.length}/>
+                    <FavoriteCard label={'Actors'} count={favoritesView.actors.length}/>
+
+                </Grid>
+            </ScrollAnimation>
             <Grid container={true} justify={'center'} spacing={5}>
                 <Grid xs={11}>
-                    <FavoriteMovieCarousel movies={favoritesView.movies}/>
+                    <ScrollAnimation animateIn={'fadeInLeft'}>
+                        <FavoriteMovieCarousel movies={favoritesView.movies}/>
+                    </ScrollAnimation>
                 </Grid>
                 <Grid xs={11}>
-                    <FavoriteTvShowCarousel tvShows={favoritesView.tvShows}/>
+                    <ScrollAnimation animateIn={'fadeInRight'}>
+                        <FavoriteTvShowCarousel tvShows={favoritesView.tvShows}/>
+                    </ScrollAnimation>
                 </Grid>
                 <Grid xs={11}>
-                    <FavoriteActorsCarousel actors={favoritesView.actors}/>
+                    <ScrollAnimation animateIn={'fadeInLeft'}>
+                        <FavoriteActorsCarousel actors={favoritesView.actors}/>
+                    </ScrollAnimation>
                 </Grid>
             </Grid>
         </>

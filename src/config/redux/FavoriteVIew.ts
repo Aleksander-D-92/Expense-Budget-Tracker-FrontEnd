@@ -93,7 +93,7 @@ function favoriteViewReducer(state: FavoriteVIewState = {movies: [], tvShows: []
         case DELETE_FAVORITE_VIEW_STATE:
             return {movies: [], tvShows: [], actors: []}
         default:
-            return {movies: [], tvShows: [], actors: []}
+            return state
 
     }
 }

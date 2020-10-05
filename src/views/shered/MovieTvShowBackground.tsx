@@ -39,15 +39,16 @@ function MovieTvShowBackground(props: Props) {
                             </div>
 
                             <div className={'movieDetailsTextProps'}>
-                                <Typography variant="h4">
+                                <Typography variant="h4" style={{color: 'white'}}>
                                     {props.title}
                                 </Typography>
-                                <Typography variant="h5">
+                                <Typography variant="h5" style={{color: 'white'}}>
                                     Genres: {props.genres?.map(genre => genre.name).join(`, `)} <br/>
                                     Rating: {props.vote_average} {props.vote_average !== undefined ?
                                     <ReactStars style={{display: 'inline-block'}}
                                                 count={10}
                                                 size={30}
+                                                edit={false}
                                                 value={props.vote_average}
                                                 activeColor="#ffd700"
                                     /> : ''}

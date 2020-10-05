@@ -9,6 +9,7 @@ import {Grid} from "@material-ui/core";
 import {ADMIN_CREDENTIALS, FREE_USER_CREDENTIALS, PAID_USER_CREDENTIALS} from "./variables";
 import {useHistory} from 'react-router-dom';
 import {userDetailsAction, userLoggedInAction} from "../../../config/redux/User";
+import {deleteAllFavoritesAction} from "../../../config/redux/Favorites";
 
 
 function UserLoginController() {
@@ -70,6 +71,7 @@ function UserLoginController() {
             const jwt = data.createJWT.idToken;
             localStorage.setItem('jwt', jwt);
             let jwtPayload = JSON.parse(atob(jwt.split('.')[1])); //parse the JWT payload to JSON object
+            dispatch(deleteAllFavoritesAction());
             dispatch(userLoggedInAction());
             dispatch(userDetailsAction({
                 userId: jwtPayload.id,
