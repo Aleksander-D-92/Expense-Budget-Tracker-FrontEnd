@@ -10,7 +10,7 @@ import './css/MovieDetails.css'
 import {PageLoading} from "../shered/PageLoading";
 import {CommentSubmitForm} from "../comment/CommentSubmitForm";
 import {useMutation} from "@apollo/client";
-import {CreateCommentResp, CREATE_COMMENT, CreateCommentVars} from "../../services/apollo/mutations/Comments";
+import {CreateCommentResp, CREATE_COMMENT, CreateCommentVars} from "../../services/apollo/mutations/CommentsMutations";
 import {useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
@@ -42,7 +42,7 @@ function MovieDetailsController() {
             variables: {
                 userId: state.userId,
                 movieDBId: movieDetails.id,
-                favoriteType: FavoriteType.TV,
+                favoriteType: FavoriteType.MOVIE,
                 title: data.title,
                 description: data.description
             }
