@@ -1,12 +1,12 @@
 import React from "react";
-import {useLocation} from 'react-router-dom';
-import {Button, Card, CardContent, CardHeader, Grid, TextField} from "@material-ui/core";
+import {Button, Card, CardContent, CardHeader, CircularProgress, Grid, TextField} from "@material-ui/core";
 import {Controller, useForm} from "react-hook-form";
 import DescriptionIcon from '@material-ui/icons/Description';
 import TitleIcon from '@material-ui/icons/Title';
 
 interface Props {
     submitComment: Function
+    loading: boolean
 }
 
 function CommentSubmitForm(props: Props) {
@@ -65,8 +65,12 @@ function CommentSubmitForm(props: Props) {
                                             </Grid>
                                         }>
                             </Controller>
-                            <Button type={'submit'} color="secondary" variant="contained">
+                            <Button type={'submit'}
+                                    color="secondary"
+                                    variant="contained"
+                                    disabled={props.loading}>
                                 Submit Comment
+                                {props.loading ? <CircularProgress size={20} color={'secondary'}/> : ''}
                             </Button>
                         </form>
                     </CardContent>

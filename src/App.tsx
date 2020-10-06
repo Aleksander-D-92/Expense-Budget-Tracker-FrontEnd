@@ -69,7 +69,7 @@ function App() {
 
     }, [darkTheme])
     useEffect(() => {
-        //removes the loading screen
+        //removes the loading screen, we have to use document.getElementById, because it is outside of ReactDOM
         const loadingScreenHtml = document.getElementById('loading screen');
         const loadingScreenCss = document.getElementById('loading screen css');
         if (loadingScreenHtml !== null && loadingScreenCss !== null) {
