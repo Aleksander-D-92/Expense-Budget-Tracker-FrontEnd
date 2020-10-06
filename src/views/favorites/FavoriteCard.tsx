@@ -29,7 +29,7 @@ function FavoriteCard(props: Props) {
                     {loading ? <CircularProgress className={'ml-5 mt-4'} thickness={10} size={40}/>
                         :
                         <Typography variant="subtitle1" gutterBottom style={{fontSize: '20px'}} className={'mt-3 mb-5'}>
-                            <StarsIcon style={favIconStyles} className={' ml-3'}/>Favorite {props.label}: {props.count}
+                            <StarsIcon style={favIconStyles} className={' ml-1'}/>Favorite {props.label}: {props.count}
                         </Typography>}
                 </Card>
             </Grid>

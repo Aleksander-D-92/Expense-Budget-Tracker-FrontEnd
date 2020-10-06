@@ -14,11 +14,16 @@ export interface GetAllCommentsByMovieDBIdResp {
 export interface CommentResp {
     commentId: number
     movieDBId: number
-    submitterId: number
     favoriteType: FavoriteType
     title: string
     description: string
     creationDate: Date
+    submitter: {
+        userId: number
+        username: string
+        registrationDate: Date
+        accountNonLocked: boolean
+    }
 }
 
 const GET_ALL_COMMENTS_BY_MOVIE_DB_ID = gql`

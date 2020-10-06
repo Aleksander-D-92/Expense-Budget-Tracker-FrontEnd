@@ -28,7 +28,7 @@ function MovieDetailsController() {
     const [movieCredits, setMovieCredits] = useState<Credits>();
     const [movieDetails, setMovieDetails] = useState<MovieDetails>();
     const [createComment, {loading: createCommentLoading}] = useMutation<CreateCommentResp, CreateCommentVars>(CREATE_COMMENT);
-    const {data, loading} = useQuery<GetAllCommentsByMovieDBIdResp, GetAllCommentsByMovieDBIdVars>(GET_ALL_COMMENTS_BY_MOVIE_DB_ID, {
+    const {data: initialComments, loading} = useQuery<GetAllCommentsByMovieDBIdResp, GetAllCommentsByMovieDBIdVars>(GET_ALL_COMMENTS_BY_MOVIE_DB_ID, {
         variables: {
             movieDBId: movieId,
             favoriteType: FavoriteType.MOVIE
@@ -44,9 +44,9 @@ function MovieDetailsController() {
     }, [movieId]);
 
     useEffect(() => {
-        console.log(data?.allCommentsByMovieDBIdAndFavoriteType);
-        console.log(data?.allCommentsByMovieDBIdAndFavoriteType.map(c => c.title).join(", "));
-    }, [data]);
+        console.log(initialComments?.allCommentsByMovieDBIdAndFavoriteType);
+        console.log(initialComments?.allCommentsByMovieDBIdAndFavoriteType.map(c => c.title).join(", "));
+    }, [initialComments]);
 
     function submitComment(data: any, e: any) {
         e.target.reset();
@@ -65,8 +65,6 @@ function MovieDetailsController() {
             }
         }).then((e) => {
             if (e.data !== null && e.data !== undefined) {
-                console.log(e.data.createComment.title);
-                console.log(e.data.createComment.description);
                 console.log(e.data.createComment);
             }
         })
