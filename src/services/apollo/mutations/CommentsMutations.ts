@@ -1,17 +1,10 @@
 import {gql} from "@apollo/client";
 import {FavoriteType} from "./FavoriteMutations";
 import {COMMENT_FRAGMENT} from "../fragments/CommentFragments";
+import {CommentResp} from "../queries/CommentQueries";
 
 export interface CreateCommentResp {
-    createComment: {
-        commentId: number
-        movieDBId: number
-        submitterId: number
-        favoriteType: FavoriteType
-        title: string
-        description: string
-        creationDate: Date
-    }
+    createComment: CommentResp
 }
 
 export interface CreateCommentVars {
@@ -49,6 +42,10 @@ interface UpdateCommentVars {
     commentId: number,
     title: string,
     description: string
+}
+
+interface UpdateCommentResp {
+    updateComment: CommentResp
 }
 
 const UPDATE_COMMENT = gql`

@@ -9,11 +9,16 @@ import {MovieTvShowBackground} from "../shered/MovieTvShowBackground";
 import './css/MovieDetails.css'
 import {PageLoading} from "../shered/PageLoading";
 import {CommentSubmitForm} from "../comment/CommentSubmitForm";
-import {useMutation} from "@apollo/client";
-import {CreateCommentResp, CREATE_COMMENT, CreateCommentVars} from "../../services/apollo/mutations/CommentsMutations";
+import {useMutation, useQuery} from "@apollo/client";
+import {CREATE_COMMENT, CreateCommentResp, CreateCommentVars} from "../../services/apollo/mutations/CommentsMutations";
 import {useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
+import {
+    GET_ALL_COMMENTS_BY_MOVIE_DB_ID,
+    GetAllCommentsByMovieDBIdResp,
+    GetAllCommentsByMovieDBIdVars
+} from "../../services/apollo/queries/CommentQueries";
 
 
 function MovieDetailsController() {
@@ -22,7 +27,13 @@ function MovieDetailsController() {
     const {movieId} = useParams();
     const [movieCredits, setMovieCredits] = useState<Credits>();
     const [movieDetails, setMovieDetails] = useState<MovieDetails>();
-    const [createComment, {loading, error, data}] = useMutation<CreateCommentResp, CreateCommentVars>(CREATE_COMMENT);
+    const [createComment, {loading: createCommentLoading}] = useMutation<CreateCommentResp, CreateCommentVars>(CREATE_COMMENT);
+    const {data, loading} = useQuery<GetAllCommentsByMovieDBIdResp, GetAllCommentsByMovieDBIdVars>(GET_ALL_COMMENTS_BY_MOVIE_DB_ID, {
+        variables: {
+            movieDBId: movieId,
+            favoriteType: FavoriteType.MOVIE
+        }
+    });
     useEffect(() => {
         MovieService.getDetails(movieId).then((e) => {
             setMovieDetails(e.data);
@@ -32,7 +43,13 @@ function MovieDetailsController() {
         });
     }, [movieId]);
 
-    function submitComment(data: any) {
+    useEffect(() => {
+        console.log(data?.allCommentsByMovieDBIdAndFavoriteType);
+        console.log(data?.allCommentsByMovieDBIdAndFavoriteType.map(c => c.title).join(", "));
+    }, [data]);
+
+    function submitComment(data: any, e: any) {
+        e.target.reset();
         if (state.userId === undefined || state.userId === null || movieDetails === undefined) {
             history.push('/users/login');
             return;
@@ -48,6 +65,8 @@ function MovieDetailsController() {
             }
         }).then((e) => {
             if (e.data !== null && e.data !== undefined) {
+                console.log(e.data.createComment.title);
+                console.log(e.data.createComment.description);
                 console.log(e.data.createComment);
             }
         })
@@ -71,7 +90,7 @@ function MovieDetailsController() {
                 <CastCarousel cast={movieCredits?.cast}/>
             </ScrollAnimation>
             <ScrollAnimation animateIn={'fadeInUp'}>
-                <CommentSubmitForm submitComment={submitComment} loading={false}/>
+                <CommentSubmitForm submitComment={submitComment} loading={createCommentLoading}/>
             </ScrollAnimation>
         </>
     )

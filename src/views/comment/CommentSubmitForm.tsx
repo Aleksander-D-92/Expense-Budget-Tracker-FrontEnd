@@ -10,7 +10,8 @@ interface Props {
 }
 
 function CommentSubmitForm(props: Props) {
-    const {control, handleSubmit, errors} = useForm();
+    const {control, handleSubmit, errors, setValue} = useForm();
+
     return (
         <Grid container={true} justify={'flex-start'} className={'ml-4'}>
             <Grid item={true} xs={11} md={6}>
@@ -19,7 +20,7 @@ function CommentSubmitForm(props: Props) {
                         <CardHeader
                             title="Submit a new comment"
                         />
-                        <form onSubmit={handleSubmit(data => props.submitComment(data))} style={{width: '100%'}}>
+                        <form onSubmit={handleSubmit((data, e) => props.submitComment(data, e))} style={{width: '100%'}}>
                             <Controller control={control}
                                         name={'title'}
                                         rules={{minLength: 5, required: true}}

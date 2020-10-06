@@ -8,15 +8,17 @@ export interface GetAllCommentsByMovieDBIdVars {
 }
 
 export interface GetAllCommentsByMovieDBIdResp {
-    allCommentsByMovieDBIdAndFavoriteType: {
-        commentId: number
-        movieDBId: number
-        submitterId: number
-        favoriteType: FavoriteType
-        title: string
-        description: string
-        creationDate: Date
-    }
+    allCommentsByMovieDBIdAndFavoriteType: CommentResp[]
+}
+
+export interface CommentResp {
+    commentId: number
+    movieDBId: number
+    submitterId: number
+    favoriteType: FavoriteType
+    title: string
+    description: string
+    creationDate: Date
 }
 
 const GET_ALL_COMMENTS_BY_MOVIE_DB_ID = gql`
