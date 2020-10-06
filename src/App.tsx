@@ -10,7 +10,7 @@ import {GetClient} from "./services/apollo/ApoloConfig";
 import {ApolloProvider} from "@apollo/client";
 import {useSelector} from "react-redux";
 import {ReduxState} from "./config/redux/ReduxStore";
-import {ThemeBuilder} from "./views/thene/ThemeBuilder";
+import {ThemeBuilder} from "./views/theme/ThemeBuilder";
 import {Theme} from "@material-ui/core/styles/createMuiTheme";
 
 
@@ -37,6 +37,10 @@ function App() {
             setCurrentTheme(createMuiTheme({
                 palette: {
                     type: "dark",
+                    primary: {
+                        main: '#90caf9'
+                    },
+                    secondary: {main: '#00e676'}
                     // primary: purple
                 },
                 overrides: {

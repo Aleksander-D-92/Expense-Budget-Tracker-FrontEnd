@@ -45,7 +45,8 @@ function TvShowDetailsController() {
             <ScrollAnimation animateIn={'fadeInRight'}>
                 <CastCarousel cast={tvShowCredits?.cast}/>
             </ScrollAnimation>
-
+            <ScrollAnimation animateIn={'fadeInUp'}>
+            </ScrollAnimation>
         </>
     )
 }

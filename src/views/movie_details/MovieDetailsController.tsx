@@ -8,6 +8,7 @@ import {MovieDescription} from "./MovieDescription";
 import {MovieTvShowBackground} from "../shered/MovieTvShowBackground";
 import './css/MovieDetails.css'
 import {PageLoading} from "../shered/PageLoading";
+import {CommentSubmitForm} from "../comment/CommentSubmitForm";
 
 
 function MovieDetailsController() {
@@ -17,12 +18,15 @@ function MovieDetailsController() {
     useEffect(() => {
         MovieService.getDetails(movieId).then((e) => {
             setMovieDetails(e.data);
-            console.log(e.data);
         });
         MovieService.getCredits(movieId).then((e) => {
             setMovieCredits(e.data);
         });
     }, [movieId]);
+
+    function submitComment(data: any) {
+        console.log(data);
+    }
 
     return (
         <>
@@ -40,6 +44,9 @@ function MovieDetailsController() {
             </Typography>
             <ScrollAnimation animateIn={'fadeInLeft'}>
                 <CastCarousel cast={movieCredits?.cast}/>
+            </ScrollAnimation>
+            <ScrollAnimation animateIn={'fadeInUp'}>
+                <CommentSubmitForm submitComment={submitComment}/>
             </ScrollAnimation>
         </>
     )

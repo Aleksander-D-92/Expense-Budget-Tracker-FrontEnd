@@ -2,14 +2,6 @@ import {gql} from "@apollo/client";
 import {FavoriteType} from "./FavoriteMutations";
 import {COMMENT_FRAGMENT} from "../fragments/CommentFragments";
 
-interface CreateCommentVars {
-    movieDBId: number
-    userId: number
-    favoriteType: FavoriteType
-    title: string
-    description: string
-}
-
 interface Comment {
     commentId: number
     movieDBId: number
@@ -18,6 +10,14 @@ interface Comment {
     title: string
     description: string
     creationDate: Date
+}
+
+interface CreateCommentVars {
+    movieDBId: number
+    userId: number
+    favoriteType: FavoriteType
+    title: string
+    description: string
 }
 
 const CREATE_COMMENT = gql`
