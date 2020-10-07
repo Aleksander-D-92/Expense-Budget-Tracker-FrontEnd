@@ -27,7 +27,7 @@ function ThemeBuilder() {
             }
             setDisabled(false);
         }
-    }, [userDetails])
+    }, [dispatch, userDetails])
 
     return (
         <>

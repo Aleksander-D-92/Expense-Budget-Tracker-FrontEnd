@@ -10,7 +10,7 @@ interface Props {
 }
 
 function CommentSubmitForm(props: Props) {
-    const {control, handleSubmit, errors, setValue} = useForm();
+    const {control, handleSubmit, errors} = useForm();
 
     return (
         <Grid container={true} justify={'flex-start'} className={'ml-4'}>
@@ -20,7 +20,8 @@ function CommentSubmitForm(props: Props) {
                         <CardHeader
                             title="Submit a new comment"
                         />
-                        <form onSubmit={handleSubmit((data, e) => props.submitComment(data, e))} style={{width: '100%'}}>
+                        <form onSubmit={handleSubmit((data, e) => props.submitComment(data, e))}
+                              style={{width: '100%'}}>
                             <Controller control={control}
                                         name={'title'}
                                         rules={{minLength: 5, required: true}}
@@ -45,7 +46,7 @@ function CommentSubmitForm(props: Props) {
                             </Controller>
                             <Controller control={control}
                                         name={'description'}
-                                        rules={{minLength: 10, required: true}}
+                                        rules={{minLength: 10, maxLength: 255, required: true}}
                                         as={
                                             <Grid container spacing={1} alignItems="flex-end" className={'mb-3'}>
                                                 <Grid item>
@@ -59,7 +60,7 @@ function CommentSubmitForm(props: Props) {
                                                                required={true}
                                                                rows={5}
                                                                error={errors.description}
-                                                               helperText={errors.description ? 'Min 10 chars' : ''}
+                                                               helperText={errors.description ? 'Min 10 chars Max 255 chars' : ''}
 
                                                     />
                                                 </Grid>
@@ -67,11 +68,11 @@ function CommentSubmitForm(props: Props) {
                                         }>
                             </Controller>
                             <Button type={'submit'}
-                                    color="secondary"
+                                    color="primary"
                                     variant="contained"
                                     disabled={props.loading}>
                                 Submit Comment
-                                {props.loading ? <CircularProgress size={20} color={'secondary'}/> : ''}
+                                {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
                             </Button>
                         </form>
                     </CardContent>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, MouseEvent} from "react";
 import {useHistory, useParams} from 'react-router-dom';
 import {Credits, MovieDetails, MovieService} from "../../services/the_movie_db/MovieService";
 import {CastCarousel} from "../shered/CastCarousel";
@@ -10,15 +10,23 @@ import './css/MovieDetails.css'
 import {PageLoading} from "../shered/PageLoading";
 import {CommentSubmitForm} from "../comment/CommentSubmitForm";
 import {useMutation, useQuery} from "@apollo/client";
-import {CREATE_COMMENT, CreateCommentResp, CreateCommentVars} from "../../services/apollo/mutations/CommentsMutations";
+import {
+    CREATE_COMMENT,
+    CreateCommentResp,
+    CreateCommentVars,
+    DELETE_COMMENT, DeleteCommentVars
+} from "../../services/apollo/mutations/CommentsMutations";
 import {useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
 import {FavoriteType} from "../../services/apollo/mutations/FavoriteMutations";
 import {
+    CommentResp,
     GET_ALL_COMMENTS_BY_MOVIE_DB_ID,
     GetAllCommentsByMovieDBIdResp,
     GetAllCommentsByMovieDBIdVars
 } from "../../services/apollo/queries/CommentQueries";
+import {CommentList} from "../comment/CommentList";
+import {Dummy} from "../../services/apollo/ApoloConfig";
 
 
 function MovieDetailsController() {
@@ -27,8 +35,10 @@ function MovieDetailsController() {
     const {movieId} = useParams();
     const [movieCredits, setMovieCredits] = useState<Credits>();
     const [movieDetails, setMovieDetails] = useState<MovieDetails>();
+    const [comments, setComments] = useState<CommentResp[]>()
     const [createComment, {loading: createCommentLoading}] = useMutation<CreateCommentResp, CreateCommentVars>(CREATE_COMMENT);
-    const {data: initialComments, loading} = useQuery<GetAllCommentsByMovieDBIdResp, GetAllCommentsByMovieDBIdVars>(GET_ALL_COMMENTS_BY_MOVIE_DB_ID, {
+    const [deleteComment, {loading: deleteCommentLoading}] = useMutation<Dummy, DeleteCommentVars>(DELETE_COMMENT);
+    const {data: initialComments, loading: initialCommentsLoading, refetch} = useQuery<GetAllCommentsByMovieDBIdResp, GetAllCommentsByMovieDBIdVars>(GET_ALL_COMMENTS_BY_MOVIE_DB_ID, {
         variables: {
             movieDBId: movieId,
             favoriteType: FavoriteType.MOVIE
@@ -44,9 +54,23 @@ function MovieDetailsController() {
     }, [movieId]);
 
     useEffect(() => {
-        console.log(initialComments?.allCommentsByMovieDBIdAndFavoriteType);
-        console.log(initialComments?.allCommentsByMovieDBIdAndFavoriteType.map(c => c.title).join(", "));
+        if (initialComments === undefined) {
+            return;
+        }
+        setComments(initialComments.allCommentsByMovieDBIdAndFavoriteType)
     }, [initialComments]);
+
+    //refetch
+    useEffect(() => {
+        if (initialComments !== undefined) {
+            refetch({
+                movieDBId: movieId,
+                favoriteType: FavoriteType.MOVIE
+            }).then((e) => {
+                setComments(e.data.allCommentsByMovieDBIdAndFavoriteType)
+            })
+        }
+    }, [initialComments, movieId, refetch])
 
     function submitComment(data: any, e: any) {
         e.target.reset();
@@ -63,11 +87,26 @@ function MovieDetailsController() {
                 title: data.title,
                 description: data.description
             }
-        }).then((e) => {
-            if (e.data !== null && e.data !== undefined) {
-                console.log(e.data.createComment);
+        }).then((resp) => {
+            if (resp.data === null || resp.data === undefined) {
+                return;
             }
+            // @ts-ignore
+            setComments((comments) => [resp.data.createComment, ...comments])
+            console.log(resp.data.createComment);
+
         })
+    }
+
+    function handleDeleteComment(e: MouseEvent) {
+        deleteComment({
+            variables: {
+                id: parseInt(e.currentTarget.id)
+            }
+        }).then((e) => {
+
+        })
+        console.log(e.currentTarget.id);
     }
 
     return (
@@ -87,8 +126,14 @@ function MovieDetailsController() {
             <ScrollAnimation animateIn={'fadeInLeft'}>
                 <CastCarousel cast={movieCredits?.cast}/>
             </ScrollAnimation>
-            <ScrollAnimation animateIn={'fadeInUp'}>
+
+            <ScrollAnimation animateIn={'fadeInDown'}>
                 <CommentSubmitForm submitComment={submitComment} loading={createCommentLoading}/>
+            </ScrollAnimation>
+            <ScrollAnimation animateIn={'fadeInUp'}>
+                <CommentList comments={comments}
+                             deleteComment={handleDeleteComment}
+                             loading={initialCommentsLoading}/>
             </ScrollAnimation>
         </>
     )

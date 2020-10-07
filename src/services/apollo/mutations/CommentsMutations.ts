@@ -59,7 +59,7 @@ const UPDATE_COMMENT = gql`
     ${COMMENT_FRAGMENT}
 `
 
-interface DeleteCommentVars {
+export interface DeleteCommentVars {
     id: number
 }
 
