@@ -84,10 +84,13 @@ function CommentList(props: Props) {
                                         </ListItemText>
                                         {props.userId == comment.submitter.userId &&
                                         <>
+                                            {/*edit comment modal*/}
                                             <CommentEdit
+                                                commentId={comment.commentId}
                                                 titleDefaultValue={comment.title}
                                                 descriptionDefaultValue={comment.description}
                                                 editComment={props.editComment}/>
+
                                             <Button className={'ml-2'}
                                                     variant="contained"
                                                     color="secondary"

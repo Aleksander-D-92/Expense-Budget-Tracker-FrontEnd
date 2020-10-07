@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Controller, useForm} from "react-hook-form";
 import {
     Button,
@@ -14,6 +14,7 @@ import TitleIcon from "@material-ui/icons/Title";
 import DescriptionIcon from "@material-ui/icons/Description";
 
 interface Props {
+    commentId: number
     titleDefaultValue: string,
     descriptionDefaultValue: string
     // loading: boolean,
@@ -22,7 +23,7 @@ interface Props {
 
 function CommentEdit(props: Props) {
     const {control, handleSubmit, errors} = useForm();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -31,7 +32,11 @@ function CommentEdit(props: Props) {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const handleSmartClose = () => {
+        if (errors.title === undefined && errors.description === undefined) {
+            setOpen(false);
+        }
+    }
     return (
         <>
             <>
@@ -100,6 +105,8 @@ function CommentEdit(props: Props) {
                                     Cancel
                                 </Button>
                                 <Button type={'submit'}
+                                        onClick={handleSmartClose}
+                                        id={props.commentId.toString()}
                                         color="secondary"
                                         disabled={false}>
                                     Edit

@@ -38,13 +38,13 @@ const CREATE_COMMENT = gql`
     ${COMMENT_FRAGMENT}
 `
 
-interface UpdateCommentVars {
+export interface UpdateCommentVars {
     commentId: number,
     title: string,
     description: string
 }
 
-interface UpdateCommentResp {
+export interface UpdateCommentResp {
     updateComment: CommentResp
 }
 

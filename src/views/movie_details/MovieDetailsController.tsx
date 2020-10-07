@@ -1,4 +1,4 @@
-import React, {useEffect, useState, MouseEvent} from "react";
+import React, {BaseSyntheticEvent, MouseEvent, useEffect, useState} from "react";
 import {useHistory, useParams} from 'react-router-dom';
 import {Credits, MovieDetails, MovieService} from "../../services/the_movie_db/MovieService";
 import {CastCarousel} from "../shered/CastCarousel";
@@ -14,7 +14,8 @@ import {
     CREATE_COMMENT,
     CreateCommentResp,
     CreateCommentVars,
-    DELETE_COMMENT, DeleteCommentVars
+    DELETE_COMMENT,
+    DeleteCommentVars, UPDATE_COMMENT, UpdateCommentResp, UpdateCommentVars
 } from "../../services/apollo/mutations/CommentsMutations";
 import {useSelector} from 'react-redux';
 import {ReduxState} from "../../config/redux/ReduxStore";
@@ -27,7 +28,6 @@ import {
 } from "../../services/apollo/queries/CommentQueries";
 import {CommentList} from "../comment/CommentList";
 import {Dummy} from "../../services/apollo/ApoloConfig";
-import {CommentEdit} from "../comment/CommentEdit";
 
 
 function MovieDetailsController() {
@@ -36,8 +36,9 @@ function MovieDetailsController() {
     const {movieId} = useParams();
     const [movieCredits, setMovieCredits] = useState<Credits>();
     const [movieDetails, setMovieDetails] = useState<MovieDetails>();
-    const [comments, setComments] = useState<CommentResp[]>()
+    const [comments, setComments] = useState<CommentResp[]>();
     const [createComment, {loading: createCommentLoading}] = useMutation<CreateCommentResp, CreateCommentVars>(CREATE_COMMENT);
+    const [updateComment, {loading: updateCommentLoading}] = useMutation<UpdateCommentResp, UpdateCommentVars>(UPDATE_COMMENT);
     const [deleteComment, {loading: deleteCommentLoading}] = useMutation<Dummy, DeleteCommentVars>(DELETE_COMMENT);
     const {data: initialComments, loading: initialCommentsLoading, refetch} = useQuery<GetAllCommentsByMovieDBIdResp, GetAllCommentsByMovieDBIdVars>(GET_ALL_COMMENTS_BY_MOVIE_DB_ID, {
         variables: {
@@ -94,7 +95,6 @@ function MovieDetailsController() {
             }
             // @ts-ignore
             setComments((comments) => [resp.data.createComment, ...comments])
-            console.log(resp.data.createComment);
 
         })
     }
@@ -110,10 +110,34 @@ function MovieDetailsController() {
         });
     }
 
-    function handleEditComment(data: any, e: MouseEvent) {
-        console.log(data);
-        console.log(e);
+    function handleUpdateComment(data: any, e: BaseSyntheticEvent) {
+        // @ts-ignore
+        const commentId = parseInt(e.nativeEvent.submitter.id);
+        updateComment({
+            variables: {
+                commentId: commentId,
+                title: data.title,
+                description: data.description
+            }
+        }).then((e) => {
+            console.log(e.data?.updateComment);
+            if (comments === undefined) {
+                return;
+            }
+            const newState = [...comments]
+            let index;
+            for (let i = 0; i < newState.length; i++) {
+                if (newState[i].commentId === e.data?.updateComment.commentId) {
+                    index = i;
+                    break;
+                }
+            }
+            // @ts-ignore
+            newState[index] = e.data?.updateComment;
+            setComments(newState);
+        });
     }
+
 
     return (
         <>
@@ -137,7 +161,7 @@ function MovieDetailsController() {
             </ScrollAnimation>
             <ScrollAnimation animateIn={'fadeInUp'}>
                 <CommentList comments={comments}
-                             editComment={handleEditComment}
+                             editComment={handleUpdateComment}
                              deleteComment={handleDeleteComment}
                              loading={initialCommentsLoading}
                              userId={userDetails.userId}/>
