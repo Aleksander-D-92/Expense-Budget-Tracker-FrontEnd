@@ -74,7 +74,7 @@ function ActorDescription(props: Props) {
     }
     return (
         <>
-            <Card elevation={10} className={'mt-2'}>
+            <Card elevation={10} className={'mt-2 mb-4'}>
                 <CardHeader title={props.actorDetails?.name}
                             action={
                                 <>

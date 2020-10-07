@@ -16,7 +16,7 @@ function FavoriteTvShowCarousel(props: Props) {
     const imageBasePath = 'https://image.tmdb.org/t/p/w780';
 
     function redirect(e: MouseEvent) {
-        history.push(`/movies/${e.currentTarget.id}`)
+        history.push(`/tv-shows/${e.currentTarget.id}`)
     }
 
     return (

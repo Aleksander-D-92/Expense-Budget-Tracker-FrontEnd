@@ -111,8 +111,6 @@ function MovieDetailsController() {
     }
 
     function handleUpdateComment(data: any, e: BaseSyntheticEvent) {
-        console.log('tuka sme');
-        console.log(data);
         // @ts-ignore
         const commentId = parseInt(e.nativeEvent.submitter.id);
         updateComment({
@@ -122,7 +120,6 @@ function MovieDetailsController() {
                 description: data.description
             }
         }).then((e) => {
-            console.log(e.data?.updateComment);
             if (comments === undefined) {
                 return;
             }
