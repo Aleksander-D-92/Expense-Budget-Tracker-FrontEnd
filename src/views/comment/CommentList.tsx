@@ -1,7 +1,7 @@
 import React, {MouseEvent, useEffect} from "react";
 import {CommentResp} from "../../services/apollo/queries/CommentQueries";
 import {
-    Avatar, Button,
+    Avatar, Button, CircularProgress,
     createStyles,
     Divider,
     Grid, LinearProgress,
@@ -23,6 +23,8 @@ interface Props {
     deleteComment: Function,
     editComment: Function,
     loading: boolean,
+    deleteLoading: boolean
+    updateLoading: boolean
     userId: number
 }
 
@@ -48,6 +50,7 @@ function CommentList(props: Props) {
         console.log(props.comments)
         console.log(props.userId)
     }, [props.comments, props.userId])
+
     return (
         <>
             <Grid container={true} justify={'center'}>
@@ -86,6 +89,7 @@ function CommentList(props: Props) {
                                         <>
                                             {/*edit comment modal*/}
                                             <CommentEdit
+                                                editLoading={props.updateLoading}
                                                 commentId={comment.commentId}
                                                 titleDefaultValue={comment.title}
                                                 descriptionDefaultValue={comment.description}
@@ -93,10 +97,13 @@ function CommentList(props: Props) {
 
                                             <Button className={'ml-2'}
                                                     variant="contained"
+                                                    disabled={props.deleteLoading}
                                                     color="secondary"
                                                     id={comment.commentId.toString()}
                                                     onClick={(e: MouseEvent) => props.deleteComment(e)}>
                                                 Delete
+                                                {props.deleteLoading ?
+                                                    <CircularProgress size={20} color={'secondary'}/> : ''}
                                             </Button>
                                         </>}
                                     </ListItem>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Controller, useForm} from "react-hook-form";
 import {
     Button,
@@ -17,14 +17,18 @@ interface Props {
     commentId: number
     titleDefaultValue: string,
     descriptionDefaultValue: string
-    // loading: boolean,
     editComment: Function
+    editLoading: boolean
 }
 
 function CommentEdit(props: Props) {
-    const {control, handleSubmit, errors} = useForm();
+    const {control, handleSubmit, errors, register} = useForm({
+        defaultValues: {
+            title: props.titleDefaultValue,
+            description: props.descriptionDefaultValue
+        }
+    });
     const [open, setOpen] = useState<boolean>(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -40,8 +44,13 @@ function CommentEdit(props: Props) {
     return (
         <>
             <>
-                <Button color="primary" variant={'contained'} onClick={handleClickOpen}>
-                    Edit
+                <Button color="primary"
+                        disabled={props.editLoading}
+                        variant={'contained'}
+                        onClick={handleClickOpen}>
+                    Edit {props.editLoading ?
+                    <CircularProgress size={20} color={'primary'}/> : ''}
+
                 </Button>
                 <Dialog
                     open={open}
@@ -54,6 +63,7 @@ function CommentEdit(props: Props) {
                         <form style={{width: '100%'}} onSubmit={handleSubmit((data, e) => props.editComment(data, e))}>
                             <Controller control={control}
                                         name={'title'}
+                                        defaultValue={props.titleDefaultValue}
                                         rules={{minLength: 5, required: true}}
                                         as={
                                             <Grid container spacing={1} alignItems="flex-end" className={'mb-3'}>
@@ -62,9 +72,11 @@ function CommentEdit(props: Props) {
                                                 </Grid>
                                                 <Grid item xs={10}>
                                                     <TextField placeholder={'Enter Title'}
-                                                               defaultValue={props.titleDefaultValue}
+                                                        // defaultValue={props.titleDefaultValue}
                                                                fullWidth={true}
                                                                label="Title"
+                                                               name={'title'}
+                                                               inputRef={register}
                                                                required={true}
                                                                rows={5}
                                                                error={errors.title}
@@ -77,6 +89,7 @@ function CommentEdit(props: Props) {
                             </Controller>
                             <Controller control={control}
                                         name={'description'}
+                                        defaultValue={props.descriptionDefaultValue}
                                         rules={{minLength: 10, maxLength: 255, required: true}}
                                         as={
                                             <Grid container spacing={1} alignItems="flex-end" className={'mb-3'}>
@@ -85,9 +98,11 @@ function CommentEdit(props: Props) {
                                                 </Grid>
                                                 <Grid item xs={10}>
                                                     <TextField placeholder={'Enter Description'}
-                                                               defaultValue={props.descriptionDefaultValue}
+                                                        // defaultValue={props.descriptionDefaultValue}
                                                                fullWidth={true}
                                                                label="Description"
+                                                               name={'description'}
+                                                               inputRef={register}
                                                                multiline={true}
                                                                required={true}
                                                                rows={5}

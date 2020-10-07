@@ -111,6 +111,8 @@ function MovieDetailsController() {
     }
 
     function handleUpdateComment(data: any, e: BaseSyntheticEvent) {
+        console.log('tuka sme');
+        console.log(data);
         // @ts-ignore
         const commentId = parseInt(e.nativeEvent.submitter.id);
         updateComment({
@@ -163,6 +165,8 @@ function MovieDetailsController() {
                 <CommentList comments={comments}
                              editComment={handleUpdateComment}
                              deleteComment={handleDeleteComment}
+                             deleteLoading={deleteCommentLoading}
+                             updateLoading={updateCommentLoading}
                              loading={initialCommentsLoading}
                              userId={userDetails.userId}/>
             </ScrollAnimation>
