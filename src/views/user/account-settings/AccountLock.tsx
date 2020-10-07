@@ -58,7 +58,7 @@ function AccountLock(props: Props) {
                         <Button type={'submit'}
                                 variant="contained"
                                 color="secondary" disabled={props.accountLockLoading || props.passwordLoading}>
-                            Lock your account
+                            Delete your account
                             {props.accountLockLoading || props.passwordLoading ?
                                 <CircularProgress size={20} color={'secondary'}/> : ''}
                         </Button>

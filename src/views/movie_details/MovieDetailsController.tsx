@@ -27,11 +27,12 @@ import {
 } from "../../services/apollo/queries/CommentQueries";
 import {CommentList} from "../comment/CommentList";
 import {Dummy} from "../../services/apollo/ApoloConfig";
+import {CommentEdit} from "../comment/CommentEdit";
 
 
 function MovieDetailsController() {
     const history = useHistory();
-    const state = useSelector((state: ReduxState) => state.userDetails);
+    const userDetails = useSelector((state: ReduxState) => state.userDetails);
     const {movieId} = useParams();
     const [movieCredits, setMovieCredits] = useState<Credits>();
     const [movieDetails, setMovieDetails] = useState<MovieDetails>();
@@ -73,21 +74,21 @@ function MovieDetailsController() {
     }, [initialComments, movieId, refetch])
 
     function submitComment(data: any, e: any) {
-        e.target.reset();
-        if (state.userId === undefined || state.userId === null || movieDetails === undefined) {
+        if (userDetails.userId === undefined || userDetails.userId === null || movieDetails === undefined) {
             history.push('/users/login');
             return;
         }
 
         createComment({
             variables: {
-                userId: state.userId,
+                userId: userDetails.userId,
                 movieDBId: movieDetails.id,
                 favoriteType: FavoriteType.MOVIE,
                 title: data.title,
                 description: data.description
             }
         }).then((resp) => {
+            e.target.reset();
             if (resp.data === null || resp.data === undefined) {
                 return;
             }
@@ -99,14 +100,19 @@ function MovieDetailsController() {
     }
 
     function handleDeleteComment(e: MouseEvent) {
+        const commentId = parseInt(e.currentTarget.id);
         deleteComment({
             variables: {
-                id: parseInt(e.currentTarget.id)
+                id: commentId
             }
-        }).then((e) => {
+        }).then(() => {
+            setComments((comments) => comments?.filter(c => c.commentId !== commentId))
+        });
+    }
 
-        })
-        console.log(e.currentTarget.id);
+    function handleEditComment(data: any, e: MouseEvent) {
+        console.log(data);
+        console.log(e);
     }
 
     return (
@@ -126,14 +132,15 @@ function MovieDetailsController() {
             <ScrollAnimation animateIn={'fadeInLeft'}>
                 <CastCarousel cast={movieCredits?.cast}/>
             </ScrollAnimation>
-
             <ScrollAnimation animateIn={'fadeInDown'}>
                 <CommentSubmitForm submitComment={submitComment} loading={createCommentLoading}/>
             </ScrollAnimation>
             <ScrollAnimation animateIn={'fadeInUp'}>
                 <CommentList comments={comments}
+                             editComment={handleEditComment}
                              deleteComment={handleDeleteComment}
-                             loading={initialCommentsLoading}/>
+                             loading={initialCommentsLoading}
+                             userId={userDetails.userId}/>
             </ScrollAnimation>
         </>
     )
