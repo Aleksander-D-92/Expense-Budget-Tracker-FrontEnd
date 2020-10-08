@@ -1,11 +1,11 @@
 import {ApolloClient, InMemoryCache} from '@apollo/client';
 
 const DEV_URL = 'http://localhost:8080/graphql';
-const PROD_URL = 'http://localhost:8080/graphql';
+const PROD_URL = 'https://theatre-database.herokuapp.com/';
 
 function GetClient(jwt: string) {
     return new ApolloClient({
-        uri: DEV_URL,
+        uri: PROD_URL,
         headers: {
             Authorization: jwt
         },
