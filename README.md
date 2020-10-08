@@ -1,7 +1,23 @@
-<h1>Front End for my Bug Tracker App</h1>
-<h2><a href="https://destroy-bugs.netlify.app" target="_blank">Deployed on Netlify (click)</a></h2>
-<h2><a href="https://destroy-bugs.herokuapp.com/swagger-ui.html" target="_blank">Uses the this RESTful API (click)</a>
-</h2>
+<h1>Front End for my Movie DB App</h1>
+<h2><a href="https://online-movie-database.netlify.app" target="_blank">Deployed on Netlify (click)</a></h2>
+<h2>Uses 2 different APIs</h2>
+<ul>
+    <li>
+        <h2>
+            <a href="https://theatre-database.herokuapp.com/playground" target="_blank">
+                Uses the this GraphQL API (click)
+            </a>
+        </h2>
+    </li>
+    <li>
+        <h2>
+            <a href="https://developers.themoviedb.org/3/getting-started/introduction" target="_blank">
+                Uses the this REST API (click)
+            </a>
+        </h2>
+    </li>
+</ul>
+
 <h3>This is a React App created using <code>Create React App</code> with <code>Typescript</code> template</h3>
 <h3>Some of the Technologies Used</h3>
 <ul>
