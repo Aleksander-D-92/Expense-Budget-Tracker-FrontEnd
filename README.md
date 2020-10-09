@@ -19,7 +19,7 @@
 </ul>
 
 <h3>This is a React App created using <code>Create React App</code> with <code>Typescript</code> template</h3>
-<h3>Some of the Technologies Used</h3>
+<h3>Some of the Dependencies Used</h3>
 <ul>
     <li><h5><code>Typescript</code></h5></li>
     <li><h5><code>React Router Dom</code></h5></li>
@@ -34,10 +34,9 @@
 </ul>
 
 <h4>The app was creating with “mobile-first” approach in mind.</h4>
-<img class="ant-image-img" src="https://i.ibb.co/1Tf0S7v/phone-mockup-iphone8plusspacegrey-portrait.png" alt="no image">
+<img src="https://i.ibb.co/GPp63Nk/phone-frame-mockup-iphonesespacegrey-portrait.png" alt="no image">
 <br>
-<img class="ant-image-img" src="https://i.ibb.co/8rMd0Zp/Dash-Board-Tablet-ipadair2-spacegrey-portrait.png"
-     alt="no image">
+<img src="https://i.ibb.co/ZghGQFH/ipad-mock-up-ipad-black-portrait.png" alt="no image">
 <br>
-<img class="ant-image-img" src="https://i.ibb.co/yN3VwTc/Dash-Board-Monitour-macbookgrey-front.png" alt="no image">
+<img src="https://i.ibb.co/4gzfVm4/pc-macbookgrey-front.png" alt="no image">
 <br>
