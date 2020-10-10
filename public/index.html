@@ -32,7 +32,19 @@
     <title>Movie DB</title>
 </head>
 <body>
+
+<script>
+/*
+ * If you use the free version of heroku, your app "hibernates",
+ * witch means that the first ajax request takes 20 sec to get a response ...
+ * so we just send 1 "dummy" request to this url before the React App starts to "wake it up"
+*/
+    fetch('https://theatre-database.herokuapp.com/heroku/start', {method: 'post'}).then(() => {
+        console.log('heroku woke up');
+    })
+</script>
 <noscript>You need to enable JavaScript to run this app.</noscript>
+<!--Loading Screen, will be deleted when ReactDOM finishes rendering-->
 <style id="loading screen css">
     .container {
         color: azure;
@@ -53,6 +65,7 @@
         right: 0;
         margin: auto;
     }
+
     .loader--dot {
         animation-name: loader;
         animation-timing-function: ease-in-out;
@@ -65,30 +78,37 @@
         position: absolute;
         border: 2px solid white;
     }
+
     .loader--dot:first-child {
         background-color: #8cc759;
         animation-delay: 0.5s;
     }
+
     .loader--dot:nth-child(2) {
         background-color: #8c6daf;
         animation-delay: 0.4s;
     }
+
     .loader--dot:nth-child(3) {
         background-color: #ef5d74;
         animation-delay: 0.3s;
     }
+
     .loader--dot:nth-child(4) {
         background-color: #f9a74b;
         animation-delay: 0.2s;
     }
+
     .loader--dot:nth-child(5) {
         background-color: #60beeb;
         animation-delay: 0.1s;
     }
+
     .loader--dot:nth-child(6) {
         background-color: #fbef5a;
         animation-delay: 0s;
     }
+
     .loader--text {
         position: absolute;
         top: 200%;
@@ -97,6 +117,7 @@
         width: 13rem;
         margin: auto;
     }
+
     .loader--text:after {
         content: "ReactDOM is Rendering";
         font-weight: bold;
@@ -119,6 +140,7 @@
             transform: translateX(0);
         }
     }
+
     @keyframes loading-text {
         0% {
             content: "ReactDOM is Rendering";
@@ -148,6 +170,7 @@
         </div>
     </div>
 </div>
+<!--Loading screen ends-->
 <div id="root"></div>
 
 <!--

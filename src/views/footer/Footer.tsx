@@ -3,7 +3,6 @@ import {AppBar, Grid, Toolbar, Typography} from "@material-ui/core";
 
 function Footer() {
     const footerTextStyle = {
-        color: 'white',
         fontSize: '1.2rem',
         fontWeight: 'bold',
     } as CSSProperties

@@ -67,7 +67,8 @@ function App() {
             }));
         }
 
-    }, [darkTheme])
+    }, [darkTheme]);
+
     useEffect(() => {
         //removes the loading screen, we have to use document.getElementById, because it is outside of ReactDOM
         const loadingScreenHtml = document.getElementById('loading screen');
@@ -76,7 +77,8 @@ function App() {
             loadingScreenHtml.style.display = 'none'
             loadingScreenCss.remove();
         }
-    }, [])
+    }, []);
+
     return (
         <>
             <ApolloProvider client={GetClient(jwt)}>
