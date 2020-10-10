@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {MediaType} from "../../services/the_movie_db/MultiSearchService";
-import {Tooltip} from "@material-ui/core";
+import {Tooltip, Typography} from "@material-ui/core";
 import './css/DetailsLink.css'
 
 interface Props {
@@ -27,16 +27,21 @@ function LinkToDetails(props: Props) {
                 setRouteName('');
         }
     }, [props.id, props.mediaType])
+
     return (
         <>
-            <Tooltip title={"Click to View Details"}
-                     placement={'top'}
-                     arrow={true}>
-                <Link to={(routeName === undefined) ? '' : routeName}
-                      className={'detailsLink'}>
-                    {props.value}
-                </Link>
-            </Tooltip>
+
+            <Link to={(routeName === undefined) ? '' : routeName}
+                  className={'detailsLink'}>
+                <Tooltip title={"Click to View Details"}
+                         placement={'top-start'}
+                         arrow={true}>
+                    <Typography color={'textPrimary'} variant={"h5"}>
+                        {props.value}
+                    </Typography>
+                </Tooltip>
+            </Link>
+
         </>
     )
 }

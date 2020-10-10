@@ -22,7 +22,7 @@ function SeasonCarousel(props: Props) {
                         <Grid item={true} xs={12} md={11}>
                             <Card className={'mt-2 mb-5 landingPageSmallCard'}
                                   elevation={10}
-                                  style={{maxHeight: 600, minHeight: 600}}>
+                                  style={{maxHeight: 650, minHeight: 650}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
                                     title={season.name}
@@ -30,7 +30,7 @@ function SeasonCarousel(props: Props) {
                                 />
                                 {season.poster_path !== null ? <CardMedia 
                                                                           id={`${season.id}`}
-                                                                          style={{height: 450}}
+                                                                          style={{height: 500}}
                                                                           image={imageBasePath + season.poster_path}
                                     /> :
                                     <>

@@ -5,6 +5,8 @@ import Carousel from "react-multi-carousel";
 import {ACTOR_DETAILS_CAROUSEL} from "../../shared/utils/variables";
 import {Card, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from "@material-ui/core";
 import {formatDate} from "../../shared/utils/functions";
+import {LinkToDetails} from "../shered/LinkToDetails";
+import {MediaType} from "../../services/the_movie_db/MultiSearchService";
 
 interface Props {
     tvOrMovie?: ActorMovieOrTvCredits[]
@@ -42,7 +44,14 @@ function ActorMovieTvShowCarousel(props: Props) {
                                   style={{maxHeight: 480, minHeight: 480}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={(show.title === undefined) ? show.name : show.title}
+                                    title={(show.title === undefined) ?
+                                        <LinkToDetails mediaType={MediaType.tv}
+                                                       value={show.name}
+                                                       id={show.id}/>
+                                        :
+                                        <LinkToDetails mediaType={MediaType.movie}
+                                                       value={show.title}
+                                                       id={show.id}/>}
                                     subheader={`Release Date: ${(show.release_date !== undefined) ? formatDate(show.release_date) : formatDate(show.first_air_date)}`}
                                 />
                                 <Tooltip title={"Double Click to see details"}

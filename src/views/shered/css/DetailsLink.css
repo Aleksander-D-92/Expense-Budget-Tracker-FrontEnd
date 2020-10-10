@@ -1,6 +1,5 @@
 .detailsLink {
     text-decoration: none;
-    color: #080808;
 }
 
 .detailsLink:visited {
@@ -8,5 +7,5 @@
 }
 
 .detailsLink:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
