@@ -18,6 +18,8 @@ import {useMutation} from "@apollo/client";
 import {Dummy} from "../../services/apollo/ApoloConfig";
 import {addFavoriteAction, deleteFavoriteAction} from "../../config/redux/Favorites";
 import CloseIcon from "@material-ui/icons/Close";
+import {LinkToDetails} from "../shered/LinkToDetails";
+import {MediaType} from "../../services/the_movie_db/MultiSearchService";
 
 interface Props {
     tvShows?: TvShow[],
@@ -93,7 +95,9 @@ function SmallTvShowCarousel(props: Props) {
                                   style={{height: 565}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={tvShow.name}
+                                    title={<LinkToDetails mediaType={MediaType.tv}
+                                                          value={tvShow.name}
+                                                          id={tvShow.id}/>}
                                     subheader={`Release Date: ${formatDate(tvShow.first_air_date)}`}
                                     action={
                                         <>

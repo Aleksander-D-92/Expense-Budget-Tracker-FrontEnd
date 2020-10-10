@@ -1,0 +1,12 @@
+.detailsLink {
+    text-decoration: none;
+    color: #080808;
+}
+
+.detailsLink:visited {
+    text-decoration: none;
+}
+
+.detailsLink:hover {
+    text-decoration: underline;
+}

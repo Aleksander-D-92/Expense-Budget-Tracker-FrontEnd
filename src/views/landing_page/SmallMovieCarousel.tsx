@@ -21,6 +21,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {ReduxState} from "../../config/redux/ReduxStore";
 import {addFavoriteAction, deleteFavoriteAction} from "../../config/redux/Favorites";
 import {Dummy} from "../../services/apollo/ApoloConfig";
+import {LinkToDetails} from "../shered/LinkToDetails";
+import {MediaType} from "../../services/the_movie_db/MultiSearchService";
 
 interface Props {
     movies?: Movie[],
@@ -95,7 +97,9 @@ function SmallMovieCarousel(props: Props) {
                                   style={{height: 565}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={movie.title}
+                                    title={<LinkToDetails mediaType={MediaType.movie}
+                                                          value={movie.title}
+                                                          id={movie.id}/>}
                                     subheader={`Release Date: ${formatDate(movie.release_date)}`}
                                     action={
                                         <>

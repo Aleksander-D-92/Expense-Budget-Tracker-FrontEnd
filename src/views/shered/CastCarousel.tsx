@@ -18,6 +18,8 @@ import {useMutation} from "@apollo/client";
 import {Dummy} from "../../services/apollo/ApoloConfig";
 import {addFavoriteAction, deleteFavoriteAction} from "../../config/redux/Favorites";
 import CloseIcon from "@material-ui/icons/Close";
+import {LinkToDetails} from "./LinkToDetails";
+import {MediaType} from "../../services/the_movie_db/MultiSearchService";
 
 interface Props {
     cast?: CastOrCrew[]
@@ -101,7 +103,9 @@ function CastCarousel(props: Props) {
                                   style={{maxHeight: 600, minHeight: 600}}>
                                 <CardHeader
                                     titleTypographyProps={{variant: 'h6'}}
-                                    title={cast.name}
+                                    title={<LinkToDetails mediaType={MediaType.person}
+                                                          value={cast.name}
+                                                          id={cast.id}/>}
                                     subheader={`Playing: ${playingAs(cast.character)}`}
                                     action={
                                         <>
