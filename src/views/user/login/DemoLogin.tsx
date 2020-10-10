@@ -1,6 +1,6 @@
 import React, {MouseEvent} from "react";
-import {Button, Card, CardHeader, CircularProgress, Grid, IconButton} from "@material-ui/core";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {Button, Card, CardHeader, CircularProgress, Grid, Tooltip} from "@material-ui/core";
+import {ADMIN_TOOLTIP, FREE_ACCOUNT_TOOLTIP, PAID_ACCOUNT_TOOLTIP} from "./variables";
 
 interface Props {
     loading: boolean
@@ -14,41 +14,50 @@ function DemoLogin(props: Props) {
                 <Card elevation={8}>
                     <CardHeader
                         title="Demo Login"
-                        subheader="Allows you to log in with a demo account with a lot of test data"
+                        subheader="Allows you to log in with a demo account with a some test data"
                     />
-                    <Button variant="contained"
-                            color="primary"
-                            className={'mb-2'}
-                            fullWidth={true}
-                            name={'paid_login'}
-                            disabled={props.loading}
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => props.handleDemoLogin(e)}
-                    >
-                        Demo Paid Account
-                        {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
-                    </Button>
-                    <Button variant="contained"
-                            className={'mb-2'}
-                            color="primary"
-                            fullWidth={true}
-                            name={'free_login'}
-                            disabled={props.loading}
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => props.handleDemoLogin(e)}
-                    >
-                        Demo Free Account
-                        {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
-                    </Button>
-                    <Button variant="contained"
-                            className={'mb-2'}
-                            color="primary"
-                            fullWidth={true}
-                            name={'admin_login'}
-                            disabled={props.loading}
-                            onClick={(e: MouseEvent<HTMLButtonElement>) => props.handleDemoLogin(e)}
-                    >
-                        Demo Admin
-                        {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
-                    </Button>
+                    <Tooltip title={PAID_ACCOUNT_TOOLTIP} placement={'top'}>
+                        <Button variant="contained"
+                                color="primary"
+                                className={'mb-2'}
+                                fullWidth={true}
+                                name={'paid_login'}
+                                disabled={props.loading}
+                                onClick={(e: MouseEvent<HTMLButtonElement>) => props.handleDemoLogin(e)}
+                        >
+                            Demo Paid Account
+                            {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
+                        </Button>
+                    </Tooltip>
+
+                    <Tooltip title={FREE_ACCOUNT_TOOLTIP} placement={'top'}>
+                        <Button variant="contained"
+                                className={'mb-2'}
+                                color="primary"
+                                fullWidth={true}
+                                name={'free_login'}
+                                disabled={props.loading}
+                                onClick={(e: MouseEvent<HTMLButtonElement>) => props.handleDemoLogin(e)}
+                        >
+                            Demo Free Account
+                            {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
+                        </Button>
+                    </Tooltip>
+
+                    <Tooltip title={ADMIN_TOOLTIP} placement={'top'}>
+                        <Button variant="contained"
+                                className={'mb-2'}
+                                color="primary"
+                                fullWidth={true}
+                                name={'admin_login'}
+                                disabled={props.loading}
+                                onClick={(e: MouseEvent<HTMLButtonElement>) => props.handleDemoLogin(e)}
+                        >
+                            Demo Admin
+                            {props.loading ? <CircularProgress size={20} color={'primary'}/> : ''}
+                        </Button>
+                    </Tooltip>
+
                 </Card>
             </Grid>
         </>

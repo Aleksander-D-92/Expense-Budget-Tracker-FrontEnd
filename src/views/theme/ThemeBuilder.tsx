@@ -15,7 +15,7 @@ function ThemeBuilder() {
     const [disabled, setDisabled] = useState<boolean>(true);
 
     useEffect(() => {
-        if (userDetails.authority === 'ROLE_USER_FREE') {
+        if (userDetails.authority === 'ROLE_USER_FREE' || userDetails.authority === undefined) {
             dispatch(setLightTheme());
             setDisabled(true);
         } else {
