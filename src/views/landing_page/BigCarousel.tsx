@@ -38,6 +38,7 @@ function BigCarousel(props: Props) {
     useEffect(() => {
         setVisible(false)
     }, []);
+
     function redirect(e: MouseEvent) {
         history.push(`/movies/${e.currentTarget.id}`)
     }
@@ -75,13 +76,13 @@ function BigCarousel(props: Props) {
                                         }} className={'backgroundDivForImage'}>
                                         </div>
                                         <div className={'backgroundDivForImageText'}>
-                                            <Typography variant="h5">
+                                            <Typography variant="h5" style={{color: 'white'}}>
                                                 Top Rated
                                             </Typography>
-                                            <Typography variant="h4">
+                                            <Typography variant="h4" style={{color: 'white'}}>
                                                 {movie.title}
                                             </Typography>
-                                            <Typography variant="h5">
+                                            <Typography variant="h5" style={{color: 'white'}}>
                                                 {genreName(movie.genre_ids[0])} | Rating: {movie.vote_average}
                                             </Typography>
                                         </div>
