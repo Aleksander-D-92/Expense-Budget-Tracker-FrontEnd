@@ -14,7 +14,7 @@ function Footer() {
                         <Typography variant={'subtitle1'} style={footerTextStyle}>2020 @Movie DB an</Typography>
                         <Typography variant={'subtitle1'} align={'center'} style={footerTextStyle}
                                     className={'ml-1 mr-1'}>
-                            <a href="https://app.netlify.com/sites/destroy-bugs/deploys"
+                            <a href="https://aleksander-dorkov.netlify.app/"
                                target={'blank'}
                                style={{color: '#d93a3d', textDecoration: 'none'}}>Alexander D.</a>
                         </Typography>
